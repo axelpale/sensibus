@@ -25,7 +25,7 @@ module.exports = (state, ev) => {
             channel: null,
             frame: null
           },
-          select: null
+          selection: null
         }
       })
     }
