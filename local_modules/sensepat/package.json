@@ -1,0 +1,21 @@
+{
+  "name": "sensepat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "start": "nodemon test.js",
+    "test": "tape test.js"
+  },
+  "author": "Akseli Palén",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.0",
+    "standard": "*",
+    "tape": "^4.10.1"
+  },
+  "dependencies": {
+    "senseway": "file:../senseway"
+  }
+}

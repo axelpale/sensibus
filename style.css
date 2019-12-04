@@ -1,0 +1,180 @@
+.container {
+  font-family: Palatino, serif;
+}
+
+h1 {
+  font-size: 4.2rem;
+}
+
+.row {
+  text-align: center;
+  height: 4.2rem;
+  margin: 0;
+  padding: 0;
+}
+
+.row-future h1 {
+  margin: 1em 0 0.3em 0;
+  line-height: 1;
+}
+.row-past h1 {
+  margin: 1em 0 0.3em 0;
+  line-height: 1;
+}
+
+.row .row-title {
+  display: inline-block;
+  position: relative;
+  top: -1.8em;
+  width: 10em;
+  margin-left: -11em;
+  padding-right: 1em;
+  text-align: right;
+  line-height: 1;
+}
+
+.cells {
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+  line-height: 0;
+  height: 4.2rem;
+}
+
+.cell {
+  display: inline-block;
+  margin: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+
+  width: 4.2rem;
+  height: 4.2rem;
+
+  position: relative;
+}
+
+.cell .cell-spine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4.2rem;
+  height: 4.2rem;
+  background: url('img/spine-unknown.png') center repeat-y;
+}
+
+.cell.cell-event .cell-spine {
+  background: url('img/spine.png') center repeat-y;
+}
+
+.cell.cell-unknown .cell-spine {
+  background: url('img/spine-unknown.png') center repeat-y;
+  opacity: 0.4;
+}
+
+.cell .cell-icon {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  width: 3.8rem;
+  height: 3.8rem;
+  border-radius: 1.9rem;
+}
+
+.cell .cell-text {
+  position: absolute;
+  top: 0.2rem;
+  left: 0.2rem;
+  line-height: 1;
+  width: 3.8rem;
+  height: 3.8rem;
+}
+
+.cell.cell-unknown .cell-icon {
+  opacity: 0.6;
+}
+.cell.cell-unknown.cell-improbable .cell-icon {
+  border: 0;
+}
+.cell.cell-unknown .cell-text {
+  top: 1.5rem;
+}
+
+.cell.cell-title {
+  height: 3.8rem;
+}
+.cell.cell-title .cell-text {
+  top: unset;
+  bottom: 0;
+  height: unset;
+}
+
+.cell.cell-selected .cell-icon {
+  border: 0.62rem solid black;
+  width: 2.4rem;
+  height: 2.4rem;
+  top: 0.3rem;
+  left: 0.35rem;
+}
+.cell.cell-selected.cell-unknown .cell-icon {
+  border: 0.62rem solid black;
+}
+.cell.cell-selected.cell-unknown.cell-improbable .cell-icon {
+  border: 0.62rem solid black;
+}
+
+.create-channel, .create-frame {
+  display: inline-block;
+  width: 2.6rem;
+  height: 2.6rem;
+  border: 1px solid black;
+  border-radius: 1.3rem;
+  text-align: center;
+  overflow: hidden;
+  font-size: 0.9rem;
+}
+.create-channel {
+  box-sizing: border-box;
+  padding-top: 0.5rem;
+  padding-bottom: 0;
+}
+.create-frame {
+  box-sizing: border-box;
+  padding-top: 0.7rem;
+  padding-bottom: 0;
+  position: relative;
+  top: 2rem;
+  left: 0.6rem;
+}
+
+.how-container {
+  margin-top: 5em;
+}
+
+.how-timeline .how-way-container {
+  float: left;
+  padding: 2em;
+  height: 26em;
+}
+
+.how-timeline .way-caption {
+  padding-top: 0.38em;
+}
+
+.how-timeline .way-cell {
+  border: 1px solid black;
+}
+
+.how-timeline .way-cell.way-selected {
+  border: 3px solid red;
+  margin: -2px;
+  z-index: 2;
+}
+
+.how-way-container.how-channels .way-cell {
+  width: 0.54em !important;
+  margin-right: 0.46em;
+}
+.how-way-container.how-frames .way-cell {
+  height: 0.54em !important;
+  margin-bottom: 0.5em;
+}
