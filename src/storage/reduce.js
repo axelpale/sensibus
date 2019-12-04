@@ -1,46 +1,42 @@
-const way = require('senseway');
+const way = require('senseway')
 
-module.exports = (model, ev) => {
+module.exports = (state, ev) => {
   switch (ev.type) {
 
-    case 'CREATE_NEW_TIMELINE': {
-      return Object.assign({}, model, {
-        channels: [
-          { title: 'Channel A' },
-          { title: 'Channel B' }
-        ],
-        frames: [
-          { title: 'Frame 1' },
-          { title: 'Frame 2' },
-        ],
-        timeline: [
-          [0, 1],
-          [1, 0]
-        ],
-        channelOnEdit: null,
-        frameOnEdit: null,
-        select: {
-          channel: 0,
-          time: 0
+    case 'RESET_TIMELINE': {
+      return Object.assign({}, state, {
+        timeline: {
+          version: 1,
+          meta: {
+            channels: [
+              { title: 'Channel A' },
+              { title: 'Channel B' }
+            ],
+            frames: [
+              { title: 'Frame 1' },
+              { title: 'Frame 2' }
+            ]
+          },
+          frames: [
+            [0, 1],
+            [1, 0]
+          ]
+          edit: {
+            channel: null,
+            frame: null
+          },
+          select: null
         }
-      });
+      })
     }
 
-    case 'IMPORT_MODEL': {
-      return Object.assign({}, model, {
-        channels: ev.model.channels,
-        frames: ev.model.frames,
-        timeline: ev.model.timeline,
-        channelOnEdit: null,
-        frameOnEdit: null,
-        select: {
-          channel: 0,
-          time: 0
-        }
-      });
+    case 'IMPORT_TIMELINE': {
+      return Object.assign({}, state, {
+        timeline: ev.timeline
+      })
     }
 
     default:
-      return model;
+      return state
   }
-};
+}

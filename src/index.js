@@ -2,22 +2,17 @@ const reduxish = require('reduxish');
 const way = require('senseway');
 
 const renderers = [
-  require('./menu/render'),
-  require('./cellViewer/render'),
-  require('./channelEditor/render'),
-  require('./channelStars/render'),
-  require('./channelTitles/render'),
-  require('./timelineViewer/render'),
-  require('./howViewer/render')
+  require('./storage/render'),
+  // require('./timeline/render'),
+  // require('./predictors/render'),
+  // require('./performance/render')
 ];
 
 const reducers = [
-  require('./menu/reduce'),
-  require('./channelEditor/reduce'),
-  require('./channelStars/reduce'),
-  require('./channelTitles/reduce'),
-  require('./timelineViewer/reduce'),
-  require('./howViewer/reduce')
+  require('./storage/reduce'),
+  // require('./timeline/reduce'),
+  // require('./predictors/reduce'),
+  // require('./performance/reduce')
 ];
 
 const u = null;
