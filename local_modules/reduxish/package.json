@@ -1,0 +1,16 @@
+{
+  "name": "reduxish",
+  "version": "1.0.0",
+  "description": "Redux-like program flow",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard"
+  },
+  "author": "Akseli Palén",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "*"
+  },
+  "dependencies": {
+  }
+}

@@ -1,4 +1,4 @@
-const reduxish = require('./lib/reduxish');
+const reduxish = require('reduxish');
 const way = require('senseway');
 
 const renderers = [

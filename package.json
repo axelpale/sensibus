@@ -26,6 +26,7 @@
   },
   "dependencies": {
     "deep-equal": "^1.0.1",
+    "reduxish": "file:./local_modules/reduxish",
     "mcbsp": "file:./local_modules/mcbsp",
     "sensepat": "file:./local_modules/sensepat",
     "senseway": "file:./local_modules/senseway"
