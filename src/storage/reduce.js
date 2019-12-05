@@ -1,36 +1,16 @@
-const way = require('senseway')
+const defaultTimeline = require('../timeline/defaultTimeline')
 
 module.exports = (state, ev) => {
   switch (ev.type) {
 
     case 'RESET_TIMELINE': {
       return Object.assign({}, state, {
-        timeline: {
-          version: 1,
-          meta: {
-            channels: [
-              { title: 'Channel A' },
-              { title: 'Channel B' }
-            ],
-            frames: [
-              { title: 'Frame 1' },
-              { title: 'Frame 2' }
-            ]
-          },
-          frames: [
-            [0, 1],
-            [1, 0]
-          ]
-          edit: {
-            channel: null,
-            frame: null
-          },
-          selection: null
-        }
+        timeline: defaultTimeline
       })
     }
 
     case 'IMPORT_TIMELINE': {
+      // TODO support import from version 0
       return Object.assign({}, state, {
         timeline: ev.timeline
       })
