@@ -1,6 +1,7 @@
 module.exports = {
   version: 1,
   meta: {
+    channelOrder: ['a', 'b'],
     channels: {
       a: { title: 'Channel A' },
       b: { title: 'Channel B' }
