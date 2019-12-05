@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Time series logger and analyzer",
   "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
   "scripts": {
     "build": "webpack",
     "deploy": "rsync --recursive ../drummer/ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
