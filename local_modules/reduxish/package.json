@@ -4,7 +4,8 @@
   "description": "Redux-like program flow",
   "main": "index.js",
   "scripts": {
-    "lint": "standard"
+    "lint": "standard",
+    "lintfix": "standard --fix"
   },
   "author": "Akseli Palén",
   "license": "MIT",
@@ -12,5 +13,6 @@
     "standard": "*"
   },
   "dependencies": {
+    "deep-equal": "^1.1.1"
   }
 }
