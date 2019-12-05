@@ -15,8 +15,8 @@ module.exports = (model, dispatch) => {
   return wayElem(ctxMean.value, {
     reversed: true,
     heading: 'Context Mean for 0',
-    caption: 'This is how it looks around the event in general '
-      + 'if we take an average over every <strong>absence</strong> '
-      + 'of our selected event.'
+    caption: 'This is how it looks around the event in general ' +
+      'if we take an average over every <strong>absence</strong> ' +
+      'of our selected event.'
   })
 }

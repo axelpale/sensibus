@@ -2,7 +2,6 @@ const defaultTimeline = require('../timeline/defaultTimeline')
 
 module.exports = (state, ev) => {
   switch (ev.type) {
-
     case 'RESET_TIMELINE': {
       return Object.assign({}, state, {
         timeline: defaultTimeline

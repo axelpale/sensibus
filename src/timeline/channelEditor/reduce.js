@@ -1,8 +1,7 @@
-const way = require('senseway');
+const way = require('senseway')
 
 module.exports = (model, ev) => {
   switch (ev.type) {
-
     case 'EDIT_CHANNEL_TITLE': {
       return Object.assign({}, model, {
         channelOnEdit: null,
@@ -10,11 +9,11 @@ module.exports = (model, ev) => {
           if (c === ev.channel) {
             return Object.assign({}, chConf, {
               title: ev.title
-            });
+            })
           }
-          return chConf;
+          return chConf
         })
-      });
+      })
     }
 
     case 'REMOVE_CHANNEL': {
@@ -26,9 +25,9 @@ module.exports = (model, ev) => {
         channels: copy,
         channelOnEdit: null,
         select: {
-          channel: model.select.channel >= ev.channel ?
-            model.select.channel - 1 :
-            model.select.channel,
+          channel: model.select.channel >= ev.channel
+            ? model.select.channel - 1
+            : model.select.channel,
           time: 0
         }
       })
@@ -56,6 +55,6 @@ module.exports = (model, ev) => {
     }
 
     default:
-      return model;
+      return model
   }
-};
+}

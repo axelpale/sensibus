@@ -1,8 +1,5 @@
-const way = require('senseway');
-
 module.exports = (model, ev) => {
   switch (ev.type) {
-
     case 'STAR_CHANNEL': {
       const c = ev.channel
       const chs = model.channels.slice()
@@ -18,4 +15,4 @@ module.exports = (model, ev) => {
     default:
       return model
   }
-};
+}

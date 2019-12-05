@@ -16,7 +16,6 @@ module.exports = (model, channel, time) => {
   const timelinePat = pat.mixedToPattern(model.timeline)
   const prior = pat.mean(timelinePat).value.map(ch => ch[0])
   const W = way.width(model.timeline)
-  const LEN = way.len(model.timeline)
   const ctxlen = model.contextLength
 
   const ctx = pat.sliceAround(timelinePat, ctxlen, time)

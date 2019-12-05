@@ -29,9 +29,9 @@ module.exports = (model, dispatch) => {
   timeline.appendChild(wayel(model.timeline, {
     reversed: true,
     heading: 'Timeline',
-    caption: 'Here is the timeline - our training data set. '
-      + 'Black represents an activity happening. White represents '
-      + 'an activity not happening. They both we call <em>atomic events</em>.'
+    caption: 'Here is the timeline - our training data set. ' +
+      'Black represents an activity happening. White represents ' +
+      'an activity not happening. They both we call <em>atomic events</em>.'
   }))
 
   timeline.appendChild(howChannels(model, dispatch))
@@ -41,16 +41,16 @@ module.exports = (model, dispatch) => {
   timeline.appendChild(wayel(timelineMass, {
     reversed: true,
     heading: 'Timeline Mass',
-    caption: 'Mass shows which atomic events we know and which we '
-      + 'do not know. Here are masses for each. White = 0, Black = 1.'
+    caption: 'Mass shows which atomic events we know and which we ' +
+      'do not know. Here are masses for each. White = 0, Black = 1.'
   }))
 
   const unknownEvents = way.map(timelineMass, q => 1 - q)
   timeline.appendChild(wayel(unknownEvents, {
     reversed: true,
     heading: 'Unknown Data',
-    caption: 'These atomic events we do not know. Our goal is to predict '
-      + 'their value from the training data.'
+    caption: 'These atomic events we do not know. Our goal is to predict ' +
+      'their value from the training data.'
   }))
 
   timeline.appendChild(howEventSelector(model, dispatch))

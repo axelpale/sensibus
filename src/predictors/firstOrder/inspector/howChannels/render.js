@@ -1,4 +1,3 @@
-const way = require('senseway')
 const wayElem = require('../../lib/wayElem')
 
 module.exports = (model, dispatch) => {

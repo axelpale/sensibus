@@ -2,7 +2,6 @@ const way = require('senseway')
 const wayElem = require('../../lib/wayElem')
 
 module.exports = (model, dispatch) => {
-
   const waySelected = (() => {
     const c = model.select.channel
     const t = model.select.time
@@ -12,9 +11,9 @@ module.exports = (model, dispatch) => {
   const eventSelector = wayElem(model.timeline, {
     reversed: true,
     heading: 'Event to Predict',
-    caption: 'We predict the unknown events one by one. '
-      + '<strong>Select</strong> an event to see '
-      + 'how we form its probability.',
+    caption: 'We predict the unknown events one by one. ' +
+      '<strong>Select</strong> an event to see ' +
+      'how we form its probability.',
     selected: waySelected
   })
 

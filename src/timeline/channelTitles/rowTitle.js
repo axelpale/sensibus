@@ -15,14 +15,14 @@ module.exports = (model, dispatch) => {
   chan.addEventListener('click', ev => {
     dispatch({
       type: 'CREATE_CHANNEL'
-    });
-  });
+    })
+  })
 
   fram.addEventListener('click', ev => {
     dispatch({
       type: 'CREATE_FRAME'
-    });
-  });
+    })
+  })
 
-  return root;
+  return root
 }

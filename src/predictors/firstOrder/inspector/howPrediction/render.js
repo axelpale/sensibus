@@ -1,5 +1,4 @@
 const way = require('senseway')
-const pat = require('sensepat')
 const wayElem = require('../../lib/wayElem')
 const predict = require('../../lib/predict')
 
@@ -101,9 +100,9 @@ module.exports = (model, dispatch) => {
     reversed: true,
     heading: 'Prediction',
     selected: waySelected,
-    caption: 'Context mean shows the probability of cell being 1 given '
-      + 'the selected event becoming 1. With Bayes\' rule we compute '
-      + 'the probability of the selected event given the context.'
+    caption: 'Context mean shows the probability of cell being 1 given ' +
+      'the selected event becoming 1. With Bayes\' rule we compute ' +
+      'the probability of the selected event given the context.'
   })
   predElem.addEventListener('click', (ev) => {
     const c = parseInt(ev.target.dataset.channel)

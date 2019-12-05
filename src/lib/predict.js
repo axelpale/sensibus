@@ -14,7 +14,6 @@ module.exports = (model, channel, time) => {
   const timelinePat = pat.mixedToPattern(model.timeline)
   const prior = pat.mean(timelinePat).value.map(ch => ch[0])
   const w = way.width(model.timeline)
-  const LEN = way.len(model.timeline)
   const ctxlen = model.contextLength
 
   const c = channel
@@ -59,7 +58,6 @@ module.exports = (model, channel, time) => {
       return 1
     }
 
-    let pri
     let factor
     if (cv < 0.5) {
       // 0 in context at this point. B=0
@@ -95,17 +93,17 @@ module.exports = (model, channel, time) => {
     // Let us use sqrt(sample_size) as a weight.
     // Because we need to return only a likelihood factor
     // and not the true probability, the weight can be in arbitrary scale.
-    const power = Math.sqrt(mm) / Math.sqrt(LEN)
-
-    // Tryout #1
-    // Works badly when extreme mv (0 or 1) because forces likelihood to zero.
-    // const weightedProb = Math.pow(prob, power)
-
-    // Tryout #2
-    const priorPower = 1 - power
-    const weightedProb = power * factor + priorPower * (cv < 0.5 ? 1 - pr : pr)
-
-    return Math.pow(weightedProb, power)
+    // const power = Math.sqrt(mm) / Math.sqrt(LEN)
+    //
+    // // Tryout #1
+    // // Works badly when extreme mv (0 or 1) because forces likelihood to zero.
+    // // const weightedProb = Math.pow(prob, power)
+    //
+    // // Tryout #2
+    // const priorPower = 1 - power
+    // const weightedProb = power * factor + priorPower * (cv < 0.5 ? 1 - pr : pr)
+    //
+    // return Math.pow(weightedProb, power)
   }
 
   const zeroField = way.map(zeroMean.value, (q, qc, qt) => {

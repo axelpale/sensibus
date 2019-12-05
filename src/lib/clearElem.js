@@ -1,6 +1,6 @@
 module.exports = (el) => {
-  while(el.firstChild){
-    el.removeChild(el.firstChild);
+  while (el.firstChild) {
+    el.removeChild(el.firstChild)
   }
-  return el;
-};
+  return el
+}

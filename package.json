@@ -12,6 +12,7 @@
     "deploy": "rsync --recursive ../drummer/ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
     "start": "nodemon --watch src --watch local_modules --exec 'npm run build'",
     "lint": "standard 'src/**/*.js' && echo OK",
+    "lintfix": "standard --fix 'src/**/*.js' && echo OK",
     "test": "npm run lint"
   },
   "author": {

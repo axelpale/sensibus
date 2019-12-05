@@ -41,7 +41,7 @@ module.exports = (state, dispatch) => {
 
   importBtn.addEventListener('change', ev => {
     const selectedFile = importBtn.files[0]
-    var reader = new FileReader()
+    var reader = new window.FileReader()
     reader.onload = (evt) => {
       const parsedTimeline = JSON.parse(evt.target.result)
       dispatch({

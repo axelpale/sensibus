@@ -10,8 +10,8 @@ module.exports = (model, dispatch) => {
   return wayElem(priorPred, {
     reversed: true,
     heading: 'Prior Prediction',
-    caption: 'Prior probabilities can directly give us the first prediction. '
-      + 'This would in fact be our best prediction if all atomic events '
-      + 'were independent of each other.'
+    caption: 'Prior probabilities can directly give us the first prediction. ' +
+      'This would in fact be our best prediction if all atomic events ' +
+      'were independent of each other.'
   })
 }

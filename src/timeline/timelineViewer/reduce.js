@@ -1,12 +1,11 @@
-const way = require('senseway');
+const way = require('senseway')
 
 module.exports = (model, ev) => {
   switch (ev.type) {
-
     case 'EDIT_CELL': {
       const sel = model.select
 
-      const curval = model.timeline[ev.channel][ev.time];
+      const curval = model.timeline[ev.channel][ev.time]
       const nextval = (() => {
         if (sel.channel === ev.channel && sel.time === ev.time) {
           if (curval === null) return 1
@@ -14,7 +13,7 @@ module.exports = (model, ev) => {
           if (curval === 0) return null
         } // else
         return curval
-      })();
+      })()
 
       return Object.assign({}, model, {
         timeline: way.set(model.timeline, ev.channel, ev.time, nextval),
@@ -22,13 +21,13 @@ module.exports = (model, ev) => {
           channel: ev.channel,
           time: ev.time
         }
-      });
+      })
     }
 
     case 'OPEN_FRAME_TITLE_EDITOR': {
       return Object.assign({}, model, {
         frameOnEdit: ev.time
-      });
+      })
     }
 
     case 'EDIT_FRAME_TITLE': {
@@ -38,11 +37,11 @@ module.exports = (model, ev) => {
           if (t === ev.time) {
             return Object.assign({}, frameConf, {
               title: ev.title
-            });
+            })
           } // else
-          return frameConf;
+          return frameConf
         })
-      });
+      })
     }
 
     case 'MOVE_FRAME': {
@@ -85,6 +84,6 @@ module.exports = (model, ev) => {
     }
 
     default:
-      return model;
+      return model
   }
-};
+}

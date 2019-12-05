@@ -13,7 +13,7 @@ module.exports = (model, dispatch) => {
   return wayElem(priorHood, {
     reversed: true,
     heading: 'Prior Probabilities',
-    caption: 'We already know what to expect in general '
-      + 'by looking the average of each channel.'
+    caption: 'We already know what to expect in general ' +
+      'by looking the average of each channel.'
   })
 }

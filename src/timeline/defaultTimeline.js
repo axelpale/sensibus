@@ -2,8 +2,8 @@ module.exports = {
   version: 1,
   meta: {
     channels: {
-      'a': { title: 'Channel A' },
-      'b': { title: 'Channel B' }
+      a: { title: 'Channel A' },
+      b: { title: 'Channel B' }
     },
     frames: [
       { title: 'Frame 1' },
