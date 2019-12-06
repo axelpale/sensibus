@@ -27,26 +27,24 @@ module.exports = (state, dispatch) => {
 
   createBtn.addEventListener('click', ev => {
     dispatch({
-      type: 'RESET_TIMELINE'
+      type: 'RESET_STATE'
     })
   })
 
   exportBtn.addEventListener('click', ev => {
     // Click to download
-    const ex = {
-      timeline: state.timeline
-    }
-    download('timeline.json', JSON.stringify(ex, null, 2))
+    const ex = state
+    download('sensibus-backup.json', JSON.stringify(ex, null, 2))
   })
 
   importBtn.addEventListener('change', ev => {
     const selectedFile = importBtn.files[0]
     var reader = new window.FileReader()
     reader.onload = (evt) => {
-      const parsedTimeline = JSON.parse(evt.target.result)
+      const parsedState = JSON.parse(evt.target.result)
       dispatch({
-        type: 'IMPORT_TIMELINE',
-        timeline: parsedTimeline
+        type: 'IMPORT_STATE',
+        state: parsedState
       })
     }
     reader.readAsText(selectedFile, 'UTF-8')

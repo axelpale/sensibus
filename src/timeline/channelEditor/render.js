@@ -1,13 +1,13 @@
 
-module.exports = (model, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
-  if (model.channelOnEdit === null) {
+  if (state.timeline.channelOnEdit === null) {
     return root
   }
 
-  const c = model.channelOnEdit
-  const title = model.channels[c].title
+  const c = state.timeline.channelOnEdit
+  const title = state.timeline.channels[c].title
 
   const row = document.createElement('div')
   row.classList.add('row')

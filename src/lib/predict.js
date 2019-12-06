@@ -1,7 +1,7 @@
 const way = require('senseway')
 const pat = require('sensepat')
 
-module.exports = (model, channel, time) => {
+module.exports = (state, channel, time) => {
   // Find probability for 1 in the given cell position,
   // given the history.
   //
@@ -11,10 +11,11 @@ module.exports = (model, channel, time) => {
   //
   // Returns
   //   probability for 1
-  const timelinePat = pat.mixedToPattern(model.timeline)
+  const timeline = state.timeline
+  const timelinePat = pat.mixedToPattern(timeline.way)
   const prior = pat.mean(timelinePat).value.map(ch => ch[0])
-  const w = way.width(model.timeline)
-  const ctxlen = model.contextLength
+  const w = way.width(timeline.way)
+  const ctxlen = state.contextLength
 
   const c = channel
   const t = time

@@ -1,23 +1,23 @@
+const u = null
+
 module.exports = {
-  version: 1,
-  meta: {
-    channelOrder: ['a', 'b'],
-    channels: {
-      a: { title: 'Channel A' },
-      b: { title: 'Channel B' }
-    },
-    frames: [
-      { title: 'Frame 1' },
-      { title: 'Frame 2' }
-    ]
-  },
-  frames: [
-    ['a'],
-    ['b']
+  channels: [ // Dimensions
+    { title: 'Channel A' },
+    { title: 'Channel B' }
   ],
-  edit: {
-    channel: null,
-    frame: null
+  frames: [
+    { title: 'Frame 1' },
+    { title: 'Frame 2' }
+  ],
+  channelOnEdit: null,
+  frameOnEdit: null,
+  select: {
+    channel: 0,
+    frame: 0
   },
-  selection: null
+  version: 1,
+  way: [
+    [1, 0],
+    [u, 1]
+  ]
 }

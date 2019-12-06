@@ -1,4 +1,4 @@
-module.exports = (model, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
   root.classList.add('row-title')
 

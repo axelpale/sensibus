@@ -1,21 +1,21 @@
 const rowTitle = require('./rowTitle')
 
-module.exports = (model, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   const row = document.createElement('div')
   row.classList.add('row')
 
-  row.appendChild(rowTitle(model, dispatch))
+  row.appendChild(rowTitle(state, dispatch))
 
   const cells = document.createElement('div')
   cells.classList.add('cells')
 
-  model.timeline.forEach((ch, c) => {
+  state.timeline.way.forEach((ch, c) => {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.classList.add('cell-title')
-    const val = model.channels[c].title
+    const val = state.timeline.channels[c].title
     cell.innerHTML = '<div class="cell-text">' + val + '</div>'
 
     cell.addEventListener('click', ev => {

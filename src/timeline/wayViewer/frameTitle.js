@@ -1,11 +1,13 @@
 const frameTitleEditor = require('./frameTitleEditor')
 
-module.exports = (model, dispatch, time) => {
+module.exports = (state, dispatch, time) => {
+  const timeline = state.timeline
+
   const root = document.createElement('div')
   root.classList.add('row-title')
 
-  if (model.frameOnEdit !== time) {
-    root.innerHTML = model.frames[time].title
+  if (timeline.frameOnEdit !== time) {
+    root.innerHTML = timeline.frames[time].title
 
     root.addEventListener('click', ev => {
       dispatch({
@@ -15,7 +17,7 @@ module.exports = (model, dispatch, time) => {
     })
   } else {
     // Frame title editor
-    root.appendChild(frameTitleEditor(model, dispatch))
+    root.appendChild(frameTitleEditor(state, dispatch))
   }
 
   return root

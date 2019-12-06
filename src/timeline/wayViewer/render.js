@@ -1,10 +1,10 @@
 const way = require('senseway')
 const frameTitle = require('./frameTitle')
-const predict = require('../lib/predict')
+const predict = require('../../lib/predict')
 
-const color = (model, channel) => {
+const color = (state, channel) => {
   const c = channel
-  const N = model.channels.length
+  const N = state.timeline.channels.length
   const hue = '' + (360 * (1 - c / N))
   const sat = '100'
   const lig = '40'
@@ -27,11 +27,12 @@ const probToCircleRadius = (prob) => {
   return Math.sqrt(prob)
 }
 
-module.exports = (model, dispatch) => {
+module.exports = (state, dispatch) => {
+  const timeline = state.timeline
   const root = document.createElement('div')
 
-  const W = way.width(model.timeline)
-  const LEN = way.len(model.timeline)
+  const W = way.width(timeline.way)
+  const LEN = way.len(timeline.way)
 
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
@@ -39,7 +40,7 @@ module.exports = (model, dispatch) => {
     row.classList.add('row')
     root.appendChild(row)
 
-    row.appendChild(frameTitle(model, dispatch, t))
+    row.appendChild(frameTitle(state, dispatch, t))
 
     const cells = document.createElement('div')
     cells.classList.add('cells')
@@ -50,7 +51,7 @@ module.exports = (model, dispatch) => {
       cell.classList.add('cell')
       cell.classList.add('cell-event')
 
-      if (model.select.channel === c && model.select.time === t) {
+      if (timeline.select.channel === c && timeline.select.frame === t) {
         cell.classList.add('cell-selected')
       }
 
@@ -66,23 +67,23 @@ module.exports = (model, dispatch) => {
       text.classList.add('cell-text')
       cell.appendChild(text)
 
-      const val = model.timeline[c][t]
+      const val = timeline.way[c][t]
 
       if (val === null) {
         cell.classList.add('cell-unknown')
-        const pred = predict(model, c, t)
+        const pred = predict(state, c, t)
         if (pred.prob < 0.5) {
           cell.classList.add('cell-improbable')
         } else {
           cell.classList.add('cell-probable')
         }
         text.innerHTML = '<span>' + Math.floor(100 * pred.prob) + '%</span>'
-        icon.style.backgroundColor = color(model, c)
+        icon.style.backgroundColor = color(state, c)
         const scale = probToCircleRadius(pred.prob)
         icon.style.transform = 'scale(' + scale + ')'
       } else {
         cell.classList.add('cell-known')
-        icon.style.backgroundColor = color(model, c)
+        icon.style.backgroundColor = color(state, c)
         const scale = probToCircleRadius(val)
         icon.style.transform = 'scale(' + scale + ')'
       }

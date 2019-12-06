@@ -1,9 +1,11 @@
 
-module.exports = (model, dispatch) => {
+module.exports = (state, dispatch) => {
+  const timeline = state.timeline
+
   const form = document.createElement('form')
 
-  const t = model.frameOnEdit
-  const title = model.frames[t].title
+  const t = timeline.frameOnEdit
+  const title = timeline.frames[t].title
 
   const text = document.createElement('input')
   text.type = 'text'
@@ -40,7 +42,7 @@ module.exports = (model, dispatch) => {
     ev.preventDefault()
     dispatch({
       type: 'EDIT_FRAME_TITLE',
-      time: t,
+      frame: t,
       title: text.value
     })
   })
@@ -48,7 +50,7 @@ module.exports = (model, dispatch) => {
   okBtn.addEventListener('click', ev => {
     dispatch({
       type: 'EDIT_FRAME_TITLE',
-      time: t,
+      frame: t,
       title: text.value
     })
   })
@@ -56,14 +58,14 @@ module.exports = (model, dispatch) => {
   delBtn.addEventListener('click', ev => {
     dispatch({
       type: 'REMOVE_FRAME',
-      time: t
+      frame: t
     })
   })
 
   upBtn.addEventListener('click', ev => {
     dispatch({
       type: 'MOVE_FRAME',
-      time: t,
+      frame: t,
       offset: 1
     })
   })
@@ -71,7 +73,7 @@ module.exports = (model, dispatch) => {
   downBtn.addEventListener('click', ev => {
     dispatch({
       type: 'MOVE_FRAME',
-      time: t,
+      frame: t,
       offset: -1
     })
   })

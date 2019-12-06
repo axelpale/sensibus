@@ -1,14 +1,14 @@
-const way = require('senseway')
-
-module.exports = (model, ev) => {
+module.exports = (state, ev) => {
   switch (ev.type) {
     case 'OPEN_CHANNEL_TITLE_EDITOR': {
-      return Object.assign({}, model, {
-        channelOnEdit: ev.channel
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          channelOnEdit: ev.channel
+        })
       })
     }
 
     default:
-      return model
+      return state
   }
 }

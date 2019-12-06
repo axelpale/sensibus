@@ -1,41 +1,45 @@
 const way = require('senseway')
 
-module.exports = (model, ev) => {
+module.exports = (state, ev) => {
   switch (ev.type) {
     case 'EDIT_CHANNEL_TITLE': {
-      return Object.assign({}, model, {
-        channelOnEdit: null,
-        channels: model.channels.map((chConf, c) => {
-          if (c === ev.channel) {
-            return Object.assign({}, chConf, {
-              title: ev.title
-            })
-          }
-          return chConf
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          channelOnEdit: null,
+          channels: state.timeline.channels.map((chConf, c) => {
+            if (c === ev.channel) {
+              return Object.assign({}, chConf, {
+                title: ev.title
+              })
+            }
+            return chConf
+          })
         })
       })
     }
 
     case 'REMOVE_CHANNEL': {
-      const copy = model.channels.slice()
+      const copy = state.timeline.channels.slice()
       copy.splice(ev.channel, 1)
 
-      return Object.assign({}, model, {
-        timeline: way.dropChannel(model.timeline, ev.channel),
-        channels: copy,
-        channelOnEdit: null,
-        select: {
-          channel: model.select.channel >= ev.channel
-            ? model.select.channel - 1
-            : model.select.channel,
-          time: 0
-        }
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          way: way.dropChannel(state.timeline.way, ev.channel),
+          channels: copy,
+          channelOnEdit: null,
+          select: {
+            channel: state.timeline.select.channel >= ev.channel
+              ? state.timeline.select.channel - 1
+              : state.timeline.select.channel,
+            frame: 0
+          }
+        })
       })
     }
 
     case 'MOVE_CHANNEL': {
-      const channelsCopy = model.channels.slice()
-      const W = way.width(model.timeline)
+      const channelsCopy = state.timeline.channels.slice()
+      const W = way.width(state.timeline.way)
       const source = ev.channel
       const target = (W + ev.channel + ev.offset) % W
 
@@ -43,18 +47,20 @@ module.exports = (model, ev) => {
       channelsCopy.splice(source, 1)
       channelsCopy.splice(target, 0, removedChannelConf)
 
-      const removedChannel = model.timeline[source]
-      const afterDrop = way.dropChannel(model.timeline, source)
+      const removedChannel = state.timeline.way[source]
+      const afterDrop = way.dropChannel(state.timeline.way, source)
       const afterInsert = way.insertChannel(afterDrop, target, removedChannel)
 
-      return Object.assign({}, model, {
-        timeline: afterInsert,
-        channels: channelsCopy,
-        channelOnEdit: target
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          way: afterInsert,
+          channels: channelsCopy,
+          channelOnEdit: target
+        })
       })
     }
 
     default:
-      return model
+      return state
   }
 }
