@@ -9,6 +9,7 @@ module.exports = (state, ev) => {
 
       const curval = timeline.way[ev.channel][ev.frame]
       const nextval = (() => {
+        // If the cell is already selected, change the value
         if (sel.channel === ev.channel && sel.frame === ev.frame) {
           if (curval === 1) return 0
           if (curval === 0) return 1
