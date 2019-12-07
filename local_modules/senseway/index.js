@@ -2,7 +2,7 @@
 //
 
 exports.add = (wayA, wayB) => {
-  // a plus b
+  // Element-wise a plus b
   return wayA.map((ch, c) => ch.map((q, t) => q + wayB[c][t]))
 }
 
