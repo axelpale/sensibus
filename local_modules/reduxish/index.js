@@ -9,21 +9,11 @@ const clearElem = (el) => {
 
 module.exports = (opts) => {
   // Persistence
-  let initialModel
+  let initialModel = {}
+
   const storedModelJson = window.localStorage.getItem(opts.storageName)
   if (storedModelJson) {
-    const storedModel = JSON.parse(storedModelJson)
-    if (deepEqual(storedModel.defaultModel, opts.defaultModel, { strict: true })) {
-      initialModel = storedModel
-    } else {
-      // Default model changed due to a source update.
-      // Replace the old values with new data. Keep unchanged data.
-      initialModel = Object.assign({}, storedModel, opts.defaultModel, {
-        defaultModel: opts.defaultModel
-      })
-    }
-  } else {
-    initialModel = opts.defaultModel
+    initialModel = JSON.parse(storedModelJson)
   }
 
   const reducer = (model, ev) => {
