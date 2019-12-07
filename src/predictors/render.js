@@ -26,6 +26,7 @@ module.exports = (state, dispatch) => {
       reversed: true,
       heading: 'Support for ' + channelTitle(state, c),
       caption: '',
+      normalize: true,
       selected: selected
     }))
   })
