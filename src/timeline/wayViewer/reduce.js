@@ -31,7 +31,8 @@ module.exports = (state, ev) => {
     case 'OPEN_FRAME_TITLE_EDITOR': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          frameOnEdit: ev.frame
+          frameOnEdit: ev.frame,
+          select: null
         })
       })
     }
