@@ -250,7 +250,7 @@ exports.max = (way) => {
 }
 
 exports.mean = (way) => {
-  // Returns a frame.
+  // Channel means. Returns a single-frame way.
   return way.map((ch) => {
     return [ch.reduce((acc, q) => acc + q, 0) / ch.length]
   })
@@ -443,6 +443,16 @@ exports.trim = (way, trimmee) => {
   }
 
   return way.map(ch => ch.slice(begin, end))
+}
+
+exports.variance = (way) => {
+  // Channel variance. Return a single-frame way.
+  return way.map((ch) => {
+    const l = ch.length
+    const mean = ch.reduce((acc, q) => acc + q, 0) / l
+    const va = ch.reduce((acc, q) => acc + (q - mean) * (q - mean), 0) / l
+    return [va]
+  })
 }
 
 exports.width = (way) => {

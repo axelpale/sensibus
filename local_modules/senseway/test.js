@@ -435,6 +435,16 @@ test('trim', (t) => {
   t.end()
 })
 
+test('variance', (t) => {
+  t.deepEqual(way.variance(ONES), [[0], [0]])
+  t.deepEqual(way.variance(ZEROS), [[0], [0]])
+  t.deepEqual(way.variance([
+    [2, 0, 2, 0],
+    [0, 1, 1, 0]
+  ]), [[1], [0.25]])
+  t.end()
+})
+
 test('width', (t) => {
   t.equal(way.width(ONES), 2)
   t.end()
