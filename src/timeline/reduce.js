@@ -6,13 +6,6 @@ const way = require('senseway')
 
 const reducer = (state, ev) => {
   switch (ev.type) {
-    case '__INIT__': {
-      // Default timeline
-      return Object.assign({}, state, {
-        timeline: defaultTimeline
-      })
-    }
-
     case 'CREATE_CHANNEL': {
       const sizeReference = way.channel(state.timeline.way, 0)
       const newChannel = way.fill(sizeReference, null)
@@ -50,6 +43,13 @@ const reducer = (state, ev) => {
 }
 
 module.exports = (state, ev) => {
+  // Default timeline
+  if (!state.timeline) {
+    state = Object.assign({}, state, {
+      timeline: defaultTimeline
+    })
+  }
+
   return [
     reducer,
     channelEditor,

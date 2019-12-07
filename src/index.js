@@ -15,7 +15,6 @@ const reducers = [
 ]
 
 reduxish({
-  defaultModel: {},
   storageName: 'sensibus-state',
   rootElementId: 'content',
   renderers: renderers,
