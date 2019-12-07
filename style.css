@@ -87,9 +87,6 @@ h1 {
 .cell.cell-unknown .cell-icon {
   opacity: 0.6;
 }
-.cell.cell-unknown.cell-improbable .cell-icon {
-  border: 0;
-}
 .cell.cell-unknown .cell-text {
   top: 1.5rem;
 }
@@ -103,18 +100,8 @@ h1 {
   height: unset;
 }
 
-.cell.cell-selected .cell-icon {
-  border: 0.62rem solid black;
-  width: 2.4rem;
-  height: 2.4rem;
-  top: 0.3rem;
-  left: 0.35rem;
-}
-.cell.cell-selected.cell-unknown .cell-icon {
-  border: 0.62rem solid black;
-}
-.cell.cell-selected.cell-unknown.cell-improbable .cell-icon {
-  border: 0.62rem solid black;
+.cell.cell-selected {
+  background: gray;
 }
 
 .create-channel, .create-frame {
