@@ -390,6 +390,12 @@ exports.slice = (way, begin, end) => {
   return exports.join(leftPadded, rightPad)
 }
 
+exports.sliceAround = (way, sliceLen, time) => {
+  const begin = time - Math.max(0, Math.floor(sliceLen / 2))
+  const end = begin + sliceLen
+  return exports.slice(way, begin, end)
+}
+
 exports.sum = (way) => {
   // Sum elements together.
   return way.reduce((acc, ch) => ch.reduce((ac, q) => ac + q, acc), 0)
