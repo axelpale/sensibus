@@ -7,6 +7,7 @@ exports.add = (wayA, wayB) => {
 }
 
 exports.after = (way, t, len) => {
+  // Pick %len frames after t and include frame t.
   if (typeof len === 'undefined') { len = way[0].length - t }
   return exports.slice(way, t, t + len)
 }
@@ -77,10 +78,12 @@ exports.dropChannel = (way, channel) => {
 }
 
 exports.each = (way, iteratee) => {
+  // Call %iteratee for every quantum
   way.forEach((ch, c) => ch.forEach((q, t) => iteratee(q, c, t)))
 }
 
 exports.equal = (wayA, wayB) => {
+  // Test if ways are deeply equal in value.
   let i, j, ch
   for (i = 0; i < wayA.length; i += 1) {
     for (j = 0; j < wayA[0].length; j += 1) {
@@ -98,6 +101,8 @@ exports.fill = (way, filler) => {
 }
 
 exports.find = (way, iteratee) => {
+  // Return first quantum that satisfies predicate %iteratee.
+  // Return undefined if not found.
   for (let c = 0; c < way.length; c += 1) {
     for (let t = 0; t < way[0].length; t += 1) {
       if (iteratee(way[c][t], c, t, way)) {
@@ -112,11 +117,12 @@ exports.find = (way, iteratee) => {
 }
 
 exports.first = (way, n) => {
-  // First n frames; the oldest
+  // First %n frames; the oldest
   return way.map(ch => ch.slice(0, n))
 }
 
 exports.frame = (way, t) => {
+  // Return a way with single frame
   return way.map(ch => [ch[t]]) // frame is an array of arrays
 }
 
@@ -225,6 +231,7 @@ exports.map = (way, fn) => {
 }
 
 exports.map2 = (wayA, wayB, fn) => {
+  // Combine two ways to one by calling fn for each element pair.
   return wayA.map((ch, c) => ch.map((q, t) => fn(q, wayB[c][t], c, t)))
 }
 
@@ -384,7 +391,7 @@ exports.slice = (way, begin, end) => {
 }
 
 exports.sum = (way) => {
-  // Sum quanta together.
+  // Sum elements together.
   return way.reduce((acc, ch) => ch.reduce((ac, q) => ac + q, acc), 0)
 }
 
