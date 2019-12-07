@@ -9,9 +9,9 @@ const renderers = [
 
 const reducers = [
   require('./storage/reduce'),
-  require('./timeline/reduce')
-  // require('./predictors/reduce'),
-  // require('./performance/reduce')
+  require('./timeline/reduce'),
+  require('./predictors/reduce'),
+  require('./performance/reduce')
 ]
 
 reduxish({

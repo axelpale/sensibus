@@ -1,6 +1,5 @@
 const way = require('senseway')
 const frameTitle = require('./frameTitle')
-const predict = require('../../lib/predict')
 
 const color = (state, channel) => {
   const c = channel
@@ -72,15 +71,15 @@ module.exports = (state, dispatch) => {
 
       if (val === 0) {
         cell.classList.add('cell-unknown')
-        const pred = predict(state, c, t)
-        if (pred.prob < 0.5) {
+        const pred = state.predictors.prediction[c][t]
+        if (pred < 0.5) {
           cell.classList.add('cell-improbable')
         } else {
           cell.classList.add('cell-probable')
         }
-        text.innerHTML = '<span>' + Math.floor(100 * pred.prob) + '%</span>'
+        text.innerHTML = '<span>' + Math.floor(100 * pred) + '%</span>'
         icon.style.backgroundColor = color(state, c)
-        const scale = probToCircleRadius(pred.prob)
+        const scale = probToCircleRadius(pred)
         icon.style.transform = 'scale(' + scale + ')'
       } else {
         cell.classList.add('cell-known')

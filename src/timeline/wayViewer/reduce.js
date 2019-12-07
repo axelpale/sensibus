@@ -80,8 +80,6 @@ module.exports = (state, ev) => {
       const copy = state.timeline.frames.slice()
       copy.splice(ev.frame, 1)
 
-      const sel = state.timeline.select
-
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
           way: way.dropFrame(state.timeline.way, ev.frame),
