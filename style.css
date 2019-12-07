@@ -61,9 +61,6 @@ h1 {
   width: 4.2rem;
   height: 4.2rem;
   background: url('img/spine.png') center repeat-y;
-}
-
-.cell.cell-unknown .cell-spine {
   opacity: 0.3;
 }
 
@@ -131,7 +128,7 @@ h1 {
 
 .way-container {
   display: inline-block;
-  margin: 2.62em;
+  margin: 0 2.62em 2.62em 0;
 }
 .way-container .way-caption {
   padding-top: 0.38em;
