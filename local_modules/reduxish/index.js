@@ -1,5 +1,3 @@
-const deepEqual = require('deep-equal')
-
 const clearElem = (el) => {
   while (el.firstChild) {
     el.removeChild(el.firstChild)
