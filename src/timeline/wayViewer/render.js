@@ -29,6 +29,7 @@ const probToCircleRadius = (prob) => {
 
 module.exports = (state, dispatch) => {
   const timeline = state.timeline
+  const sel = timeline.select
   const root = document.createElement('div')
 
   const W = way.width(timeline.way)
@@ -51,7 +52,7 @@ module.exports = (state, dispatch) => {
       cell.classList.add('cell')
       cell.classList.add('cell-event')
 
-      if (timeline.select.channel === c && timeline.select.frame === t) {
+      if (sel && sel.channel === c && sel.frame === t) {
         cell.classList.add('cell-selected')
       }
 

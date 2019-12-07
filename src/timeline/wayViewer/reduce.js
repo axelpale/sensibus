@@ -10,7 +10,7 @@ module.exports = (state, ev) => {
       const curval = timeline.way[ev.channel][ev.frame]
       const nextval = (() => {
         // If the cell is already selected, change the value
-        if (sel.channel === ev.channel && sel.frame === ev.frame) {
+        if (sel && sel.channel === ev.channel && sel.frame === ev.frame) {
           if (curval === 1) return 0
           if (curval === 0) return 1
         } // else
@@ -79,18 +79,14 @@ module.exports = (state, ev) => {
       const copy = state.timeline.frames.slice()
       copy.splice(ev.frame, 1)
 
-      const sc = state.timeline.select.channel
-      const st = state.timeline.select.frame
+      const sel = state.timeline.select
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
           way: way.dropFrame(state.timeline.way, ev.frame),
           frames: copy,
           frameOnEdit: null,
-          select: {
-            channel: sc,
-            frame: st >= ev.frame ? st - 1 : st
-          }
+          select: null
         })
       })
     }
