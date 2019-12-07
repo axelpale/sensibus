@@ -101,7 +101,7 @@ h1 {
 }
 
 .cell.cell-selected {
-  background: #AAA;
+  background: black;
 }
 
 .create-channel, .create-frame {
