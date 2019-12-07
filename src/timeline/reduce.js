@@ -13,8 +13,7 @@ const reducer = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           way: way.mix(newChannel, state.timeline.way),
           channels: [].concat([{
-            title: '?',
-            backgroundColor: '#8A1C82'
+            title: '?'
           }], state.timeline.channels),
           channelOnEdit: 0 // Open name edit input
         })
