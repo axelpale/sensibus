@@ -32,10 +32,16 @@ module.exports = (state, ev) => {
     }, way.create(ctxWidth, ctxLen, 0))
   })
 
+  // Standard deviation for each support
+  const vars = supports.map(sup => {
+    return way.variance(sup)
+  })
+
   return Object.assign({}, state, {
     predictors: Object.assign({}, state.predictors, {
       prediction: way.fill(state.timeline.way, 0),
-      supports: supports
+      supports: supports,
+      variances: vars
     })
   })
 }
