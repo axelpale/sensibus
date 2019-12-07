@@ -131,9 +131,13 @@ exports.html = (way, opts) => {
   const heading = opts.heading ? opts.heading : ''
   const caption = opts.caption ? opts.caption : ''
   const selected = opts.selected ? opts.selected : exports.fill(way, 0)
+  const normalize = opts.normalize ? true : false
 
   const len = exports.len(way)
   const width = exports.width(way)
+
+  // Normalize colors
+  const colorWay = normalize ? exports.normalize(way) : way
 
   let tbegin = 0
   let tend = len
@@ -167,9 +171,10 @@ exports.html = (way, opts) => {
       let style = 'flex:1;width:1em;height:1em;'
 
       if (typeof q === 'number') {
+        const colorq = colorWay[c][t]
         const h = '0' // degrees
         const s = '0%' // saturation
-        const l = Math.round((1 - q) * 100) + '%' // lightness
+        const l = Math.round((1 - colorq) * 100) + '%' // lightness
         style += 'background-color: hsl(' + h + ',' + s + ',' + l + ')";'
       }
 
