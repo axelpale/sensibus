@@ -92,7 +92,7 @@ module.exports = (state, dispatch) => {
         dispatch({
           type: 'EDIT_CELL',
           channel: c,
-          time: t
+          frame: t
         })
       })
 
