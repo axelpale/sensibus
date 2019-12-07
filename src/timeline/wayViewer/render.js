@@ -69,7 +69,7 @@ module.exports = (state, dispatch) => {
 
       const val = timeline.way[c][t]
 
-      if (val === null) {
+      if (val === 0) {
         cell.classList.add('cell-unknown')
         const pred = predict(state, c, t)
         if (pred.prob < 0.5) {

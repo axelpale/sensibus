@@ -59,15 +59,10 @@ h1 {
   left: 0;
   width: 4.2rem;
   height: 4.2rem;
-  background: url('img/spine-unknown.png') center repeat-y;
-}
-
-.cell.cell-event .cell-spine {
   background: url('img/spine.png') center repeat-y;
 }
 
 .cell.cell-unknown .cell-spine {
-  background: url('img/spine-unknown.png') center repeat-y;
   opacity: 0.4;
 }
 

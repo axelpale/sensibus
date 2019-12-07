@@ -12,7 +12,7 @@ module.exports = (state, dispatch, time) => {
     root.addEventListener('click', ev => {
       dispatch({
         type: 'OPEN_FRAME_TITLE_EDITOR',
-        time: time
+        frame: time
       })
     })
   } else {
