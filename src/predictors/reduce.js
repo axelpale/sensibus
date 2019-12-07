@@ -5,22 +5,37 @@ module.exports = (state, ev) => {
   if (!state.predictors) {
     state = Object.assign({}, state, {
       predictors: {
-        prediction: way.fill(state.timeline.way, 0)
+        prediction: way.fill(state.timeline.way, 0),
+        supports: []
       }
     })
   }
 
-  switch (ev.type) {
-    case 'EDIT_CELL': {
-      return Object.assign({}, state, {
-        predictors: Object.assign({}, state.predictors, {
-          prediction: way.fill(state.timeline.way, 0)
-        })
-      })
-    }
+  // Compute prediction
+  // TODO do not do at every event
 
-    default: {
-      return state
-    }
-  }
+  // For every channel c
+  // Find every event e in c
+  // Get hood of e
+  // Sum to get the support field
+  const w = state.timeline.way
+  const ctxLen = 5
+  const ctxWidth = way.width(w)
+
+  const supports = w.map((ch, c) => {
+    return ch.reduce((acc, q, t) => {
+      if (q === 1) {
+        const hood = way.sliceAround(w, ctxLen, t)
+        return way.add(acc, hood)
+      }
+      return acc
+    }, way.create(ctxWidth, ctxLen, 0))
+  })
+
+  return Object.assign({}, state, {
+    predictors: Object.assign({}, state.predictors, {
+      prediction: way.fill(state.timeline.way, 0),
+      supports: supports
+    })
+  })
 }
