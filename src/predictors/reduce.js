@@ -37,11 +37,20 @@ module.exports = (state, ev) => {
     return way.variance(sup)
   })
 
+  // Support deviation from local channel mean
+  const devs = supports.map(sup => {
+    const m = way.mean(sup)
+    return way.map(sup, (q, c) => {
+      return Math.abs(q - m[c])
+    })
+  })
+
   return Object.assign({}, state, {
     predictors: Object.assign({}, state.predictors, {
       prediction: way.fill(state.timeline.way, 0),
       supports: supports,
-      variances: vars
+      variances: vars,
+      deviationFields: devs
     })
   })
 }

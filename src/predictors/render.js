@@ -44,5 +44,16 @@ module.exports = (state, dispatch) => {
   })
   root.appendChild(varEl)
 
+  const devEl = document.createElement('div')
+  state.predictors.deviationFields.forEach((dev, c) => {
+    devEl.appendChild(renderWay(dev, {
+      reversed: true,
+      heading: 'Deviation for ' + channelTitle(state, c),
+      caption: '',
+      normalize: true
+    }))
+  })
+  root.appendChild(devEl)
+
   return root
 }
