@@ -25,7 +25,7 @@ module.exports = (state, dispatch) => {
 
     supEl.appendChild(renderWay(sup, {
       reversed: true,
-      heading: 'Support for ' + channelTitle(state, c),
+      heading: 'Support by ' + channelTitle(state, c),
       caption: '',
       normalize: true,
       selected: selected
