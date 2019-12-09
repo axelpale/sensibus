@@ -6,7 +6,7 @@ module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   const heading = document.createElement('h2')
-  heading.innerHTML = 'Prediction'
+  heading.innerHTML = 'Predictor'
   root.appendChild(heading)
 
   const predictorRenderer = predictorRenderers[state.predictors.selection]
