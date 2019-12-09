@@ -9,7 +9,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "deploy": "rsync --recursive ../drummer/ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
+    "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
     "start": "nodemon --watch src --watch local_modules --exec 'npm run build'",
     "lint": "standard 'src/**/*.js' && echo OK",
     "lintfix": "standard --fix 'src/**/*.js' && echo OK",
