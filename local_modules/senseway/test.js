@@ -335,6 +335,13 @@ test('reduce', (t) => {
   t.end()
 })
 
+test('remap', (t) => {
+  const w = [[-2, 4, 2]]
+  t.deepEqual(way.remap(w, 0, 3), [[0, 3, 2]])
+  t.deepEqual(way.remap(w, -1, 2), [[-1, 2, 1]])
+  t.end()
+})
+
 test('repeatAt', (t) => {
   t.deepEqual(way.repeatAt(V, 1), [
     [1, 0, 0, 1],

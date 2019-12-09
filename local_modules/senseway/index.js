@@ -313,6 +313,19 @@ exports.reduce = (way, iteratee, acc) => {
   }, acc)
 }
 
+exports.remap = (way, min, max) => {
+  // Scale values so that smallest becomes %min and largest becomes %max.
+  const minq = exports.min(way)
+  const maxq = exports.max(way)
+  if (minq === maxq) {
+    return exports.map(way, q => min)
+  }
+  // First to 0..1
+  const unit = exports.map(way, q => (q - minq) / (maxq - minq))
+  // Then to min..max
+  return exports.map(unit, q => (q * (max - min) + min))
+}
+
 exports.repeatAt = (way, t) => {
   // Repeat frame at
   const w = exports.clone(way)
