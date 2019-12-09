@@ -301,11 +301,8 @@ test('negate', (t) => {
 })
 
 test('normalize', (t) => {
-  t.deepEqual(way.normalize([
-    [-2, 0, 2]
-  ]), [
-    [0, 0.5, 1]
-  ])
+  t.deepEqual(way.normalize([[-2, 0, 2]]), [[-1, 0, 1]])
+  t.deepEqual(way.normalize([[2, 2, 2]]), [[1, 1, 1]])
   t.end()
 })
 
