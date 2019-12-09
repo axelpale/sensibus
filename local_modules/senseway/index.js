@@ -232,6 +232,7 @@ exports.len = (way) => {
 }
 
 exports.map = (way, fn) => {
+  // Element-wise map.
   return way.map((ch, c) => ch.map((q, t) => fn(q, c, t)))
 }
 
@@ -315,6 +316,7 @@ exports.padRight = (way, len, filler) => {
 }
 
 exports.reduce = (way, iteratee, acc) => {
+  // Reduce elements to a value.
   return way.reduce((ac, ch, c) => {
     return ch.reduce((a, q, t) => {
       return iteratee(a, q, c, t)
