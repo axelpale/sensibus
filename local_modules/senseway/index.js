@@ -425,6 +425,11 @@ exports.sumsAbs = (way) => {
   return way.map(ch => [ch.reduce((ac, q) => ac + Math.abs(q), 0)])
 }
 
+exports.sumsPos = (way) => {
+  // Sum positive values of elements in together per channel. Return way.
+  return way.map(ch => [ch.reduce((ac, q) => ac + (q < 0 ? 0 : q), 0)])
+}
+
 exports.toArray = (way) => {
   // Return an array of element objects.
   return way.reduce((acc, ch, c) => ch.reduce((ac, q, t) => {

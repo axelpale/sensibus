@@ -427,6 +427,11 @@ test('sumsAbs', (t) => {
   t.end()
 })
 
+test('sumsPos', (t) => {
+  t.deepEqual(way.sumsPos(UPDOWN), [[1], [1]])
+  t.end()
+})
+
 test('toArray', (t) => {
   t.deepEqual(way.toArray([[1, 1],[0, 1]]), [
     {
