@@ -5,5 +5,9 @@ module.exports = (state, dispatch) => {
   heading.innerHTML = 'Performance'
   root.appendChild(heading)
 
+  const score = document.createElement('p')
+  score.innerHTML = 'Score: ' + state.performance.score.toFixed(2)
+  root.appendChild(score)
+
   return root
 }
