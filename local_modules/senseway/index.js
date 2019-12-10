@@ -411,6 +411,7 @@ exports.sum = (way) => {
 }
 
 exports.toArray = (way) => {
+  // Return an array of element objects.
   return way.reduce((acc, ch, c) => ch.reduce((ac, q, t) => {
     ac.push({
       channel: c,
