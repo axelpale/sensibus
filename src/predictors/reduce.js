@@ -1,8 +1,5 @@
 const way = require('senseway')
-
-const predictors = {
-  ratePredictor: require('./ratePredictor/reduce')
-}
+const predictors = require('./index')
 
 module.exports = (state, ev) => {
   // Default
@@ -16,19 +13,20 @@ module.exports = (state, ev) => {
     })
   }
 
-  const pr = predictors[state.predictors.selection]
-  const oldPredictorState = state.predictors[state.predictors.selection]
+  const local = state.predictors
+
+  const pr = predictors.getCurrent(state).reduce
+  const oldPredictorState = local[local.selection]
   const nextPredictorState = pr(oldPredictorState, state.timeline.way, ev)
 
   if (nextPredictorState !== oldPredictorState) {
     // Copy probabilties from the local state to ease read for timeline render.
     const part = {}
-    part[state.predictors.selection] = nextPredictorState
+    part[local.selection] = nextPredictorState
     part.prediction = nextPredictorState.prediction
-    part.certainty = nextPredictorState.certainty
 
     return Object.assign({}, state, {
-      predictors: Object.assign({}, state.predictors, part)
+      predictors: Object.assign({}, local, part)
     })
   }
 

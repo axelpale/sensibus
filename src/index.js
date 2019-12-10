@@ -8,8 +8,8 @@ const renderers = [
 ]
 
 const reducers = [
-  require('./storage/reduce'),
   require('./timeline/reduce'),
+  require('./storage/reduce'),
   require('./predictors/reduce'),
   require('./performance/reduce')
 ]

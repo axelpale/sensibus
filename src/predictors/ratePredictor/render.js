@@ -11,12 +11,12 @@ module.exports = (state, dispatch) => {
     normalize: true
   }))
 
-  root.appendChild(renderWay(local.certs, {
-    reversed: true,
-    heading: 'Cer&shy;tain&shy;ty',
-    caption: '',
-    normalize: true
-  }))
+  // root.appendChild(renderWay(local.certs, {
+  //   reversed: true,
+  //   heading: 'Cer&shy;tain&shy;ty',
+  //   caption: '',
+  //   normalize: true
+  // }))
 
   return root
 }
