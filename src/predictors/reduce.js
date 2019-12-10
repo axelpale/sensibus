@@ -21,10 +21,11 @@ module.exports = (state, ev) => {
   const nextPredictorState = pr(oldPredictorState, state.timeline.way, ev)
 
   if (nextPredictorState !== oldPredictorState) {
-    // Copy prediction from the local state to ease read for timeline render.
+    // Copy probabilties from the local state to ease read for timeline render.
     const part = {}
     part[state.predictors.selection] = nextPredictorState
     part.prediction = nextPredictorState.prediction
+    part.certainty = nextPredictorState.certainty
 
     return Object.assign({}, state, {
       predictors: Object.assign({}, state.predictors, part)

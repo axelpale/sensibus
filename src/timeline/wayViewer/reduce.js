@@ -11,8 +11,10 @@ module.exports = (state, ev) => {
       const nextval = (() => {
         // If the cell is already selected, change the value
         if (sel && sel.channel === ev.channel && sel.frame === ev.frame) {
+          // Todo take prediction into account
           if (curval === 1) return 0
-          if (curval === 0) return 1
+          if (curval === 0) return -1
+          if (curval === -1) return 1
         } // else
         return curval
       })()

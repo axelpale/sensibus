@@ -22,7 +22,6 @@ const probToCircleRadius = (prob) => {
   // => r = sqrt(probArea / PI)
   // => r = sqrt(prob * PI / PI)
   // => r = sqrt(prob)
-
   return Math.sqrt(prob)
 }
 
@@ -67,26 +66,38 @@ module.exports = (state, dispatch) => {
       text.classList.add('cell-text')
       cell.appendChild(text)
 
-      const val = timeline.way[c][t]
+      const q = timeline.way[c][t]
 
-      if (val === 0) {
+      // Design rules:
+      // - known positive -> probability 1, certainty 1
+      // - known negative -> probability 0, certainty 1
+      // - predicted probability -> radius
+      // - prediction certainty -> opacity
+      //
+      // Problems:
+      // - highly uncertain look like known negative
+      // - high prediction certainty & prob looks like known positive
+      //
+      // Address problems with additional design:
+      // - unknown -> display prediction and certainty as text
+
+      let prob
+      let cert
+      if (q === 0) {
         cell.classList.add('cell-unknown')
-        const pred = state.predictors.prediction[c][t]
-        if (pred < 0.5) {
-          cell.classList.add('cell-improbable')
-        } else {
-          cell.classList.add('cell-probable')
-        }
-        text.innerHTML = '<span>' + Math.floor(100 * pred) + '%</span>'
-        icon.style.backgroundColor = color(state, c)
-        const scale = probToCircleRadius(pred)
-        icon.style.transform = 'scale(' + scale + ')'
+        prob = state.predictors.prediction[c][t]
+        cert = state.predictors.certainty[c][t]
+        const probHtml = Math.floor(100 * prob) + '%'
+        const certHtml = '.' + Math.round(cert * 100)
+        text.innerHTML = '' + probHtml + '<br>' + certHtml
       } else {
         cell.classList.add('cell-known')
-        icon.style.backgroundColor = color(state, c)
-        const scale = probToCircleRadius(val)
-        icon.style.transform = 'scale(' + scale + ')'
+        prob = q < 0 ? 0 : 1
+        cert = 1
       }
+      icon.style.backgroundColor = color(state, c)
+      icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
+      icon.style.opacity = cert.toFixed(2)
 
       cell.addEventListener('click', ev => {
         dispatch({
