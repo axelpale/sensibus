@@ -50,8 +50,8 @@ exports.create = (width, len, fill) => {
     throw new Error('Fill must be number')
   }
 
-  const channels = [];
-  let i, j, ch;
+  const channels = []
+  let i, j, ch
   for (i = 0; i < width; i += 1) {
     ch = [];
     for (j = 0; j < len; j += 1) {
