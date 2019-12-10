@@ -1,16 +1,15 @@
 const way = require('senseway')
 
 module.exports = (memory) => {
-  const sumsPos = way.sumsPos(memory)
-  const sumsAbs = way.sumsAbs(memory)
+  // Trit mean. A bit different from traditional mean where every value
+  // has equal weight. Trit mean can be viewed as a weighted average where
+  // weight of a trit equals its absolute value. Beautiful.
 
-  const probs = way.map2(sumsPos, sumsAbs, (a, b) => a / b)
-  const certs = way.map(sumsAbs, q => 1 - (1 / Math.sqrt(q)))
+  const sums = way.sums(memory)
+  const sumsAbs = way.sumsAbs(memory)
+  const channelMean = way.map2(sums, sumsAbs, (a, b) => a / b)
 
   return {
-    prediction: way.map(memory, (q, c) => probs[c][0]),
-    certainty: way.map(memory, (q, c) => certs[c][0]),
-    probs: probs,
-    certs: certs
+    prediction: way.map(memory, (q, c) => channelMean[c][0])
   }
 }

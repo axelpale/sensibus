@@ -82,22 +82,18 @@ module.exports = (state, dispatch) => {
       // - unknown -> display prediction and certainty as text
 
       let prob
-      let cert
       if (q === 0) {
         cell.classList.add('cell-unknown')
-        prob = state.predictors.prediction[c][t]
-        cert = state.predictors.certainty[c][t]
+        prob = (state.predictors.prediction[c][t] + 1) / 2
         const probHtml = Math.floor(100 * prob) + '%'
-        const certHtml = '.' + Math.round(cert * 100)
-        text.innerHTML = '' + probHtml + '<br>' + certHtml
+        text.innerHTML = '' + probHtml
+        icon.style.opacity = 0.5
       } else {
         cell.classList.add('cell-known')
         prob = q < 0 ? 0 : 1
-        cert = 1
       }
       icon.style.backgroundColor = color(state, c)
       icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
-      icon.style.opacity = cert.toFixed(2)
 
       cell.addEventListener('click', ev => {
         dispatch({
