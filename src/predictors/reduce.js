@@ -1,35 +1,36 @@
 const way = require('senseway')
-const predictors = require('./index')
+const collection = require('./collection')
 
 module.exports = (state, ev) => {
   // Default
   if (!state.predictors) {
     state = Object.assign({}, state, {
       predictors: {
-        selection: 'ratePredictor',
+        current: 'ratePredictor',
         prediction: way.fill(state.timeline.way, 0),
         ratePredictor: {}
       }
     })
   }
 
-  const local = state.predictors
+  const memory = state.timeline.way
+  const selection = state.predictors.selection
 
-  const pr = predictors.getCurrent(state).reduce
-  const oldPredictorState = local[local.selection]
-  const nextPredictorState = pr(oldPredictorState, state.timeline.way, ev)
+  const reducer = collection.getPredictor(selection).reduce
+  const oldPredictorState = state.predictors[selection]
+  const nextPredictorState = reducer(oldPredictorState, memory, ev)
 
   if (nextPredictorState !== oldPredictorState) {
     // Copy probabilties from the local state to ease read for timeline render.
-    const part = {}
-    part[local.selection] = nextPredictorState
-    part.prediction = nextPredictorState.prediction
+    const update = {}
+    update[selection] = nextPredictorState
+    update.prediction = nextPredictorState.prediction
 
     return Object.assign({}, state, {
-      predictors: Object.assign({}, local, part)
+      predictors: Object.assign({}, local, update)
     })
   }
 
-  // No changes
+  // Else no changes
   return state
 }

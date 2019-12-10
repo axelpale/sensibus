@@ -1,6 +1,4 @@
-const predictorRenderers = {
-  ratePredictor: require('./ratePredictor/render')
-}
+const collection = require('./collection')
 
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
@@ -9,8 +7,8 @@ module.exports = (state, dispatch) => {
   heading.innerHTML = 'Predictor'
   root.appendChild(heading)
 
-  const predictorRenderer = predictorRenderers[state.predictors.selection]
-  root.appendChild(predictorRenderer(state, dispatch))
+  const renderer = collection.getSelectedPredictor(state).render
+  root.appendChild(renderer(state, dispatch))
 
   return root
 }
