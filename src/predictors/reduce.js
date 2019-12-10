@@ -27,7 +27,7 @@ module.exports = (state, ev) => {
     update.prediction = nextPredictorState.prediction
 
     return Object.assign({}, state, {
-      predictors: Object.assign({}, local, update)
+      predictors: Object.assign({}, state.predictors, update)
     })
   }
 

@@ -1,5 +1,5 @@
 const way = require('senseway')
-const predictors = require('../predictors')
+const predictorCollection = require('../predictors/collection')
 
 module.exports = (state, ev) => {
   // Leave-one-out method:
@@ -15,7 +15,7 @@ module.exports = (state, ev) => {
   //     know -1, pred  0 => point  0
   //
   const mem = state.timeline.way
-  const predictor = predictors.getCurrent(state)
+  const predictor = predictorCollection.getSelectedPredictor(state)
 
   const testSets = way.toArray(mem).filter(elem => {
     return elem.value !== 0
