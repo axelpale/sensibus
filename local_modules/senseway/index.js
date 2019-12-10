@@ -279,12 +279,12 @@ exports.multiply = (wayA, wayB) => {
 }
 
 exports.negate = (way) => {
-  return way.map(ch => ch.map(q => 1 - q))
+  return way.map(ch => ch.map(q => -q))
 }
 
 exports.normalize = (way) => {
-  // Scale values within 0..1. For positive values only.
-  const maxq = exports.max(way)
+  // Scale values within -1..1
+  const maxq = Math.max(-exports.min(way), exports.max(way))
   return exports.map(way, q => q / maxq)
 }
 
@@ -426,7 +426,7 @@ exports.trim = (way, trimmee) => {
   // Remove leading and trailing frames whose cells only contain the trimmee.
   // For example way.trim(w, 1) trims:
   //   [[1, 0, 1],   to   [[0],
-  //    [1, 1, 1]]         [1]]
+  //    [1,-1, 1]]         [-1]]
   //
   trimmee = typeof trimmee === 'undefined' ? 0 : trimmee
 
