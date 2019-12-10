@@ -415,6 +415,18 @@ test('sumAbs', (t) => {
   t.end()
 })
 
+test('sums', (t) => {
+  t.deepEqual(way.sums(ONES), [[3], [3]])
+  t.deepEqual(way.sums(V), [[2], [1]])
+  t.deepEqual(way.sums(UPDOWN), [[0], [0]])
+  t.end()
+})
+
+test('sumsAbs', (t) => {
+  t.deepEqual(way.sumsAbs(UPDOWN), [[2], [2]])
+  t.end()
+})
+
 test('toArray', (t) => {
   t.deepEqual(way.toArray([[1, 1],[0, 1]]), [
     {

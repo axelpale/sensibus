@@ -415,6 +415,16 @@ exports.sumAbs = (way) => {
   return way.reduce((ac, ch) => ch.reduce((a, q) => a + Math.abs(q), ac), 0)
 }
 
+exports.sums = (way) => {
+  // Sum elements together per channel. Return way.
+  return way.map(ch => [ch.reduce((ac, q) => ac + q, 0)])
+}
+
+exports.sumsAbs = (way) => {
+  // Sum absolute values of elements in together per channel. Return way.
+  return way.map(ch => [ch.reduce((ac, q) => ac + Math.abs(q), 0)])
+}
+
 exports.toArray = (way) => {
   // Return an array of element objects.
   return way.reduce((acc, ch, c) => ch.reduce((ac, q, t) => {
