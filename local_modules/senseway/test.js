@@ -31,6 +31,10 @@ const SEQ = [
   [0, 1, 2],
   [3, 4, 5]
 ]
+const UPDOWN = [
+  [-1, 0, 1],
+  [1, 0, -1]
+]
 
 test('add', (t) => {
   t.deepEqual(way.add(W0, W1), [
@@ -294,8 +298,8 @@ test('multiply', (t) => {
 
 test('negate', (t) => {
   t.deepEqual(way.negate(V), [
-    [0, 1, 0],
-    [1, 0, 1]
+    [-1, 0, -1],
+    [0, -1, 0]
   ])
   t.end()
 })
@@ -403,6 +407,11 @@ test('sum', (t) => {
   t.equal(way.sum(ONES), 6)
   t.equal(way.sum(V), 3)
   t.equal(way.sum(ZEROS), 0)
+  t.end()
+})
+
+test('sumAbs', (t) => {
+  t.equal(way.sumAbs(UPDOWN), 4)
   t.end()
 })
 

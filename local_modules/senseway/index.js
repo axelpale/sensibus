@@ -410,6 +410,11 @@ exports.sum = (way) => {
   return way.reduce((acc, ch) => ch.reduce((ac, q) => ac + q, acc), 0)
 }
 
+exports.sumAbs = (way) => {
+  // Sum absolute values of elements together.
+  return way.reduce((ac, ch) => ch.reduce((a, q) => a + Math.abs(q), ac), 0)
+}
+
 exports.toArray = (way) => {
   // Return an array of element objects.
   return way.reduce((acc, ch, c) => ch.reduce((ac, q, t) => {
