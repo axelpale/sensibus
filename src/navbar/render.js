@@ -2,19 +2,22 @@ const download = require('./download')
 const template = require('./template.ejs')
 require('./custom.css')
 
+const listenId = (elemId, evName, handler) => {
+  const el = document.getElementById(elemId)
+  el.addEventListener(evName, handler)
+}
+
 module.exports = (state, dispatch) => {
   const root = document.getElementById('nav-container')
   root.innerHTML = template({})
 
-  const createBtn = document.getElementById('file-new')
-  createBtn.addEventListener('click', ev => {
+  listenId('file-new', 'click', ev => {
     dispatch({
       type: 'RESET_STATE'
     })
   })
 
-  const saveBtn = document.getElementById('file-save')
-  saveBtn.addEventListener('click', ev => {
+  listenId('file-save', 'click', ev => {
     // Click to download
     const ex = state
     download('sensibus-backup.json', JSON.stringify(ex, null, 2))
@@ -33,4 +36,16 @@ module.exports = (state, dispatch) => {
     }
     reader.readAsText(selectedFile, 'UTF-8')
   }, false)
+
+  listenId('edit-addchannel', 'click', ev => {
+    dispatch({
+      type: 'CREATE_CHANNEL'
+    })
+  })
+
+  listenId('edit-addframe', 'click', ev => {
+    dispatch({
+      type: 'CREATE_FRAME'
+    })
+  })
 }
