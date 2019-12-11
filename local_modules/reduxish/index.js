@@ -32,7 +32,10 @@ module.exports = (opts) => {
     clearElem(container)
 
     opts.renderers.forEach(createElemFn => {
-      container.appendChild(createElemFn(model, dispatch))
+      const maybeElem = createElemFn(model, dispatch)
+      if (maybeElem) {
+        container.appendChild(maybeElem)
+      }
     })
   }
 
