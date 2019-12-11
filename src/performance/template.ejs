@@ -1,0 +1,34 @@
+<div class="row">
+  <div class="col-md">
+    <h2>Performance</h2>
+
+    <table class="table table-sm">
+      <tbody>
+        <tr>
+          <th scope="row">Number of tests</th>
+          <td><%= numTrainingSets %></td>
+        </tr>
+        <tr>
+          <th scope="row">True positives</th>
+          <td><%= truePos.toFixed(2) %></td>
+        </tr>
+        <tr>
+          <th scope="row">True negatives</th>
+          <td><%= trueNeg.toFixed(2) %></td>
+        </tr>
+        <tr>
+          <th scope="row">False positives</th>
+          <td><%= falsePos.toFixed(2) %></td>
+        </tr>
+        <tr>
+          <th scope="row">False negatives</th>
+          <td><%= falseNeg.toFixed(2) %></td>
+        </tr>
+        <tr>
+          <th scope="row">Avg. Score</th>
+          <td><%= score.toFixed(2) %></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
