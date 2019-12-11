@@ -48,4 +48,10 @@ module.exports = (state, dispatch) => {
       type: 'CREATE_FRAME'
     })
   })
+
+  listenId('edit-selectnone', 'click', ev => {
+    dispatch({
+      type: 'SELECT_NONE'
+    })
+  })
 }

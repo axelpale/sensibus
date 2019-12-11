@@ -35,6 +35,14 @@ const reducer = (state, ev) => {
       })
     }
 
+    case 'SELECT_NONE': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: null
+        })
+      })
+    }
+
     default: {
       return state
     }
