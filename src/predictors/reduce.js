@@ -4,12 +4,13 @@ const collection = require('./collection')
 
 const delegate = (state, ev) => {
   // Delegate event to the selected predictor.
+  // Create a state branch for the selector if one does not yet exist.
   //
   const memory = state.timeline.way
   const selection = state.predictors.selection
 
   const reducer = collection.getPredictor(selection).reduce
-  const oldPredictorState = state.predictors[selection]
+  const oldPredictorState = state.predictors[selection] || {}
   const nextPredictorState = reducer(oldPredictorState, memory, ev)
 
   if (nextPredictorState !== oldPredictorState) {
@@ -32,9 +33,8 @@ module.exports = (state, ev) => {
   if (!state.predictors) {
     state = Object.assign({}, state, {
       predictors: {
-        current: 'ratePredictor',
-        prediction: way.fill(state.timeline.way, 0),
-        ratePredictor: {}
+        selection: collection.DEFAULT_PREDICTOR,
+        prediction: way.fill(state.timeline.way, 0)
       }
     })
   }

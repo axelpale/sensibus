@@ -1,5 +1,7 @@
+exports.DEFAULT_PREDICTOR = 'channelMean'
+
 exports.predictors = {
-  ratePredictor: require('./ratePredictor')
+  channelMean: require('./channelMean')
 }
 
 exports.getPredictor = (predictorName) => {
