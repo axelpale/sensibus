@@ -1,12 +1,12 @@
-const rowTitle = require('./rowTitle')
-
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   const row = document.createElement('div')
   row.classList.add('timeline-row')
 
-  row.appendChild(rowTitle(state, dispatch))
+  const rowTitle = document.createElement('div')
+  rowTitle.classList.add('timeline-row-title')
+  row.appendChild(rowTitle)
 
   const cells = document.createElement('div')
   cells.classList.add('cells')
