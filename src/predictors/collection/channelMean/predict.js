@@ -7,7 +7,9 @@ module.exports = (memory) => {
 
   const sums = way.sums(memory)
   const sumsAbs = way.sumsAbs(memory)
-  const channelMean = way.map2(sums, sumsAbs, (a, b) => a / b)
+  const channelMean = way.map2(sums, sumsAbs, (a, b) => {
+    return b > 0 ? a / b : 0
+  })
 
   return {
     prediction: way.map(memory, (q, c) => channelMean[c][0])
