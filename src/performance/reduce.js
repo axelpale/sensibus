@@ -2,7 +2,7 @@ const way = require('senseway')
 const predictorCollection = require('../predictors/collection')
 
 module.exports = (state, ev) => {
-  // Leave-one-out method:
+  // Leave-one-out cross-validation:
   // For each known value
   //   clone the memory but set the known value to 0
   //   make prediction
@@ -17,7 +17,7 @@ module.exports = (state, ev) => {
   const mem = state.timeline.way
   const predictor = predictorCollection.getSelectedPredictor(state)
 
-  const testSets = way.toArray(mem).filter(elem => {
+  const trainingSets = way.toArray(mem).filter(elem => {
     return elem.value !== 0
   }).map(knownElem => {
     return {
@@ -26,16 +26,32 @@ module.exports = (state, ev) => {
     }
   })
 
-  const scoreSum = testSets.reduce((acc, testSet) => {
-    const results = predictor.predict(testSet.memory)
-    const c = testSet.target.channel
-    const t = testSet.target.time
-    return acc + results.prediction[c][t] * testSet.target.value
-  }, 0)
+  const results = trainingSets.reduce((acc, trainingSet) => {
+    const results = predictor.predict(trainingSet.memory)
+    const c = trainingSet.target.channel
+    const t = trainingSet.target.time
+
+    const pred = results.prediction[c][t]
+    const corr = trainingSet.target.value
+    const score = pred * corr
+
+    acc.truePos += (pred > 0 && corr > 0) ? score : 0
+    acc.trueNeg += (pred < 0 && corr < 0) ? score : 0
+    acc.falsePos += (pred > 0 && corr < 0) ? -score : 0
+    acc.falseNeg += (pred < 0 && corr > 0) ? -score : 0
+    acc.score += score / trainingSets.length
+
+    return acc
+  }, {
+    numTrainingSets: trainingSets.length,
+    truePos: 0,
+    trueNeg: 0,
+    falsePos: 0,
+    falseNeg: 0,
+    score: 0
+  })
 
   return Object.assign({}, state, {
-    performance: {
-      score: scoreSum
-    }
+    performance: results
   })
 }
