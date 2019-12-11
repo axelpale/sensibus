@@ -1,0 +1,37 @@
+.custom-file-button {
+  position: relative;
+  display: block;
+}
+
+.custom-file-button:hover {
+  background: #f8f9fa;
+}
+
+.custom-file-button input {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  height: calc(1.5em + .5rem);
+  margin: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.custom-file-button label {
+  position: absolute;
+  top: 0;
+  right: 0;
+  left: 0;
+  z-index: 1;
+
+  width: 100%;
+  padding: .25rem 1.5rem;
+  margin: 0;
+  clear: both;
+  font-weight: 400;
+  color: #212529;
+  text-align: inherit;
+  white-space: nowrap;
+  background-color: transparent;
+  border: 0;
+}

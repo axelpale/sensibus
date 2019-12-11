@@ -4,7 +4,7 @@ module.exports = (state, dispatch, time) => {
   const timeline = state.timeline
 
   const root = document.createElement('div')
-  root.classList.add('row-title')
+  root.classList.add('timeline-row-title')
 
   if (timeline.frameOnEdit !== time) {
     root.innerHTML = timeline.frames[time].title

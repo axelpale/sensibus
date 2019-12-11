@@ -1,6 +1,6 @@
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
-  root.classList.add('row-title')
+  root.classList.add('timeline-row-title')
 
   const fram = document.createElement('div')
   fram.classList.add('create-frame')

@@ -1,7 +1,7 @@
 const reduxish = require('reduxish')
 
 const renderers = [
-  require('./storage/render'),
+  require('./navbar/render'),
   require('./timeline/render'),
   require('./predictors/render'),
   require('./performance/render')
@@ -9,14 +9,14 @@ const renderers = [
 
 const reducers = [
   require('./timeline/reduce'),
-  require('./storage/reduce'),
+  require('./navbar/reduce'),
   require('./predictors/reduce'),
   require('./performance/reduce')
 ]
 
 reduxish({
   storageName: 'sensibus-state',
-  rootElementId: 'content',
+  rootElementId: 'container',
   renderers: renderers,
   reducers: reducers
 })

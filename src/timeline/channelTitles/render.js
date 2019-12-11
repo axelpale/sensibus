@@ -4,7 +4,7 @@ module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   const row = document.createElement('div')
-  row.classList.add('row')
+  row.classList.add('timeline-row')
 
   row.appendChild(rowTitle(state, dispatch))
 

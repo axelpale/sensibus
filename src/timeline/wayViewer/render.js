@@ -36,7 +36,7 @@ module.exports = (state, dispatch) => {
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
     const row = document.createElement('div')
-    row.classList.add('row')
+    row.classList.add('timeline-row')
     root.appendChild(row)
 
     row.appendChild(frameTitle(state, dispatch, t))

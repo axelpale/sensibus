@@ -1,28 +1,11 @@
-.container {
-  font-family: Palatino, serif;
-}
-
-h1 {
-  font-size: 4.2rem;
-}
-
-.row {
+.timeline-row {
   text-align: center;
   height: 4.2rem;
   margin: 0;
   padding: 0;
 }
 
-.row-future h1 {
-  margin: 1em 0 0.3em 0;
-  line-height: 1;
-}
-.row-past h1 {
-  margin: 1em 0 0.3em 0;
-  line-height: 1;
-}
-
-.row .row-title {
+.timeline-row .timeline-row-title {
   display: inline-block;
   position: relative;
   top: -1.8em;
