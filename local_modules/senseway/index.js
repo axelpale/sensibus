@@ -405,6 +405,13 @@ exports.sliceAround = (way, sliceLen, time) => {
   return exports.slice(way, begin, end)
 }
 
+exports.slices = (way, sliceLen, timeOffset) => {
+  // TODO optimize to avoid calling slice
+  return way[0].map((q, t) => {
+    return exports.slice(way, t + timeOffset, t + timeOffset + sliceLen)
+  })
+}
+
 exports.sum = (way) => {
   // Sum elements together.
   return way.reduce((acc, ch) => ch.reduce((ac, q) => ac + q, acc), 0)
