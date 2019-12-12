@@ -172,9 +172,11 @@ exports.html = (way, opts) => {
 
       if (typeof q === 'number') {
         const colorq = colorWay[c][t]
-        const h = '0' // degrees
-        const s = '0%' // saturation
-        const l = Math.round((1 - colorq) * 100) + '%' // lightness
+        const h = colorq < 0 ? '180' : '0' // degrees
+        // Saturation
+        const s = '100%'
+        // Lightness
+        const l = Math.round(50 + (1 - Math.abs(colorq)) * 50) + '%'
         style += 'background-color: hsl(' + h + ',' + s + ',' + l + ')";'
       }
 
