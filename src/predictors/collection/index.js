@@ -5,7 +5,11 @@ exports.predictors = {
 }
 
 exports.getPredictor = (predictorName) => {
-  return exports.predictors[predictorName]
+  const p = exports.predictors[predictorName]
+  if (p) {
+    return p
+  }
+  return exports.predictors[exports.DEFAULT_PREDICTOR]
 }
 
 exports.getSelectedPredictor = (state) => {
