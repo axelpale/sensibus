@@ -1,7 +1,8 @@
 exports.DEFAULT_PREDICTOR = 'channelMean'
 
 exports.predictors = {
-  channelMean: require('./channelMean')
+  channelMean: require('./channelMean'),
+  firstOrder: require('./firstOrder')
 }
 
 exports.getPredictor = (predictorName) => {
