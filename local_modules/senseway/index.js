@@ -154,7 +154,7 @@ exports.html = (way, opts) => {
   str += '>' + heading + '</div>'
 
   for (let t = tbegin; (rev ? t > tend : t < tend); t += dt) {
-    str += '<div class="way-frame" style="display:flex">'
+    str += '<div class="way-frame" style="height:1em">'
     for (let c = 0; c < width; c += 1) {
       const q = way[c][t]
       str += '<div '
@@ -168,7 +168,7 @@ exports.html = (way, opts) => {
       str += 'data-channel="' + c + '" '
       str += 'data-time="' + t + '" '
 
-      let style = 'flex:1;width:1em;height:1em;'
+      let style = 'display:inline-block;width:1em;height:1em;'
 
       if (typeof q === 'number') {
         const colorq = colorWay[c][t]
