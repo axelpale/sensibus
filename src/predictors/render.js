@@ -3,15 +3,20 @@ const predictorSelector = require('./predictorSelector/render')
 
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
+  root.classList.add('row')
+  const col = document.createElement('div')
+  col.classList.add('col-md')
 
   const heading = document.createElement('h2')
   heading.innerHTML = 'Predictor'
-  root.appendChild(heading)
+  col.appendChild(heading)
 
-  root.appendChild(predictorSelector(state, dispatch))
+  col.appendChild(predictorSelector(state, dispatch))
 
   const renderer = collection.getSelectedPredictor(state).render
-  root.appendChild(renderer(state, dispatch))
+  col.appendChild(renderer(state, dispatch))
+
+  root.appendChild(col)
 
   return root
 }
