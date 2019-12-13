@@ -50,6 +50,8 @@ module.exports = (state, ev) => {
     case 'CREATE_FRAME':
     case 'MOVE_FRAME':
     case 'REMOVE_FRAME':
+    case 'IMPORT_STATE':
+    case 'RESET_STATE':
       return delegate(state, ev)
 
     default:
