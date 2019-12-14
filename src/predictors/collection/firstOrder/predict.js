@@ -8,13 +8,13 @@ module.exports = (local, memory) => {
   // - Position average neighborhoods on the context.
   // - Combine average neighborhoods to yield prediction for the cell.
   //
-  const fieldLen = 5
+  const fieldLen = local.fieldLength
   const fieldWidth = way.width(memory)
 
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
-  const fieldOffset = -fieldLen + 2
+  const fieldOffset = local.fieldOffset
   const slices = way.slices(memory, fieldLen, fieldOffset)
 
   // Build value and mass fields by going through each slice.
@@ -101,7 +101,6 @@ module.exports = (local, memory) => {
 
   return {
     prediction: predictedMemory,
-    fields: fields,
-    fieldOffset: fieldOffset
+    fields: fields
   }
 }

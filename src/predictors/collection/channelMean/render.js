@@ -1,6 +1,6 @@
 // const renderWay = require('../../lib/renderWay')
 
-module.exports = (state, dispatch) => {
+module.exports = (state, local, dispatch) => {
   // const local = state.predictors.ratePredictor
   const root = document.createElement('div')
 

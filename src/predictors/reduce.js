@@ -10,7 +10,7 @@ const delegate = (state, ev) => {
   const selection = state.predictors.selection
 
   const reducer = collection.getPredictor(selection).reduce
-  const oldPredictorState = state.predictors[selection] || {}
+  const oldPredictorState = state.predictors[selection] // can be undefined
   const nextPredictorState = reducer(oldPredictorState, memory, ev)
 
   if (nextPredictorState !== oldPredictorState) {
@@ -39,22 +39,9 @@ module.exports = (state, ev) => {
     })
   }
 
+  // Call selector reducer and then predictor reducer
   state = predictorSelector(state, ev)
+  state = delegate(state, ev)
 
-  switch (ev.type) {
-    case '__INIT__':
-    case 'EDIT_CELL':
-    case 'CREATE_CHANNEL':
-    case 'MOVE_CHANNEL':
-    case 'REMOVE_CHANNEL':
-    case 'CREATE_FRAME':
-    case 'MOVE_FRAME':
-    case 'REMOVE_FRAME':
-    case 'IMPORT_STATE':
-    case 'RESET_STATE':
-      return delegate(state, ev)
-
-    default:
-      return state
-  }
+  return state
 }

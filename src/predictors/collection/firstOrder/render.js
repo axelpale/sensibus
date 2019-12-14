@@ -1,10 +1,15 @@
 const way = require('senseway')
+const renderControls = require('./controls/render')
 const renderWay = require('../../../lib/renderWay')
 const channelTitle = require('../../../lib/channelTitle')
 
-module.exports = (state, dispatch) => {
-  const local = state.predictors.firstOrder // TODO no literal names
+module.exports = (state, local, dispatch) => {
   const root = document.createElement('div')
+
+  // Controls
+  root.appendChild(renderControls(state, local, dispatch))
+
+  // Inspection
 
   const sumEl = document.createElement('div')
   local.fields.forEach((field, c) => {

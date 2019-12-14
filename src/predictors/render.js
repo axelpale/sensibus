@@ -14,7 +14,8 @@ module.exports = (state, dispatch) => {
   col.appendChild(predictorSelector(state, dispatch))
 
   const renderer = collection.getSelectedPredictor(state).render
-  col.appendChild(renderer(state, dispatch))
+  const local = collection.getSelectedLocalState(state)
+  col.appendChild(renderer(state, local, dispatch))
 
   root.appendChild(col)
 
