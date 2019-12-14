@@ -36,27 +36,20 @@ module.exports = (state, dispatch) => {
   })
   root.appendChild(sumAbsEl)
 
-  // const varEl = document.createElement('div')
-  // local.variances.forEach((sup, c) => {
-  //   varEl.appendChild(renderWay(sup, {
-  //     reversed: true,
-  //     heading: 'Variance for ' + channelTitle(state, c),
-  //     caption: '',
-  //     normalize: true
-  //   }))
-  // })
-  // root.appendChild(varEl)
-  //
-  // const devEl = document.createElement('div')
-  // local.deviationFields.forEach((dev, c) => {
-  //   devEl.appendChild(renderWay(dev, {
-  //     reversed: true,
-  //     heading: 'Deviation for ' + channelTitle(state, c),
-  //     caption: '',
-  //     normalize: true
-  //   }))
-  // })
-  // root.appendChild(devEl)
+  const valueEl = document.createElement('div')
+  local.fields.forEach((field, c) => {
+    const valueField = field.valueField
+    const selected = way.set(way.fill(valueField, 0), c, -local.fieldOffset, 1)
+
+    valueEl.appendChild(renderWay(valueField, {
+      reversed: true,
+      heading: 'Value by ' + channelTitle(state, c),
+      caption: '',
+      normalize: true,
+      selected: selected
+    }))
+  })
+  root.appendChild(valueEl)
 
   return root
 }

@@ -63,23 +63,25 @@ module.exports = (memory) => {
     const begin = unknownCell.time - fieldLen + fieldOffset - 1
     const end = unknownCell.time + fieldOffset - 1
     const context = way.slice(memory, begin, end)
+
     const valueField = fields[unknownCell.channel].valueField
     const sumAbsField = fields[unknownCell.channel].sumAbsField
-    const matches = way.multiply(context, valueField)
+    const matches = way.multiply(context, valueField) // support for hypo u=1
     const weightField = way.map(sumAbsField, massToWeight)
-    const weightedSum = way.reduce(matches, (acc, match, c, t) => {
+
+    const weightedMatchSum = way.reduce(matches, (acc, match, c, t) => {
       return acc + match * weightField[c][t]
     }, 0)
-    const weightSum = way.reduce(context, (acc, q, c, t) => {
-      // Zero field weights from unknown memories
-      return acc + Math.abs(q) * weightField[c][t]
+    const weightedAbsMatchSum = way.reduce(matches, (acc, match, c, t) => {
+      return acc + Math.abs(match) * weightField[c][t]
     }, 0)
-    const weightedAvg = weightedSum / weightSum
+    const weightedAvg = weightedMatchSum / weightedAbsMatchSum
+
     return {
       unknownCell: unknownCell,
       weightedAvg: weightedAvg, // prediction
       mass: way.sum(sumAbsField), // sample size
-      weight: weightSum
+      weight: weightedAbsMatchSum
     }
   })
 
