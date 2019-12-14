@@ -16,6 +16,7 @@ module.exports = (state, ev) => {
   //
   const mem = state.timeline.way
   const predictor = predictorCollection.getSelectedPredictor(state)
+  const predictorState = predictorCollection.getSelectedLocalState(state)
 
   const trainingSets = way.toArray(mem).filter(elem => {
     return elem.value !== 0
@@ -27,7 +28,7 @@ module.exports = (state, ev) => {
   })
 
   const results = trainingSets.reduce((acc, trainingSet) => {
-    const results = predictor.predict(trainingSet.memory)
+    const results = predictor.predict(predictorState, trainingSet.memory)
     const c = trainingSet.target.channel
     const t = trainingSet.target.time
 

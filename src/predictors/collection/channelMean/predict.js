@@ -1,6 +1,6 @@
 const way = require('senseway')
 
-module.exports = (memory) => {
+module.exports = (local, memory) => {
   // Trit mean. A bit different from traditional mean where every value
   // has equal weight. Trit mean can be viewed as a weighted average where
   // weight of a trit equals its absolute value. Beautiful.

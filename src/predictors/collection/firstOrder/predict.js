@@ -1,6 +1,6 @@
 const way = require('senseway')
 
-module.exports = (memory) => {
+module.exports = (local, memory) => {
   // Overview:
   // - Compute average neighborhood for every channel.
   // - Find unknown cells.
