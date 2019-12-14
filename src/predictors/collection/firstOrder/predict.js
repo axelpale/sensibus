@@ -14,7 +14,7 @@ module.exports = (memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
-  const fieldOffset = -1
+  const fieldOffset = -fieldLen + 2
   const slices = way.slices(memory, fieldLen, fieldOffset)
 
   // Build value and mass fields by going through each slice.
@@ -26,7 +26,7 @@ module.exports = (memory) => {
     }
   })
   const fields = slices.reduce((acc, slice) => {
-    return acc.map((vs, c) => {
+    const sumPairs = acc.map((vs, c) => {
       const source = slice[c][-fieldOffset]
       // OPTIMIZE if source == 0 then return vs
       const multiplied = way.map(slice, q => q * source)
@@ -37,27 +37,62 @@ module.exports = (memory) => {
         sumAbsField: way.add(vs.sumAbsField, absolute)
       }
     })
+    const sumsWithValue = sumPairs.map(sumPair => {
+      return Object.assign(sumPair, {
+        valueField: way.map2(sumPair.sumField, sumPair.sumAbsField, (a, b) => {
+          return (b > 0) ? a / b : 0
+        })
+      })
+    })
+    return sumsWithValue
   }, accInit)
 
   // TODO make auto sums unknown
 
-  // // Predict unknowns using the fields.
-  // const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
-  // const x = unknows.map(cell => {
-  //   const begin = cell.time - fieldLen + fieldOffset
-  //   const end = cell.time + fieldOffset
-  //   const context = way.slice(memory, begin, end)
-  //   way.reduce(context, (acc, q, c, t) => {
-  //     fields[c] ...
-  //   })
-  // })
+  const r = 0.5
+  const massToWeight = n => r * n ** r - r + 1
+  // const massToWeight = n => 1
 
-  // Simpler approach: fiels look mostly back.
+  // Predict unknowns using the fields.
+  // Simple approach: fiels look mostly back.
   // Use single field to check how much it agrees with context.
-  // Possibly simple multiplication is wat we need.
+  // Simple multiply-accumulate is what we need.
+  // Weight via massToWeight
+  const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
+  const predicted = unknowns.map(unknownCell => {
+    const begin = unknownCell.time - fieldLen + fieldOffset - 1
+    const end = unknownCell.time + fieldOffset - 1
+    const context = way.slice(memory, begin, end)
+    const valueField = fields[unknownCell.channel].valueField
+    const sumAbsField = fields[unknownCell.channel].sumAbsField
+    const matches = way.multiply(context, valueField)
+    const weightField = way.map(sumAbsField, massToWeight)
+    const weightedSum = way.reduce(matches, (acc, match, c, t) => {
+      return acc + match * weightField[c][t]
+    }, 0)
+    const weightSum = way.reduce(context, (acc, q, c, t) => {
+      // Zero field weights from unknown memories
+      return acc + Math.abs(q) * weightField[c][t]
+    }, 0)
+    const weightedAvg = weightedSum / weightSum
+    return {
+      unknownCell: unknownCell,
+      weightedAvg: weightedAvg, // prediction
+      mass: way.sum(sumAbsField), // sample size
+      weight: weightSum
+    }
+  })
+
+  // Lay predictions on a memory-shaped way
+  const predictedMemory = predicted.reduce((mem, pred) => {
+    const c = pred.unknownCell.channel
+    const t = pred.unknownCell.time
+    mem[c][t] = pred.weightedAvg
+    return mem
+  }, way.map(memory, q => 0))
 
   return {
-    prediction: way.map(memory, q => 0),
+    prediction: predictedMemory,
     fields: fields,
     fieldOffset: fieldOffset
   }
