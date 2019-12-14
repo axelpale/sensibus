@@ -60,8 +60,12 @@ module.exports = (memory) => {
   // Weight via massToWeight
   const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
   const predicted = unknowns.map(unknownCell => {
-    const begin = unknownCell.time - fieldLen + fieldOffset - 1
-    const end = unknownCell.time + fieldOffset - 1
+    // Find the context ie surroundings of the unknown cell.
+    // An example for correct slice positioning:
+    //   let fieldLen = 3 and fieldOffset = -1 and u.time = 0.
+    //   We expect the context begin at time = -1 and end at time = 2.
+    const begin = unknownCell.time + fieldOffset
+    const end = unknownCell.time + fieldOffset + fieldLen
     const context = way.slice(memory, begin, end)
 
     const valueField = fields[unknownCell.channel].valueField
@@ -75,13 +79,15 @@ module.exports = (memory) => {
     const weightedAbsMatchSum = way.reduce(matches, (acc, match, c, t) => {
       return acc + Math.abs(match) * weightField[c][t]
     }, 0)
-    const weightedAvg = weightedMatchSum / weightedAbsMatchSum
+    const weightedAvg = (weightedAbsMatchSum > 0
+      ? weightedMatchSum / weightedAbsMatchSum : 0)
 
     return {
       unknownCell: unknownCell,
       weightedAvg: weightedAvg, // prediction
       mass: way.sum(sumAbsField), // sample size
-      weight: weightedAbsMatchSum
+      weightedSum: weightedMatchSum,
+      weightedSumAbs: weightedAbsMatchSum
     }
   })
 
