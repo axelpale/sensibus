@@ -70,15 +70,16 @@ module.exports = (local, memory) => {
 
     const valueField = fields[unknownCell.channel].valueField
     const sumAbsField = fields[unknownCell.channel].sumAbsField
-    const matches = way.multiply(context, valueField) // support for hypo u=1
     const weightField = way.map(sumAbsField, massToWeight)
 
+    const matches = way.multiply(context, valueField) // support for hypo u=1
     const weightedMatchSum = way.reduce(matches, (acc, match, c, t) => {
       return acc + match * weightField[c][t]
     }, 0)
     const weightedAbsMatchSum = way.reduce(matches, (acc, match, c, t) => {
       return acc + Math.abs(match) * weightField[c][t]
     }, 0)
+
     const weightedAvg = (weightedAbsMatchSum > 0
       ? weightedMatchSum / weightedAbsMatchSum : 0)
 
