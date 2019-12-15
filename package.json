@@ -10,7 +10,7 @@
   "scripts": {
     "build": "webpack",
     "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
-    "watchbuild": "nodemon --watch src --watch local_modules --ext js,ejs,css --exec 'npm run lint && npm run build'",
+    "watchbuild": "nodemon --watch src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
     "lint": "standard 'src/**/*.js' && echo OK",
     "lintfix": "standard --fix 'src/**/*.js' && echo OK",
     "test": "npm run lint"
