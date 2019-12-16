@@ -25,8 +25,9 @@ module.exports = (local, memory) => {
       sumAbsField: way.create(fieldWidth, fieldLen, 0)
     }
   })
-  const fields = slices.reduce((acc, slice) => {
-    const sumPairs = acc.map((vs, c) => {
+  const sumPairs = slices.reduce((acc, slice) => {
+    return acc.map((vs, c) => {
+      // Source, the conditioning cell for the correlations are computed.
       const source = slice[c][-fieldOffset]
       // OPTIMIZE if source == 0 then return vs
       const multiplied = way.map(slice, q => q * source)
@@ -37,15 +38,16 @@ module.exports = (local, memory) => {
         sumAbsField: way.add(vs.sumAbsField, absolute)
       }
     })
-    const sumsWithValue = sumPairs.map(sumPair => {
-      return Object.assign(sumPair, {
-        valueField: way.map2(sumPair.sumField, sumPair.sumAbsField, (a, b) => {
-          return (b > 0) ? a / b : 0
-        })
+  }, accInit)
+
+  // Compute value from sums.
+  const fields = sumPairs.map(sumPair => {
+    return Object.assign(sumPair, {
+      valueField: way.map2(sumPair.sumField, sumPair.sumAbsField, (a, b) => {
+        return (b > 0) ? a / b : 0
       })
     })
-    return sumsWithValue
-  }, accInit)
+  })
 
   const r = local.weightFactor
   const massToWeight = n => r * n ** r - r + 1
