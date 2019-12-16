@@ -2,6 +2,7 @@ exports.DEFAULT_PREDICTOR = 'channelMean'
 
 exports.predictors = {
   channelMean: require('./channelMean'),
+  naiveCorrelator: require('./naiveCorrelator'),
   firstOrder: require('./firstOrder')
 }
 
