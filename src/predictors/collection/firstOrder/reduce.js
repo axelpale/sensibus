@@ -7,8 +7,7 @@ module.exports = (local, memory, ev) => {
   if (!local) {
     local = {
       fieldLength: 5,
-      fieldOffset: -3,
-      weightFactor: 0.5
+      fieldOffset: -3
     }
   }
 
@@ -22,12 +21,6 @@ module.exports = (local, memory, ev) => {
     case 'SELECT_FIELD_OFFSET':
       local = Object.assign({}, local, {
         fieldOffset: ev.offset
-      })
-      return Object.assign({}, local, predict(local, memory))
-
-    case 'SELECT_WEIGHT_FACTOR':
-      local = Object.assign({}, local, {
-        weightFactor: ev.factor
       })
       return Object.assign({}, local, predict(local, memory))
 

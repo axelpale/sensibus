@@ -24,17 +24,4 @@
       <% }) %>
     </select>
   </div>
-
-  <div class="form-group">
-    <label for="weight-factor">Weight factor</label>
-    <select class="form-control" id="weight-factor">
-      <% weightFactors.forEach(factor => { %>
-        <% if (factor === currentWeightFactor) { %>
-          <option value="<%= factor %>" selected="selected"><%= factor %></option>
-        <% } else { %>
-          <option value="<%= factor %>"><%= factor %></option>
-        <% } %>
-      <% }) %>
-    </select>
-  </div>
 </form>
