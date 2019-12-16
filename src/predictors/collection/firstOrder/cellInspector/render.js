@@ -27,22 +27,33 @@ module.exports = (state, local, dispatch) => {
     predictedValue: predictedCell ? predictedCell.avg.toFixed(2) : 'N/A'
   })
 
-  // A unknown cell is selected. Show how we predict its value.
   if (predictedCell) {
+    // A unknown cell is selected. Show how we predict its value.
     const c = predictedCell.unknownCell.channel
-    const contextHtml = [predictedCell.context].map(ctx => {
-      const selected = way.set(way.fill(ctx, 0), c, -local.fieldOffset, 1)
-      return '<div class="way-container">' + way.html(ctx, {
-        reversed: true,
-        heading: 'Context',
-        caption: '',
-        normalize: true,
-        selected: selected
-      }) + '</div>'
-    })[0]
+
+    const ctx = predictedCell.context
+    const selected = way.set(way.fill(ctx, 0), c, -local.fieldOffset, 1)
+
+    const contextHtml = '<div class="way-container">' + way.html(ctx, {
+      reversed: true,
+      heading: 'Context',
+      caption: '',
+      normalize: true,
+      selected: selected
+    }) + '</div>'
+
+    const valueField = local.fields[c].valueField
+    const fieldHtml = '<div class="way-container">' + way.html(valueField, {
+      reversed: true,
+      heading: 'Value Field',
+      caption: '',
+      normalize: true,
+      selected: selected
+    }) + '</div>'
 
     innerHTML += template({
-      contextHtml: contextHtml
+      contextHtml: contextHtml,
+      fieldHtml: fieldHtml
     })
   }
 
