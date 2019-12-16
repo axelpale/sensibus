@@ -6,13 +6,20 @@ module.exports = (state, local, dispatch) => {
   const root = document.createElement('div')
   let innerHTML = ''
 
-  const c = state.timeline.select.channel
-  const t = state.timeline.select.frame
+  // Get prediction data for the selected cell.
+  const predictedCell = (() => {
+    const select = state.timeline.select
+    if (select) {
+      const c = select.channel
+      const t = select.frame
+      return local.predictedCells.find(cell => {
+        return cell.unknownCell.channel === c && cell.unknownCell.time === t
+      })
+    }
+    // Return undefined otherwise
+  })()
 
-  const predictedCell = local.predictedCells.find(cell => {
-    return cell.unknownCell.channel === c && cell.unknownCell.time === t
-  })
-
+  // General info that does not depend if the selected cell is unknown or not.
   innerHTML += generalTemplate({
     c: state.timeline.select.channel,
     t: state.timeline.select.frame,
@@ -20,7 +27,9 @@ module.exports = (state, local, dispatch) => {
     predictedValue: predictedCell ? predictedCell.avg.toFixed(2) : 'N/A'
   })
 
+  // A unknown cell is selected. Show how we predict its value.
   if (predictedCell) {
+    const c = predictedCell.unknownCell.channel
     const contextHtml = [predictedCell.context].map(ctx => {
       const selected = way.set(way.fill(ctx, 0), c, -local.fieldOffset, 1)
       return '<div class="way-container">' + way.html(ctx, {
