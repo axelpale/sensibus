@@ -47,9 +47,7 @@ module.exports = (local, memory) => {
     return sumsWithValue
   }, accInit)
 
-  // TODO make auto sums unknown
-
-  const r = 0.5
+  const r = local.weightFactor
   const massToWeight = n => r * n ** r - r + 1
   // const massToWeight = n => 1
 
