@@ -1,5 +1,6 @@
 const way = require('senseway')
 const renderControls = require('./controls/render')
+const cellInspector = require('./cellInspector/render')
 const renderWay = require('../../../lib/renderWay')
 const channelTitle = require('../../../lib/channelTitle')
 
@@ -55,6 +56,8 @@ module.exports = (state, local, dispatch) => {
     }))
   })
   root.appendChild(valueEl)
+
+  root.appendChild(cellInspector(state, local, dispatch))
 
   return root
 }
