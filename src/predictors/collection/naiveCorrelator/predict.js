@@ -47,17 +47,10 @@ module.exports = (local, memory) => {
     return sumsWithValue
   }, accInit)
 
-  // TODO make auto sums unknown
-
-  const r = 0.5
-  const massToWeight = n => r * n ** r - r + 1
-  // const massToWeight = n => 1
-
   // Predict unknowns using the fields.
   // Simple approach: fiels look mostly back.
   // Use single field to check how much it agrees with context.
   // Simple multiply-accumulate is what we need.
-  // Weight via massToWeight
   const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
   const predicted = unknowns.map(unknownCell => {
     // Find the context ie surroundings of the unknown cell.
@@ -70,25 +63,23 @@ module.exports = (local, memory) => {
 
     const valueField = fields[unknownCell.channel].valueField
     const sumAbsField = fields[unknownCell.channel].sumAbsField
-    const weightField = way.map(sumAbsField, massToWeight)
-
     const matches = way.multiply(context, valueField) // support for hypo u=1
-    const weightedMatchSum = way.reduce(matches, (acc, match, c, t) => {
-      return acc + match * weightField[c][t]
+
+    const matchSum = way.reduce(matches, (acc, match, c, t) => {
+      return acc + match
     }, 0)
-    const weightedAbsMatchSum = way.reduce(matches, (acc, match, c, t) => {
-      return acc + Math.abs(match) * weightField[c][t]
+    const absMatchSum = way.reduce(matches, (acc, match, c, t) => {
+      return acc + Math.abs(match)
     }, 0)
 
-    const weightedAvg = (weightedAbsMatchSum > 0
-      ? weightedMatchSum / weightedAbsMatchSum : 0)
+    const avg = (absMatchSum > 0 ? matchSum / absMatchSum : 0)
 
     return {
       unknownCell: unknownCell,
-      weightedAvg: weightedAvg, // prediction
+      avg: avg, // prediction
       mass: way.sum(sumAbsField), // sample size
-      weightedSum: weightedMatchSum,
-      weightedSumAbs: weightedAbsMatchSum
+      matchSum: matchSum,
+      absMatchSum: absMatchSum
     }
   })
 
@@ -96,7 +87,7 @@ module.exports = (local, memory) => {
   const predictedMemory = predicted.reduce((mem, pred) => {
     const c = pred.unknownCell.channel
     const t = pred.unknownCell.time
-    mem[c][t] = pred.weightedAvg
+    mem[c][t] = pred.avg
     return mem
   }, way.map(memory, q => 0))
 
