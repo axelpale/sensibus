@@ -95,7 +95,8 @@ module.exports = (local, memory) => {
       avg: avg, // prediction
       mass: way.sum(sumAbsField), // sample size
       matchSum: matchSum,
-      absMatchSum: absMatchSum
+      absMatchSum: absMatchSum,
+      context: context
     }
   })
 
@@ -109,6 +110,7 @@ module.exports = (local, memory) => {
 
   return {
     prediction: predictedMemory,
-    fields: fields
+    fields: fields,
+    predictedCells: predicted
   }
 }
