@@ -11,6 +11,13 @@ module.exports = (local, memory) => {
   const fieldLen = local.fieldLength
   const fieldWidth = way.width(memory)
 
+  // Base rate to balance rare and common events.
+  // const sums = way.sums(memory)
+  // const sumsAbs = way.sumsAbs(memory)
+  // const means = way.map2(sums, sumsAbs, (a, b) => {
+  //   return b > 0 ? a / b : 0
+  // })
+
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
