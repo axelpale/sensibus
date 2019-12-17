@@ -44,8 +44,8 @@ module.exports = (local, memory) => {
         return {
           posSumField: vs.posSumField,
           posAbsField: vs.posAbsField,
-          negSumField: way.add(vs.posSumField, slice),
-          negAbsField: way.add(vs.posAbsField, way.abs(slice))
+          negSumField: way.add(vs.negSumField, slice),
+          negAbsField: way.add(vs.negAbsField, way.abs(slice))
         }
       }
       return vs
@@ -90,13 +90,9 @@ module.exports = (local, memory) => {
     })
 
     const posLikelihood = way.reduce(posLikelihoodFactors, (acc, q) => {
-      // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
-      // = (acc + 1) * (like + 1) / 2 - 1
       return (acc * q + acc + q - 1) / 2
     }, 1)
     const negLikelihood = way.reduce(negLikelihoodFactors, (acc, q) => {
-      // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
-      // = (acc + 1) * (like + 1) / 2 - 1
       return (acc * q + acc + q - 1) / 2
     }, 1)
 
