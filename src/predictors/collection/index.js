@@ -4,6 +4,7 @@ exports.predictors = {
   channelMean: require('./channelMean'),
   naiveCorrelator: require('./naiveCorrelator'),
   weightedNaiveCorrelator: require('./weightedNaiveCorrelator'),
+  naiveBayes: require('./naiveBayes'),
   firstOrder: require('./firstOrder')
 }
 
