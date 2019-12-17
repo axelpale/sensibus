@@ -456,6 +456,24 @@ exports.toArray = (way) => {
   }, acc), [])
 }
 
+exports.toTimeOrderedArray = (way) => {
+  // Return an array of element objects.
+  const arr = []
+  const len = way[0] ? way[0].length : 0 // allow empty way
+  const wid = way.length
+  let c, t
+  for (t = 0; t < len; t += 1) {
+    for (c = 0; c < wid; c += 1) {
+      arr.push({
+        channel: c,
+        time: t,
+        value: way[c][t]
+      })
+    }
+  }
+  return arr
+}
+
 exports.trim = (way, trimmee) => {
   // Remove leading and trailing frames whose cells only contain the trimmee.
   // For example way.trim(w, 1) trims:

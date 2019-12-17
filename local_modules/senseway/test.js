@@ -482,6 +482,33 @@ test('toArray', (t) => {
   t.end()
 })
 
+test('toTimeOrderedArray', (t) => {
+  t.deepEqual(way.toTimeOrderedArray([[1, 1],[0, 1]]), [
+    {
+      channel: 0,
+      time: 0,
+      value: 1
+    },
+    {
+      channel: 1,
+      time: 0,
+      value: 0
+    },
+    {
+      channel: 0,
+      time: 1,
+      value: 1
+    },
+    {
+      channel: 1,
+      time: 1,
+      value: 1
+    }
+  ])
+  t.deepEqual(way.toTimeOrderedArray([]), [])
+  t.end()
+})
+
 test('trim', (t) => {
   t.deepEqual(way.trim(ZEROS), [[], []])
   t.deepEqual(way.trim(W0, 1), [[1, 0], [0, 1]])
