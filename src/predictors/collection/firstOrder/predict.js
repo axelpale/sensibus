@@ -14,9 +14,9 @@ module.exports = (local, memory) => {
   // Base rate to balance rare and common events.
   const sums = way.sums(memory)
   const sumsAbs = way.sumsAbs(memory)
-  const means = way.map2(sums, sumsAbs, (a, b) => {
+  const priors = way.map2(sums, sumsAbs, (a, b) => {
     return b > 0 ? a / b : 0
-  })
+  }).map(ch => ch[0])
 
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
@@ -39,8 +39,8 @@ module.exports = (local, memory) => {
       // OPTIMIZE if source == 0 then return vs
       const multiplied = way.map(slice, (target, tc) => {
         const corr = source * target
-        const sex = means[c] * Math.sign(source) // Expected source value
-        const tex = means[tc] * Math.sign(target) // Expected target value
+        const sex = priors[c] * Math.sign(source) // Expected source value
+        const tex = priors[tc] * Math.sign(target) // Expected target value
         const stex = (sex * tex + sex + tex - 1) / 2 // Expected together
         const w = 1 / (1 + stex)
         return w * corr
