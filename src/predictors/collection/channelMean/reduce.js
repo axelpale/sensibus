@@ -1,10 +1,13 @@
 const predict = require('./predict')
+const way = require('senseway')
 
 module.exports = (local, memory, ev) => {
   // Compute prediction
   // TODO do not do at every event
   if (!local) {
-    local = {}
+    local = {
+      prediction: way.fill(memory, 0)
+    }
   }
 
   switch (ev.type) {

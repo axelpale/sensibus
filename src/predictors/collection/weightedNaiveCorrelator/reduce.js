@@ -1,4 +1,5 @@
 const predict = require('./predict')
+const way = require('senseway')
 
 module.exports = (local, memory, ev) => {
   // Compute prediction
@@ -8,6 +9,7 @@ module.exports = (local, memory, ev) => {
     local = {
       fieldLength: 5,
       fieldOffset: -3,
+      prediction: way.fill(memory, 0),
       weightFactor: 0.5
     }
   }
