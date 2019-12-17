@@ -82,15 +82,22 @@ module.exports = (local, memory) => {
 
     const posLikelihood = way.reduce(posField, (acc, cond, c, t) => {
       const ctx = context[c][t]
+      if (ctx === 0) {
+        return acc
+      }
       // if (ctx > 0) the conditional prob ok
       // if (ctx < 0) the conditional prop negated
       const like = cond * ctx
       // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
       // = (acc + 1) * (like + 1) / 2 - 1
+      // = (acc*like + like + acc + 1) / 2 - 1
       return (acc * like + acc + like - 1) / 2
     }, 1)
     const negLikelihood = way.reduce(negField, (acc, cond, c, t) => {
       const ctx = context[c][t]
+      if (ctx === 0) {
+        return acc
+      }
       // if (ctx > 0) the conditional prob ok
       // if (ctx < 0) the conditional prop negated
       const like = cond * ctx
@@ -100,8 +107,8 @@ module.exports = (local, memory) => {
     }, 1)
 
     // P2(hood|tgt) * P2(tgt)
-    const posSupport = posLikelihood * posPrior + posLikelihood + posPrior
-    const negSupport = negLikelihood * negPrior + negLikelihood + negPrior
+    const posSupport = (posLikelihood * posPrior + posLikelihood + posPrior - 1) / 2
+    const negSupport = (negLikelihood * negPrior + negLikelihood + negPrior - 1) / 2
 
     // Maximum a posteriori
     const argmax = (posSupport > negSupport) ? 1 : -1
