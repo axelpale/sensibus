@@ -21,19 +21,31 @@ module.exports = (local, memory) => {
   // The fields resemble probabilities given the target.
   const accInit = memory.map(ch => {
     return {
-      sumField: way.create(fieldWidth, fieldLen, 0),
-      sumAbsField: way.create(fieldWidth, fieldLen, 0)
+      posSumField: way.create(fieldWidth, fieldLen, 0),
+      posAbsField: way.create(fieldWidth, fieldLen, 0),
+      negSumField: way.create(fieldWidth, fieldLen, 0),
+      negAbsField: way.create(fieldWidth, fieldLen, 0)
     }
   })
-  const sumPairs = slices.reduce((acc, slice) => {
+  const sumQuads = slices.reduce((acc, slice) => {
     return acc.map((vs, c) => {
       // Value of the conditioning cell in this slice.
       const target = slice[c][-fieldOffset]
       // if target=1 let us add values to sumField
       if (target > 0) {
         return {
-          sumField: way.add(vs.sumField, slice),
-          sumAbsField: way.add(vs.sumAbsField, way.abs(slice))
+          posSumField: way.add(vs.posSumField, slice),
+          posAbsField: way.add(vs.posAbsField, way.abs(slice)),
+          negSumField: vs.negSumField,
+          negAbsField: vs.negAbsField
+        }
+      }
+      if (target < 0) {
+        return {
+          posSumField: vs.posSumField,
+          posAbsField: vs.posAbsField,
+          negSumField: way.add(vs.posSumField, slice),
+          negAbsField: way.add(vs.posAbsField, way.abs(slice))
         }
       }
       return vs
@@ -41,9 +53,12 @@ module.exports = (local, memory) => {
   }, accInit)
 
   // Compute value from sums.
-  const fields = sumPairs.map(sumPair => {
-    return Object.assign(sumPair, {
-      valueField: way.map2(sumPair.sumField, sumPair.sumAbsField, (a, b) => {
+  const fields = sumQuads.map(sumQuad => {
+    return Object.assign(sumQuad, {
+      posField: way.map2(sumQuad.posSumField, sumQuad.posAbsField, (a, b) => {
+        return (b > 0) ? a / b : 0
+      }),
+      negField: way.map2(sumQuad.negSumField, sumQuad.negAbsField, (a, b) => {
         return (b > 0) ? a / b : 0
       })
     })
@@ -60,46 +75,40 @@ module.exports = (local, memory) => {
     const end = unknownCell.time + fieldOffset + fieldLen
     const context = way.slice(memory, begin, end)
 
-    const pCtxGTgt = fields[unknownCell.channel].valueField
-    const prior = priors[unknownCell.channel]
+    const posField = fields[unknownCell.channel].posField
+    const negField = fields[unknownCell.channel].negField
+    const posPrior = priors[unknownCell.channel]
+    const negPrior = -posPrior
 
-    const likelihood = way.reduce(pCtxGTgt, (product, pGTgt, c, t) => {
+    const posLikelihood = way.reduce(posField, (acc, cond, c, t) => {
       const ctx = context[c][t]
-      if (pGTgt > -1 || ctx < 0) {
-        // if (ctx > 0) { r = p }
-        // if (ctx < 0) { r = -p }
-        const r = pGTgt * ctx
-        // 2 * (((product + 1) / 2) * ((r + 1) / 2)) -1
-        // = (product + 1) * (p + 1) / 2 - 1
-        return (product * r + product + r - 1) / 2
-      }
-      return product
+      // if (ctx > 0) the conditional prob ok
+      // if (ctx < 0) the conditional prop negated
+      const like = cond * ctx
+      // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
+      // = (acc + 1) * (like + 1) / 2 - 1
+      return (acc * like + acc + like - 1) / 2
+    }, 1)
+    const negLikelihood = way.reduce(negField, (acc, cond, c, t) => {
+      const ctx = context[c][t]
+      // if (ctx > 0) the conditional prob ok
+      // if (ctx < 0) the conditional prop negated
+      const like = cond * ctx
+      // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
+      // = (acc + 1) * (like + 1) / 2 - 1
+      return (acc * like + acc + like - 1) / 2
     }, 1)
 
     // P2(hood|tgt) * P2(tgt)
-    const numerator = (likelihood * prior + likelihood + prior - 1) / 2
+    const posSupport = posLikelihood * posPrior + posLikelihood + posPrior
+    const negSupport = negLikelihood * negPrior + negLikelihood + negPrior
 
-    // P2(hood)
-    const evidence = way.reduce(context, (acc, q, c) => {
-      const p = q * priors[c]
-      return (acc * p + acc + p - 1) / 2
-    }, 1)
-
-    // Dividing ternary probabilities. a / b
-    // 2 * ((a + 1) / 2) / ((b + 1) / 2) - 1
-    // 2 * (a + 1) / (b + 1) - 1
-    // ((2a + 2) - (b + 1)) / (b + 1)
-    // (2a - b + 1) / (b + 1)
-    let posterior
-    if (evidence > -1) {
-      posterior = 2 * (numerator + 1) / (evidence + 1) - 1
-    } else {
-      posterior = prior
-    }
+    // Maximum a posteriori
+    const argmax = (posSupport > negSupport) ? 1 : -1
 
     return {
       unknownCell: unknownCell,
-      posterior: posterior,
+      decision: argmax,
       context: context
     }
   })
@@ -108,7 +117,7 @@ module.exports = (local, memory) => {
   const predictedMemory = predicted.reduce((mem, pred) => {
     const c = pred.unknownCell.channel
     const t = pred.unknownCell.time
-    mem[c][t] = pred.posterior
+    mem[c][t] = pred.decision
     return mem
   }, way.map(memory, q => 0))
 

@@ -12,50 +12,35 @@ module.exports = (state, local, dispatch) => {
 
   // Inspection
 
-  const sumEl = document.createElement('div')
+  const posEl = document.createElement('div')
   local.fields.forEach((field, c) => {
-    const sumField = field.sumField
-    const selected = way.set(way.fill(sumField, 0), c, -local.fieldOffset, 1)
+    const posField = field.posField
+    const selected = way.set(way.fill(posField, 0), c, -local.fieldOffset, 1)
 
-    sumEl.appendChild(renderWay(sumField, {
+    posEl.appendChild(renderWay(posField, {
       reversed: true,
-      heading: 'Sum by ' + channelTitle(state, c),
+      heading: 'P(1|1) on ' + channelTitle(state, c),
       caption: '',
       normalize: true,
       selected: selected
     }))
   })
-  root.appendChild(sumEl)
+  root.appendChild(posEl)
 
-  const sumAbsEl = document.createElement('div')
+  const negEl = document.createElement('div')
   local.fields.forEach((field, c) => {
-    const sumAbsField = field.sumAbsField
-    const selected = way.set(way.fill(sumAbsField, 0), c, -local.fieldOffset, 1)
+    const negField = field.negField
+    const selected = way.set(way.fill(negField, 0), c, -local.fieldOffset, 1)
 
-    sumAbsEl.appendChild(renderWay(sumAbsField, {
+    negEl.appendChild(renderWay(negField, {
       reversed: true,
-      heading: 'SumAbs by ' + channelTitle(state, c),
+      heading: 'P(1|-1) on ' + channelTitle(state, c),
       caption: '',
       normalize: true,
       selected: selected
     }))
   })
-  root.appendChild(sumAbsEl)
-
-  const valueEl = document.createElement('div')
-  local.fields.forEach((field, c) => {
-    const valueField = field.valueField
-    const selected = way.set(way.fill(valueField, 0), c, -local.fieldOffset, 1)
-
-    valueEl.appendChild(renderWay(valueField, {
-      reversed: true,
-      heading: 'Value by ' + channelTitle(state, c),
-      caption: '',
-      normalize: true,
-      selected: selected
-    }))
-  })
-  root.appendChild(valueEl)
+  root.appendChild(negEl)
 
   root.appendChild(cellInspector(state, local, dispatch))
 

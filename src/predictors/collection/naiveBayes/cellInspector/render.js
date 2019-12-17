@@ -24,7 +24,7 @@ module.exports = (state, local, dispatch) => {
     c: state.timeline.select.channel,
     t: state.timeline.select.frame,
     memory: state.timeline.way,
-    predictedValue: predictedCell ? predictedCell.posterior.toFixed(2) : 'N/A'
+    predictedValue: predictedCell ? predictedCell.decision.toFixed(2) : 'N/A'
   })
 
   if (predictedCell) {
