@@ -4,19 +4,22 @@ const way = require('senseway')
 
 module.exports = (state, local, dispatch) => {
   const root = document.createElement('div')
+
+  // Cell inspector is only for selections
+  if (!state.timeline.select) {
+    return root
+  }
+
   let innerHTML = ''
 
   // Get prediction data for the selected cell.
   const predictedCell = (() => {
     const select = state.timeline.select
-    if (select) {
-      const c = select.channel
-      const t = select.frame
-      return local.predictedCells.find(cell => {
-        return cell.unknownCell.channel === c && cell.unknownCell.time === t
-      })
-    }
-    // Return undefined otherwise
+    const c = select.channel
+    const t = select.frame
+    return local.predictedCells.find(cell => {
+      return cell.unknownCell.channel === c && cell.unknownCell.time === t
+    })
   })()
 
   // General info that does not depend if the selected cell is unknown or not.
