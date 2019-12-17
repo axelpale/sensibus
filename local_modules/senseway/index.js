@@ -1,6 +1,11 @@
 // Senseway, a multi-channel timeline.
 //
 
+exports.abs = (way) => {
+  // Return a way where every element is mapped to its absolute value.
+  return way.map(ch => ch.map(Math.abs))
+}
+
 exports.add = (wayA, wayB) => {
   // Element-wise a plus b
   return wayA.map((ch, c) => ch.map((q, t) => q + wayB[c][t]))

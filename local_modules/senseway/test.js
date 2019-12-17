@@ -35,6 +35,15 @@ const UPDOWN = [
   [-1, 0, 1],
   [1, 0, -1]
 ]
+const ONEOONE = [
+  [1, 0, 1],
+  [1, 0, 1]
+]
+
+test('abs', (t) => {
+  t.deepEqual(way.abs(UPDOWN), ONEOONE)
+  t.end()
+})
 
 test('add', (t) => {
   t.deepEqual(way.add(W0, W1), [
