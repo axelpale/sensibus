@@ -9,7 +9,7 @@ module.exports = (local, memory) => {
   const sumsAbs = way.sumsAbs(memory)
   const priors = way.map2(sums, sumsAbs, (a, b) => {
     return b > 0 ? a / b : 0
-  })
+  }).map(ch => ch[0])
 
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
