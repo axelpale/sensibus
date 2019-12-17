@@ -46,7 +46,9 @@ module.exports = (state, local, dispatch) => {
     }) + '</div>'
 
     innerHTML += template({
-      contextHtml: contextHtml
+      contextHtml: contextHtml,
+      posSupport: predictedCell.posSupport,
+      negSupport: predictedCell.negSupport
     })
   }
 

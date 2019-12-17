@@ -108,6 +108,8 @@ module.exports = (local, memory) => {
 
     return {
       unknownCell: unknownCell,
+      posSupport: posSupport,
+      negSupport: negSupport,
       decision: argmax,
       context: context
     }
