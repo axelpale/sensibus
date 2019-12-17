@@ -1,8 +1,19 @@
 const way = require('senseway')
 
 module.exports = (local, memory) => {
+  // How the field is positioned on the conditioned element?
+  // Offset of 0 means that the element is on the oldest row
+  // and that the field is towards future.
+  const fieldOffset = local.fieldOffset
   const fieldLen = local.fieldLength
   const fieldWidth = way.width(memory)
+
+  // Slice navigation.
+  // An example for correct slice positioning:
+  //   let fieldLen = 3 and fieldOffset = -1 and u.time = 0.
+  //   We expect the context begin at time = -1 and end at time = 2.
+  const getBegin = t => t + fieldOffset
+  const getEnd = t => t + fieldOffset + fieldLen
 
   // Base rate
   const sums = way.sums(memory)
@@ -11,10 +22,7 @@ module.exports = (local, memory) => {
     return b > 0 ? a / b : 0
   }).map(ch => ch[0])
 
-  // How the field is positioned on the conditioned element?
-  // Offset of 0 means that the element is on the oldest row
-  // and that the field is towards future.
-  const fieldOffset = local.fieldOffset
+  // Slices to go through
   const slices = way.slices(memory, fieldLen, fieldOffset)
 
   // Build conditioned fields by going through each slice.
@@ -64,16 +72,37 @@ module.exports = (local, memory) => {
     })
   })
 
-  // Predict unknowns using the fields.
+  // - Predict unknowns by using the priors and conditional fields.
+  // - Apply dynamic programming method and include every predicted cell
+  //   into the context of the next prediction.
+  // - The computation order is important.
+  //   The heavier the context, the better the estimate.
   const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
-  const predicted = unknowns.map(unknownCell => {
+  // OPTIMIZE start search from the middle and avoid going far to light areas.
+  const firstCell = unknowns.reduce((acc, cell, i) => {
+    const context = way.slice(memory, getBegin(cell.time), getEnd(cell.time))
+    const weight = way.sumAbs(context)
+    if (weight > acc.weight) {
+      return Object.assign({}, cell, {
+        weight: weight,
+        index: i
+      })
+    }
+    return acc
+  }, { weight: -1 })
+  // First up, then down from the first cell.
+  const orderedUnknowns = [].concat(
+    unknowns.slice(0, firstCell.index + 1).reverse(),
+    unknowns.slice(firstCell.index + 1)
+  )
+  // Now unknowns are ordered so that we can predict them dynamically.
+  // We need to place the predictions in somewhere.
+  const virtual = way.clone(memory)
+  // We place the predictions into 'virtual memory'.
+  const predicted = orderedUnknowns.map(unknownCell => {
     // Find the context ie surroundings of the unknown cell.
-    // An example for correct slice positioning:
-    //   let fieldLen = 3 and fieldOffset = -1 and u.time = 0.
-    //   We expect the context begin at time = -1 and end at time = 2.
-    const begin = unknownCell.time + fieldOffset
-    const end = unknownCell.time + fieldOffset + fieldLen
-    const context = way.slice(memory, begin, end)
+    const t = unknownCell.time
+    const context = way.slice(virtual, getBegin(t), getEnd(t))
 
     const posField = fields[unknownCell.channel].posField
     const negField = fields[unknownCell.channel].negField
@@ -102,6 +131,9 @@ module.exports = (local, memory) => {
 
     // Maximum a posteriori
     const argmax = (posSupport > negSupport) ? 1 : -1
+
+    // Insert into the virtual memory to boost next predictions.
+    virtual[unknownCell.channel][unknownCell.time] = argmax
 
     return {
       unknownCell: unknownCell,
