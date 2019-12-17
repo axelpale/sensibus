@@ -80,30 +80,24 @@ module.exports = (local, memory) => {
     const posPrior = priors[unknownCell.channel]
     const negPrior = -posPrior
 
-    const posLikelihood = way.reduce(posField, (acc, cond, c, t) => {
+    const posLikelihoodFactors = way.map(posField, (cond, c, t) => {
       const ctx = context[c][t]
-      if (ctx === 0) {
-        return acc
-      }
-      // if (ctx > 0) the conditional prob ok
-      // if (ctx < 0) the conditional prop negated
-      const like = cond * ctx
+      return cond * ctx
+    })
+    const negLikelihoodFactors = way.map(negField, (cond, c, t) => {
+      const ctx = context[c][t]
+      return cond * ctx
+    })
+
+    const posLikelihood = way.reduce(posLikelihoodFactors, (acc, q) => {
       // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
       // = (acc + 1) * (like + 1) / 2 - 1
-      // = (acc*like + like + acc + 1) / 2 - 1
-      return (acc * like + acc + like - 1) / 2
+      return (acc * q + acc + q - 1) / 2
     }, 1)
-    const negLikelihood = way.reduce(negField, (acc, cond, c, t) => {
-      const ctx = context[c][t]
-      if (ctx === 0) {
-        return acc
-      }
-      // if (ctx > 0) the conditional prob ok
-      // if (ctx < 0) the conditional prop negated
-      const like = cond * ctx
+    const negLikelihood = way.reduce(negLikelihoodFactors, (acc, q) => {
       // 2 * (((acc + 1) / 2) * ((like + 1) / 2)) -1
       // = (acc + 1) * (like + 1) / 2 - 1
-      return (acc * like + acc + like - 1) / 2
+      return (acc * q + acc + q - 1) / 2
     }, 1)
 
     // P2(hood|tgt) * P2(tgt)
@@ -115,6 +109,8 @@ module.exports = (local, memory) => {
 
     return {
       unknownCell: unknownCell,
+      posFactors: posLikelihoodFactors,
+      negFactors: negLikelihoodFactors,
       posSupport: posSupport,
       negSupport: negSupport,
       decision: argmax,

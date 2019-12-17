@@ -2,6 +2,16 @@ const generalTemplate = require('./general.ejs')
 const template = require('./template.ejs')
 const way = require('senseway')
 
+const renderWay = (mem, opts) => {
+  opts = Object.assign({
+    reversed: true,
+    heading: '',
+    caption: '',
+    normalize: true
+  }, opts)
+  return '<div class="way-container">' + way.html(mem, opts) + '</div>'
+}
+
 module.exports = (state, local, dispatch) => {
   const root = document.createElement('div')
 
@@ -32,21 +42,25 @@ module.exports = (state, local, dispatch) => {
 
   if (predictedCell) {
     // A unknown cell is selected. Show how we predict its value.
-    const c = predictedCell.unknownCell.channel
+    const cell = predictedCell
+    const c = cell.unknownCell.channel
 
-    const ctx = predictedCell.context
+    const ctx = cell.context
     const selected = way.set(way.fill(ctx, 0), c, -local.fieldOffset, 1)
 
-    const contextHtml = '<div class="way-container">' + way.html(ctx, {
-      reversed: true,
-      heading: 'Context',
-      caption: '',
-      normalize: true,
-      selected: selected
-    }) + '</div>'
-
     innerHTML += template({
-      contextHtml: contextHtml,
+      contextHtml: renderWay(ctx, {
+        heading: 'Context',
+        selected: selected
+      }),
+      posFactorsHtml: renderWay(cell.posFactors, {
+        heading: 'Likelihood Factors for Positive',
+        selected: selected
+      }),
+      negFactorsHtml: renderWay(cell.negFactors, {
+        heading: 'Likelihood Factors for Negative',
+        selected: selected
+      }),
       posSupport: predictedCell.posSupport,
       negSupport: predictedCell.negSupport
     })
