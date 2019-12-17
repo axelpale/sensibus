@@ -5,6 +5,7 @@ exports.predictors = {
   naiveCorrelator: require('./naiveCorrelator'),
   weightedNaiveCorrelator: require('./weightedNaiveCorrelator'),
   naiveBayes: require('./naiveBayes'),
+  dynamicNaiveBayes: require('./dynamicNaiveBayes'),
   firstOrder: require('./firstOrder')
 }
 
