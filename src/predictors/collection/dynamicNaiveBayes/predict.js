@@ -77,7 +77,8 @@ module.exports = (local, memory) => {
   //   into the context of the next prediction.
   // - The computation order is important.
   //   The heavier the context, the better the estimate.
-  const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
+  const filter = cell => cell.value === 0
+  const unknowns = way.toTimeOrderedArray(memory).filter(filter)
   // OPTIMIZE start search from the middle and avoid going far to light areas.
   const firstCell = unknowns.reduce((acc, cell, i) => {
     const context = way.slice(memory, getBegin(cell.time), getEnd(cell.time))
