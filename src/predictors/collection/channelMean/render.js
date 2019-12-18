@@ -1,15 +1,16 @@
-// const renderWay = require('../../lib/renderWay')
+const renderWay = require('../../../lib/renderWay')
 
-module.exports = (state, local, dispatch) => {
-  // const local = state.predictors.ratePredictor
+module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
-  // root.appendChild(renderWay(local.probs, {
-  //   reversed: true,
-  //   heading: 'Proba&shy;bi&shy;lity',
-  //   caption: '',
-  //   normalize: true
-  // }))
+  const meansWay = model.channelMeans.map(m => [m])
+
+  root.appendChild(renderWay(meansWay, {
+    reversed: true,
+    heading: 'Channel Means',
+    caption: '',
+    normalize: true
+  }))
 
   return root
 }

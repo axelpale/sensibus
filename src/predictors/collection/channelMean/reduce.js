@@ -1,11 +1,12 @@
-const predict = require('./predict')
+const train = require('./train')
+const inferAll = require('./inferAll')
 const way = require('senseway')
 
-module.exports = (local, memory, ev) => {
+module.exports = (model, memory, ev) => {
   // Compute prediction
   // TODO do not do at every event
-  if (!local) {
-    local = {
+  if (!model) {
+    model = {
       prediction: way.fill(memory, 0)
     }
   }
@@ -22,9 +23,10 @@ module.exports = (local, memory, ev) => {
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR':
-      return Object.assign({}, local, predict(local, memory))
+      model = Object.assign({}, model, train(model, memory))
+      return Object.assign({}, model, inferAll(model, memory))
 
     default:
-      return local
+      return model
   }
 }
