@@ -96,7 +96,7 @@ module.exports = (local, memory) => {
     const t = pred.unknownCell.time
     mem[c][t] = pred.weightedAvg
     return mem
-  }, way.clone(local.prediction))
+  }, way.fill(memory, 0))
 
   return {
     prediction: predictedMemory,

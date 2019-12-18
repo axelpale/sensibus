@@ -11,19 +11,10 @@ module.exports = (state, ev) => {
       const nextval = (() => {
         // If the cell is already selected, change the value
         if (sel && sel.channel === ev.channel && sel.frame === ev.frame) {
-          // Take prediction into account.
-          // Note that this depends on predictors ability to keep
-          // predictions of previously unknown cells.
-          const p = state.predictors.prediction[ev.channel][ev.frame]
-          if (p < 0) {
-            if (curval === 0) return -1
-            if (curval === -1) return 1
-            if (curval === 1) return 0
-          } else {
-            if (curval === 0) return 1
-            if (curval === 1) return -1
-            if (curval === -1) return 0
-          }
+          // TODO Take prediction into account.
+          if (curval === 0) return 1
+          if (curval === 1) return -1
+          if (curval === -1) return 0
         } // else
         return curval
       })()
