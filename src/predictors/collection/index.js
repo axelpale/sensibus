@@ -3,8 +3,6 @@ exports.DEFAULT_PREDICTOR = 'channelMean'
 exports.predictors = {
   channelMean: require('./channelMean'),
   naiveCorrelator: require('./naiveCorrelator'),
-  weightedNaiveCorrelator: require('./weightedNaiveCorrelator'),
-  naiveBayes: require('./naiveBayes'),
   dynamicNaiveBayes: require('./dynamicNaiveBayes'),
   firstOrder: require('./firstOrder')
 }
