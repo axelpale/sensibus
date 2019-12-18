@@ -38,6 +38,7 @@ module.exports = (local, memory, ev) => {
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR':
       return Object.assign({}, local, predict(local, memory))
+      // OPTIMIZE only predict on CREATE_CHANNEL and CREATE_FRAME
 
     default:
       return local
