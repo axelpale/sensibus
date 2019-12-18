@@ -20,16 +20,17 @@ module.exports = (model, cell, memory) => {
     return cond * ctx
   })
 
-  const posLikelihood = way.reduce(posLikelihoodFactors, (acc, q) => {
+  // Likelihoods
+  const posLike = way.reduce(posLikelihoodFactors, (acc, q) => {
     return (acc * q + acc + q - 1) / 2
   }, 1)
-  const negLikelihood = way.reduce(negLikelihoodFactors, (acc, q) => {
+  const negLike = way.reduce(negLikelihoodFactors, (acc, q) => {
     return (acc * q + acc + q - 1) / 2
   }, 1)
 
   // P2(hood|tgt) * P2(tgt)
-  const posSupport = (posLikelihood * posPrior + posLikelihood + posPrior - 1) / 2
-  const negSupport = (negLikelihood * negPrior + negLikelihood + negPrior - 1) / 2
+  const posSupport = (posLike * posPrior + posLike + posPrior - 1) / 2
+  const negSupport = (negLike * negPrior + negLike + negPrior - 1) / 2
 
   // Maximum a posteriori decision
   const decision = (posSupport > negSupport) ? 1 : -1
