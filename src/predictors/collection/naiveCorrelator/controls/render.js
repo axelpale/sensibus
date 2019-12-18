@@ -1,11 +1,11 @@
 const template = require('./template.ejs')
 
-module.exports = (state, local, dispatch) => {
+module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
   root.innerHTML = template({
-    currentFieldLength: local.fieldLength,
-    currentFieldOffset: local.fieldOffset,
+    currentFieldLength: model.fieldLength,
+    currentFieldOffset: model.fieldOffset,
     fieldLengths: [1, 2, 3, 5, 7, 9],
     fieldOffsets: [0, -1, -2, -3, -4, -5]
   })

@@ -1,30 +1,34 @@
-const predict = require('./predict')
+const train = require('./train')
+const inferAll = require('./inferAll')
 const way = require('senseway')
 
-module.exports = (local, memory, ev) => {
+module.exports = (model, memory, ev) => {
   // Compute prediction
   // TODO do not do at every event
   // Default
-  if (!local) {
-    local = {
+  if (!model) {
+    model = {
       fieldLength: 5,
       fieldOffset: -3,
+      fields: [],
       prediction: way.fill(memory, 0)
     }
   }
 
   switch (ev.type) {
     case 'SELECT_FIELD_LENGTH':
-      local = Object.assign({}, local, {
+      model = Object.assign({}, model, {
         fieldLength: ev.length
       })
-      return Object.assign({}, local, predict(local, memory))
+      model = Object.assign({}, model, train(model, memory))
+      return Object.assign({}, model, inferAll(model, memory))
 
     case 'SELECT_FIELD_OFFSET':
-      local = Object.assign({}, local, {
+      model = Object.assign({}, model, {
         fieldOffset: ev.offset
       })
-      return Object.assign({}, local, predict(local, memory))
+      model = Object.assign({}, model, train(model, memory))
+      return Object.assign({}, model, inferAll(model, memory))
 
     case '__INIT__':
     case 'EDIT_CELL':
@@ -37,9 +41,10 @@ module.exports = (local, memory, ev) => {
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR':
-      return Object.assign({}, local, predict(local, memory))
+      model = Object.assign({}, model, train(model, memory))
+      return Object.assign({}, model, inferAll(model, memory))
 
     default:
-      return local
+      return model
   }
 }
