@@ -1,3 +1,5 @@
+exports.infer = require('./infer')
+exports.inferAll = require('./inferAll')
 exports.reduce = require('./reduce')
 exports.render = require('./render')
-exports.predict = require('./predict')
+exports.train = require('./train')

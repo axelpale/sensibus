@@ -1,11 +1,11 @@
 const way = require('senseway')
 
-module.exports = (local, memory) => {
+module.exports = (config, memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
-  const fieldOffset = local.fieldOffset
-  const fieldLen = local.fieldLength
+  const fieldOffset = config.fieldOffset
+  const fieldLength = config.fieldLength
   const fieldWidth = way.width(memory)
 
   // Base rate
@@ -16,16 +16,16 @@ module.exports = (local, memory) => {
   }).map(ch => ch[0])
 
   // Slices to go through
-  const slices = way.slices(memory, fieldLen, fieldOffset)
+  const slices = way.slices(memory, fieldLength, fieldOffset)
 
   // Build conditioned fields by going through each slice.
   // The fields resemble probabilities given the target.
   const accInit = memory.map(ch => {
     return {
-      posSumField: way.create(fieldWidth, fieldLen, 0),
-      posAbsField: way.create(fieldWidth, fieldLen, 0),
-      negSumField: way.create(fieldWidth, fieldLen, 0),
-      negAbsField: way.create(fieldWidth, fieldLen, 0)
+      posSumField: way.create(fieldWidth, fieldLength, 0),
+      posAbsField: way.create(fieldWidth, fieldLength, 0),
+      negSumField: way.create(fieldWidth, fieldLength, 0),
+      negAbsField: way.create(fieldWidth, fieldLength, 0)
     }
   })
   const sumQuads = slices.reduce((acc, slice) => {
@@ -66,6 +66,8 @@ module.exports = (local, memory) => {
   })
 
   return {
+    fieldOffset: fieldOffset,
+    fieldLength: fieldLength,
     priors: priors,
     fields: fields
   }

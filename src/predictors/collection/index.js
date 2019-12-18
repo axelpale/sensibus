@@ -22,7 +22,7 @@ exports.getSelectedPredictor = (state) => {
   return exports.predictors[name]
 }
 
-exports.getSelectedLocalState = (state) => {
+exports.getSelectedModel = (state) => {
   const name = state.predictors.selection
   return state.predictors[name]
 }

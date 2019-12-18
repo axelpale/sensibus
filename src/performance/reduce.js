@@ -16,7 +16,7 @@ module.exports = (state, ev) => {
   //
   const mem = state.timeline.way
   const predictor = predictorCollection.getSelectedPredictor(state)
-  const predictorState = predictorCollection.getSelectedLocalState(state)
+  const config = predictorCollection.getSelectedModel(state)
 
   const trainingSets = way.toArray(mem).filter(elem => {
     return elem.value !== 0
@@ -27,13 +27,12 @@ module.exports = (state, ev) => {
     }
   })
 
-  const results = trainingSets.reduce((acc, trainingSet) => {
-    const results = predictor.predict(predictorState, trainingSet.memory)
-    const c = trainingSet.target.channel
-    const t = trainingSet.target.time
+  const results = trainingSets.reduce((acc, trainSet) => {
+    const model = predictor.train(config, trainSet.memory)
+    const results = predictor.infer(model, trainSet.target, trainSet.memory)
 
-    const pred = results.prediction[c][t]
-    const corr = trainingSet.target.value
+    const pred = results.prediction
+    const corr = trainSet.target.value
     const score = pred * corr
 
     acc.truePos += (pred > 0 && corr > 0) ? score : 0

@@ -12,7 +12,7 @@ const renderWay = (mem, opts) => {
   return '<div class="way-container">' + way.html(mem, opts) + '</div>'
 }
 
-module.exports = (state, local, dispatch) => {
+module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
   // Cell inspector is only for selections
@@ -23,12 +23,12 @@ module.exports = (state, local, dispatch) => {
   let innerHTML = ''
 
   // Get prediction data for the selected cell.
-  const predictedCell = (() => {
+  const cellResult = (() => {
     const select = state.timeline.select
     const c = select.channel
     const t = select.frame
-    return local.predictedCells.find(cell => {
-      return cell.unknownCell.channel === c && cell.unknownCell.time === t
+    return model.cellResults.find(cellResult => {
+      return cellResult.cell.channel === c && cellResult.cell.time === t
     })
   })()
 
@@ -37,32 +37,30 @@ module.exports = (state, local, dispatch) => {
     c: state.timeline.select.channel,
     t: state.timeline.select.frame,
     memory: state.timeline.way,
-    predictedValue: predictedCell ? predictedCell.decision.toFixed(2) : 'N/A'
+    predictedValue: cellResult ? cellResult.prediction.toFixed(2) : 'N/A'
   })
 
-  if (predictedCell) {
+  if (cellResult) {
     // A unknown cell is selected. Show how we predict its value.
-    const cell = predictedCell
-    const c = cell.unknownCell.channel
-
-    const ctx = cell.context
-    const selected = way.set(way.fill(ctx, 0), c, -local.fieldOffset, 1)
+    const c = cellResult.cell.channel
+    const ctx = cellResult.context
+    const selected = way.set(way.fill(ctx, 0), c, -model.fieldOffset, 1)
 
     innerHTML += template({
       contextHtml: renderWay(ctx, {
         heading: 'Context',
         selected: selected
       }),
-      posFactorsHtml: renderWay(cell.posFactors, {
+      posFactorsHtml: renderWay(cellResult.posFactors, {
         heading: 'Likelihood Factors for Positive',
         selected: selected
       }),
-      negFactorsHtml: renderWay(cell.negFactors, {
+      negFactorsHtml: renderWay(cellResult.negFactors, {
         heading: 'Likelihood Factors for Negative',
         selected: selected
       }),
-      posSupport: predictedCell.posSupport,
-      negSupport: predictedCell.negSupport
+      posSupport: cellResult.posSupport,
+      negSupport: cellResult.negSupport
     })
   }
 
