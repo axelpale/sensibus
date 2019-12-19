@@ -32,8 +32,23 @@ module.exports = (model, cell, memory) => {
   const posSupport = (posLike * posPrior + posLike + posPrior - 1) / 2
   const negSupport = (negLike * negPrior + negLike + negPrior - 1) / 2
 
+  // Normalise ternary supports so that their sum becomes 0.
+  // See notes 2019-12-19
+  let prediction, posProb, negProb
+  if (posSupport === -1 && negSupport === -1) {
+    // Undecidable
+    posProb = 0
+    negProb = 0
+    prediction = 0
+  } else {
+    const s = 2 / (posSupport + negSupport + 2)
+    posProb = s * posSupport + s - 1
+    negProb = s * negSupport + s - 1
+    prediction = posProb
+  }
+
   // Maximum a posteriori decision
-  const decision = (posSupport > negSupport) ? 1 : -1
+  // const decision = (posSupport > negSupport) ? 1 : -1
 
   return {
     cell: cell,
@@ -42,6 +57,8 @@ module.exports = (model, cell, memory) => {
     negFactors: negLikelihoodFactors,
     posSupport: posSupport,
     negSupport: negSupport,
-    prediction: decision
+    posProb: posProb,
+    negProb: negProb,
+    prediction: prediction
   }
 }

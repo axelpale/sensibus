@@ -60,7 +60,9 @@ module.exports = (state, model, dispatch) => {
         selected: selected
       }),
       posSupport: cellResult.posSupport,
-      negSupport: cellResult.negSupport
+      negSupport: cellResult.negSupport,
+      posProb: cellResult.posProb,
+      negProb: cellResult.negProb
     })
   }
 
