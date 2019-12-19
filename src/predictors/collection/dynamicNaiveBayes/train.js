@@ -8,11 +8,17 @@ module.exports = (config, memory) => {
   const fieldLength = config.fieldLength
   const fieldWidth = way.width(memory)
 
+  // To compute posterior probabilities for small sample sizes
+  // we need to provide a small initial mass for all conjugate priors.
+  // See https://en.wikipedia.org/wiki/Beta_distribution#Bayesian_inference
+  // See also Sunrise problem.
+  const alpha = 1
+
   // Base rate
   const sums = way.sums(memory)
   const sumsAbs = way.sumsAbs(memory)
   const priors = way.map2(sums, sumsAbs, (a, b) => {
-    return b > 0 ? a / b : 0
+    return b > 0 ? a / (b + alpha) : 0
   }).map(ch => ch[0])
 
   // Slices to go through
@@ -57,10 +63,10 @@ module.exports = (config, memory) => {
   const fields = sumQuads.map(sumQuad => {
     return Object.assign(sumQuad, {
       posField: way.map2(sumQuad.posSumField, sumQuad.posAbsField, (a, b) => {
-        return (b > 0) ? a / b : 0
+        return (b > 0) ? a / (b + alpha) : 0
       }),
       negField: way.map2(sumQuad.negSumField, sumQuad.negAbsField, (a, b) => {
-        return (b > 0) ? a / b : 0
+        return (b > 0) ? a / (b + alpha) : 0
       })
     })
   })
