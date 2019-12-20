@@ -69,17 +69,8 @@ module.exports = (state, dispatch) => {
       const q = timeline.way[c][t]
 
       // Design rules:
-      // - known positive -> probability 1, certainty 1
-      // - known negative -> probability 0, certainty 1
-      // - predicted probability -> radius
-      // - prediction certainty -> opacity
-      //
-      // Problems:
-      // - highly uncertain look like known negative
-      // - high prediction certainty & prob looks like known positive
-      //
-      // Address problems with additional design:
-      // - unknown -> display prediction and certainty as text
+      // - given or predicted probability -> radius
+      // - unknown or known -> opacity
 
       let prob
       if (q === 0) {
