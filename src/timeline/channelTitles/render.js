@@ -15,6 +15,12 @@ module.exports = (state, dispatch) => {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.classList.add('cell-title')
+
+    const select = state.timeline.select
+    if (select && select.channel === c) {
+      cell.classList.add('cell-title-selected')
+    }
+
     const val = state.timeline.channels[c].title
     cell.innerHTML = '<div class="cell-text">' + val + '</div>'
 

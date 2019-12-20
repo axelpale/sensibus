@@ -1,3 +1,4 @@
+require('./style.css')
 const way = require('senseway')
 const frameTitle = require('./frameTitle')
 
@@ -50,8 +51,11 @@ module.exports = (state, dispatch) => {
       cell.classList.add('cell')
       cell.classList.add('cell-event')
 
-      if (sel && sel.channel === c && sel.frame === t) {
+      if (sel && (sel.channel === c || sel.frame === t)) {
         cell.classList.add('cell-selected')
+        if (sel.channel === c && sel.frame === t) {
+          cell.classList.add('cell-focus')
+        }
       }
 
       const spine = document.createElement('div')
