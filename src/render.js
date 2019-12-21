@@ -1,29 +1,42 @@
+require('./style.css')
 const navbar = require('./navbar/render')
 const timeline = require('./timeline/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 
 module.exports = (state, dispatch) => {
-  navbar(state, dispatch)
-
   const root = document.createElement('div')
-  root.classList.add('row')
-
-  const mainCol = document.createElement('div')
+  root.classList.add('root')
+  root.appendChild(timeline(state, dispatch))
 
   if (state.sidebar) {
-    const sideCol = document.createElement('div')
-    mainCol.classList.add('col-8')
-    mainCol.appendChild(timeline(state, dispatch))
-    root.appendChild(mainCol)
-    sideCol.classList.add('col-4')
-    sideCol.appendChild(predictors(state, dispatch))
-    sideCol.appendChild(performance(state, dispatch))
-    root.appendChild(sideCol)
+    const sidebar = document.createElement('div')
+    sidebar.classList.add('sidebar')
+    sidebar.appendChild(navbar(state, dispatch))
+
+    const container = document.createElement('div')
+    container.classList.add('container-fluid')
+    container.appendChild(predictors(state, dispatch))
+    container.appendChild(performance(state, dispatch))
+    sidebar.appendChild(container)
+
+    root.appendChild(sidebar)
   } else {
-    mainCol.classList.add('col')
-    mainCol.appendChild(timeline(state, dispatch))
-    root.appendChild(mainCol)
+    const opener = document.createElement('div')
+    opener.classList.add('sidebar-opener')
+    opener.classList.add('bg-dark')
+    const openerIcon = document.createElement('img')
+    openerIcon.src = 'img/icon.png'
+    openerIcon.width = 30
+    openerIcon.height = 30
+    opener.appendChild(openerIcon)
+    root.appendChild(opener)
+
+    opener.addEventListener('click', ev => {
+      dispatch({
+        type: 'OPEN_SIDEBAR'
+      })
+    })
   }
 
   return root

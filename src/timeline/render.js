@@ -1,7 +1,8 @@
+require('./style.css')
+const way = require('senseway')
+const wayViewer = require('./wayViewer/render')
 const channelEditor = require('./channelEditor/render')
 const channelTitles = require('./channelTitles/render')
-const wayViewer = require('./wayViewer/render')
-const way = require('senseway')
 
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
@@ -11,7 +12,7 @@ module.exports = (state, dispatch) => {
   canvas.classList.add('timeline-canvas')
 
   const W = way.width(state.timeline.way)
-  canvas.style.width = '' + (W * 4.8 + 4).toFixed(2) + 'rem'
+  canvas.style.width = '' + (W * 4.8 + 38).toFixed(2) + 'rem'
 
   canvas.appendChild(channelEditor(state, dispatch))
   canvas.appendChild(channelTitles(state, dispatch))

@@ -1,4 +1,3 @@
-require('./style.css')
 const way = require('senseway')
 const frameTitle = require('./frameTitle')
 const renderCell = require('./cell')

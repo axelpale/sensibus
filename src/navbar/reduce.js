@@ -13,6 +13,18 @@ module.exports = (state, ev) => {
       return Object.assign({}, state, ev.state)
     }
 
+    case 'CLOSE_SIDEBAR': {
+      return Object.assign({}, state, {
+        sidebar: false
+      })
+    }
+
+    case 'OPEN_SIDEBAR': {
+      return Object.assign({}, state, {
+        sidebar: true
+      })
+    }
+
     default:
       return state
   }
