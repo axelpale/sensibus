@@ -1,3 +1,11 @@
+.timeline-root {
+  width: 100%;
+  overflow: scroll;
+}
+.timeline-canvas {
+
+}
+
 .timeline-row {
   text-align: center;
   height: 4.2rem;
@@ -8,13 +16,18 @@
 .timeline-row .timeline-row-title {
   display: inline-block;
   position: relative;
-  top: -1.8em;
-  width: 10em;
+  top: 0;
+  margin-left: -11rem;
+  width: 10rem;
   height: 100%;
-  margin-left: -11em;
-  padding-right: 1em;
+  padding-right: 1rem;
   text-align: right;
   line-height: 1;
+  overflow: hidden;
+}
+
+.timeline-row .frame-label {
+  padding-top: 1.37rem;
 }
 
 .cells {
@@ -44,7 +57,7 @@
   width: 4.2rem;
   height: 4.2rem;
   background: url('img/spine.png') center repeat-y;
-  opacity: 0.3;
+  opacity: 0.16;
 }
 
 .cell .cell-icon {
@@ -69,7 +82,9 @@
   opacity: 0.6;
 }
 .cell.cell-unknown .cell-text {
-  top: 1.5rem;
+  top: 1.3rem;
+  font-size: 1.27rem;
+  height: 60%;
 }
 
 .cell.cell-title {
@@ -82,6 +97,7 @@
 }
 .cell.cell-title-selected {
   font-weight: bold;
+  background: rgba(0,0,0,0.10);
 }
 
 .cell.cell-selected {
@@ -93,4 +109,5 @@
 
 .frame-title-selected {
   font-weight: bold;
+  background: rgba(0,0,0,0.10);
 }

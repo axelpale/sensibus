@@ -12,7 +12,10 @@ module.exports = (state, dispatch, time) => {
   }
 
   if (timeline.frameOnEdit !== time) {
-    root.innerHTML = timeline.frames[time].title
+    const label = document.createElement('div')
+    label.classList.add('frame-label')
+    label.innerHTML = timeline.frames[time].title
+    root.appendChild(label)
 
     root.addEventListener('click', ev => {
       dispatch({

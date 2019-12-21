@@ -39,7 +39,7 @@ module.exports = (state, dispatch, c, t) => {
   if (q === 0) {
     cell.classList.add('cell-unknown')
     prob = (state.predictors.prediction[c][t] + 1) / 2
-    const probHtml = Math.floor(100 * prob) + '%'
+    const probHtml = Math.floor(100 * prob)
     text.innerHTML = '' + probHtml
     icon.style.opacity = 0.5
   } else {
