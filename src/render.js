@@ -7,8 +7,24 @@ module.exports = (state, dispatch) => {
   navbar(state, dispatch)
 
   const root = document.createElement('div')
-  root.appendChild(timeline(state, dispatch))
-  root.appendChild(predictors(state, dispatch))
-  root.appendChild(performance(state, dispatch))
+  root.classList.add('row')
+
+  const mainCol = document.createElement('div')
+
+  if (state.sidebar) {
+    const sideCol = document.createElement('div')
+    mainCol.classList.add('col-8')
+    mainCol.appendChild(timeline(state, dispatch))
+    root.appendChild(mainCol)
+    sideCol.classList.add('col-4')
+    sideCol.appendChild(predictors(state, dispatch))
+    sideCol.appendChild(performance(state, dispatch))
+    root.appendChild(sideCol)
+  } else {
+    mainCol.classList.add('col')
+    mainCol.appendChild(timeline(state, dispatch))
+    root.appendChild(mainCol)
+  }
+
   return root
 }

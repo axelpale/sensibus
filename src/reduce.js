@@ -5,7 +5,9 @@ const performance = require('./performance/reduce')
 
 module.exports = (state, ev) => {
   if (!state) {
-    state = {}
+    state = {
+      sidebar: true
+    }
   }
 
   state = navbar(state, ev)

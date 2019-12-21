@@ -7,7 +7,7 @@ const clearElem = (el) => {
 
 module.exports = (opts) => {
   // Persistence
-  let initialModel = {}
+  let initialModel
 
   const storedModelJson = window.localStorage.getItem(opts.storageName)
   if (storedModelJson) {
