@@ -7,7 +7,7 @@ module.exports = (state, dispatch, time) => {
   root.classList.add('frame-title')
   root.classList.add('timeline-row-title')
 
-  if (timeline.select.frame === time) {
+  if (timeline.select && timeline.select.frame === time) {
     root.classList.add('frame-title-selected')
   }
 
