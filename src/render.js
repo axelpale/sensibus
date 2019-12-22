@@ -22,6 +22,7 @@ module.exports = (state, dispatch) => {
 
     root.appendChild(sidebar)
   } else {
+    // Sidebar closed
     const opener = document.createElement('div')
     opener.classList.add('sidebar-opener')
     opener.classList.add('bg-dark')

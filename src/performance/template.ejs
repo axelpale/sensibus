@@ -1,4 +1,10 @@
-<div class="row">
+<%
+  var n = numTrainingSets
+  var precision = (truePos > 0) ? truePos / (truePos + falsePos) : 0
+  var recall = (truePos > 0) ? truePos / (truePos + falseNeg) : 0
+  var accuracy = (n > 0) ? (truePos + trueNeg) / n : 0
+  var f1score = (precision + recall > 0) ? 2 * (precision * recall) / (precision + recall) : 0
+%><div class="row">
   <div class="col-md">
     <h2>Performance</h2>
 
@@ -10,7 +16,7 @@
       <tbody>
         <tr>
           <th scope="row">Number of tests</th>
-          <td><%= numTrainingSets %></td>
+          <td><%= n %></td>
         </tr>
         <tr>
           <th scope="row">True positives</th>
@@ -28,9 +34,21 @@
           <th scope="row">False negatives</th>
           <td><%= falseNeg.toFixed(2) %></td>
         </tr>
-        <tr>
-          <th scope="row">Avg. Score</th>
-          <td><%= score.toFixed(4) %> / 1.0</td>
+        <tr title="The proportion in which predicted positives were actually positive">
+          <th scope="row">Precision</th>
+          <td><%= precision.toFixed(2) %></td>
+        </tr>
+        <tr title="The proportion in which actual positives were correctly predicted as positives">
+          <th scope="row">Recall</th>
+          <td><%= recall.toFixed(2) %></td>
+        </tr>
+        <tr title="The proportion of correct predictions">
+          <th scope="row">Accuracy</th>
+          <td><%= accuracy.toFixed(2) %></td>
+        </tr>
+        <tr title="F-score – harmonic mean of precision and recall">
+          <th scope="row">Score</th>
+          <td><%= f1score.toFixed(4) %></td>
         </tr>
       </tbody>
     </table>

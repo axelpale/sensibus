@@ -5,8 +5,7 @@ const defaultResults = {
   truePos: 0,
   trueNeg: 0,
   falsePos: 0,
-  falseNeg: 0,
-  score: 0
+  falseNeg: 0
 }
 
 module.exports = (state, ev) => {
