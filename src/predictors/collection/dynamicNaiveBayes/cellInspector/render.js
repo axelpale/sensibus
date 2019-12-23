@@ -72,6 +72,8 @@ module.exports = (state, model, dispatch) => {
         heading: 'Likelihood factors for negative',
         selected: selected
       }),
+      posPrior: cellResult.posPrior,
+      negPrior: cellResult.negPrior,
       posSupport: cellResult.posSupport,
       negSupport: cellResult.negSupport,
       posProb: cellResult.posProb,

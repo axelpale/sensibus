@@ -50,6 +50,8 @@ module.exports = (model, cell, memory) => {
     context: context,
     posFactors: posLikelihoodFactors,
     negFactors: negLikelihoodFactors,
+    posPrior: posPrior,
+    negPrior: negPrior,
     posSupport: posSupport,
     negSupport: negSupport,
     posProb: posProb,
