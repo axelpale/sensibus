@@ -8,30 +8,32 @@ module.exports = (config, memory) => {
   const fieldLength = config.fieldLength
   const fieldWidth = way.width(memory)
 
-  // To compute posterior probabilities for small sample sizes
-  // we need to provide a small initial mass for all conjugate priors.
-  // See https://en.wikipedia.org/wiki/Beta_distribution#Bayesian_inference
-  // See also Sunrise problem.
-  const alpha = 1
-
   // Base rate
   const sums = way.sums(memory)
   const sumsAbs = way.sumsAbs(memory)
   const priors = way.map2(sums, sumsAbs, (a, b) => {
-    return b > 0 ? a / (b + alpha) : 0
+    return b > 0 ? a / b : 0
   }).map(ch => ch[0])
 
   // Slices to go through
   const slices = way.slices(memory, fieldLength, fieldOffset)
 
+  // To compute posterior probabilities for small sample sizes
+  // we need to provide a small initial mass for all conjugate priors.
+  // See https://en.wikipedia.org/wiki/Beta_distribution#Bayesian_inference
+  // See also Sunrise problem.
+  // Let us use channel priors as initial knowledge of mass one.
+  const protoAbs = way.create(fieldWidth, fieldLength, 1)
+  const protoSum = way.map(protoAbs, (q, c) => priors[c])
+
   // Build conditioned fields by going through each slice.
   // The fields resemble probabilities given the target.
   const accInit = memory.map(ch => {
     return {
-      posSumField: way.create(fieldWidth, fieldLength, 0),
-      posAbsField: way.create(fieldWidth, fieldLength, 0),
-      negSumField: way.create(fieldWidth, fieldLength, 0),
-      negAbsField: way.create(fieldWidth, fieldLength, 0)
+      posSumField: protoSum,
+      posAbsField: protoAbs,
+      negSumField: protoSum,
+      negAbsField: protoAbs
     }
   })
   const sumQuads = slices.reduce((acc, slice) => {
@@ -60,13 +62,13 @@ module.exports = (config, memory) => {
   }, accInit)
 
   // Compute value from sums.
-  const fields = sumQuads.map(sumQuad => {
+  const fields = sumQuads.map((sumQuad, c) => {
     return Object.assign(sumQuad, {
       posField: way.map2(sumQuad.posSumField, sumQuad.posAbsField, (a, b) => {
-        return (b > 0) ? a / (b + alpha) : 0
+        return (b > 0) ? a / b : 0
       }),
       negField: way.map2(sumQuad.negSumField, sumQuad.negAbsField, (a, b) => {
-        return (b > 0) ? a / (b + alpha) : 0
+        return (b > 0) ? a / b : 0
       })
     })
   })
