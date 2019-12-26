@@ -12,6 +12,20 @@ const renderWay = (mem, opts) => {
   return '<div class="way-container">' + way.html(mem, opts) + '</div>'
 }
 
+const gain = (priors, posterior) => {
+  return way.map(posterior, (pos, c, t) => {
+    const pri = priors[c]
+    // Kullback-Leibler divergence
+    const x0 = (pos === 1) ? 0 : (1 - pos) * Math.log2((1 - pos) / (1 - pri))
+    const x1 = (pos === 0) ? 0 : pos * Math.log2(pos / pri)
+    return x0 + x1
+  })
+}
+
+const tritToProb = t => {
+  return (1 + t) / 2
+}
+
 module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
@@ -35,6 +49,12 @@ module.exports = (state, model, dispatch) => {
     })
   })()
 
+  const priors = model.priors.map(tritToProb)
+  const posField = way.map(model.fields[c].posField, tritToProb)
+  const negField = way.map(model.fields[c].negField, tritToProb)
+  const posGain = gain(priors, posField)
+  const negGain = gain(priors, negField)
+
   // General info that does not depend if the selected cell is unknown or not.
   innerHTML += generalTemplate({
     channelTitle: channelTitle,
@@ -44,12 +64,20 @@ module.exports = (state, model, dispatch) => {
     predictedValue: cellResult ? cellResult.prediction.toFixed(2) : 'N/A',
     posField: renderWay(model.fields[c].posField, {
       heading: 'If ' + channelTitle + ' then',
-      caption: 'in general.',
+      caption: 'in average.',
       selected: selected
     }),
     negField: renderWay(model.fields[c].negField, {
       heading: 'If not ' + channelTitle + ' then',
-      caption: 'in general.',
+      caption: 'in average.',
+      selected: selected
+    }),
+    posGain: renderWay(posGain, {
+      heading: 'Difference to channel mean around ' + channelTitle,
+      selected: selected
+    }),
+    negGain: renderWay(negGain, {
+      heading: 'Difference to channel mean around not ' + channelTitle,
       selected: selected
     })
   })
