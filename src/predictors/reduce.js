@@ -6,7 +6,7 @@ const delegate = (state, ev) => {
   // Delegate event to the selected predictor.
   // Create a state branch for the selector if one does not yet exist.
   //
-  const memory = state.timeline.way
+  const memory = state.timeline.memory
   const selection = state.predictors.selection
 
   const reducer = collection.getPredictor(selection).reduce
@@ -34,7 +34,7 @@ module.exports = (state, ev) => {
     state = Object.assign({}, state, {
       predictors: {
         selection: collection.DEFAULT_PREDICTOR,
-        prediction: way.fill(state.timeline.way, 0)
+        prediction: way.fill(state.timeline.memory, 0)
       }
     })
   }

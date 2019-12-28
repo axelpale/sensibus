@@ -11,7 +11,7 @@ module.exports = (state, dispatch) => {
   const canvas = document.createElement('div')
   canvas.classList.add('timeline-canvas')
 
-  const W = way.width(state.timeline.way)
+  const W = way.width(state.timeline.memory)
   canvas.style.width = '' + (W * 4.8 + 38).toFixed(2) + 'rem'
 
   canvas.appendChild(channelEditor(state, dispatch))

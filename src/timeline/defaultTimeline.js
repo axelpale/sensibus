@@ -14,7 +14,7 @@ module.exports = {
     frame: 0
   },
   version: 1,
-  way: [
+  memory: [
     [1, -1],
     [0, 1]
   ]

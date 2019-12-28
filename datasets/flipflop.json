@@ -20,7 +20,7 @@
     "frameOnEdit": null,
     "select": null,
     "version": 1,
-    "way": [
+    "memory": [
       [1, -1, 1, -1, 1, -1, 1, -1, 1, -1],
       [-1, 1, -1, 1, -1, 1, -1, 1, -1, 1]
     ]

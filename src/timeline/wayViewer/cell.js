@@ -29,7 +29,7 @@ module.exports = (state, dispatch, c, t) => {
   text.classList.add('cell-text')
   cell.appendChild(text)
 
-  const q = timeline.way[c][t]
+  const q = timeline.memory[c][t]
 
   // Design rules:
   // - given or predicted probability -> radius

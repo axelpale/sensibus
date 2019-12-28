@@ -24,7 +24,7 @@ module.exports = (state, ev) => {
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: way.dropChannel(state.timeline.way, ev.channel),
+          memory: way.dropChannel(state.timeline.memory, ev.channel),
           channels: copy,
           channelOnEdit: null,
           select: {
@@ -39,7 +39,7 @@ module.exports = (state, ev) => {
 
     case 'MOVE_CHANNEL': {
       const channelsCopy = state.timeline.channels.slice()
-      const W = way.width(state.timeline.way)
+      const W = way.width(state.timeline.memory)
       const source = ev.channel
       const target = (W + ev.channel + ev.offset) % W
 
@@ -47,13 +47,13 @@ module.exports = (state, ev) => {
       channelsCopy.splice(source, 1)
       channelsCopy.splice(target, 0, removedChannelConf)
 
-      const removedChannel = state.timeline.way[source]
-      const afterDrop = way.dropChannel(state.timeline.way, source)
+      const removedChannel = state.timeline.memory[source]
+      const afterDrop = way.dropChannel(state.timeline.memory, source)
       const afterInsert = way.insertChannel(afterDrop, target, removedChannel)
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: afterInsert,
+          memory: afterInsert,
           channels: channelsCopy,
           channelOnEdit: target
         })

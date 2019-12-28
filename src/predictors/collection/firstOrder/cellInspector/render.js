@@ -26,7 +26,7 @@ module.exports = (state, local, dispatch) => {
   innerHTML += generalTemplate({
     c: state.timeline.select.channel,
     t: state.timeline.select.frame,
-    memory: state.timeline.way,
+    memory: state.timeline.memory,
     predictedValue: predictedCell ? predictedCell.avg.toFixed(2) : 'N/A'
   })
 

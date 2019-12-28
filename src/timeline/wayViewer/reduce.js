@@ -7,7 +7,7 @@ module.exports = (state, ev) => {
     case 'EDIT_CELL': {
       const sel = timeline.select
 
-      const curval = timeline.way[ev.channel][ev.frame]
+      const curval = timeline.memory[ev.channel][ev.frame]
       const nextval = (() => {
         // If the cell is already selected, change the value
         if (sel && sel.channel === ev.channel && sel.frame === ev.frame) {
@@ -21,7 +21,7 @@ module.exports = (state, ev) => {
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, timeline, {
-          way: way.set(timeline.way, ev.channel, ev.frame, nextval),
+          memory: way.set(timeline.memory, ev.channel, ev.frame, nextval),
           select: {
             channel: ev.channel,
             frame: ev.frame
@@ -56,7 +56,7 @@ module.exports = (state, ev) => {
     }
 
     case 'MOVE_FRAME': {
-      const LEN = way.len(state.timeline.way)
+      const LEN = way.len(state.timeline.memory)
       const source = ev.frame
       const target = (LEN + ev.frame + ev.offset) % LEN
       const copy = state.timeline.frames.slice()
@@ -65,13 +65,13 @@ module.exports = (state, ev) => {
       copy.splice(source, 1)
       copy.splice(target, 0, frameConf)
 
-      const frame = way.frame(state.timeline.way, source)
-      const afterDrop = way.dropFrame(state.timeline.way, source)
+      const frame = way.frame(state.timeline.memory, source)
+      const afterDrop = way.dropFrame(state.timeline.memory, source)
       const afterInsert = way.insert(afterDrop, target, frame)
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: afterInsert,
+          memory: afterInsert,
           frames: copy,
           frameOnEdit: target
         })
@@ -84,7 +84,7 @@ module.exports = (state, ev) => {
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: way.dropFrame(state.timeline.way, ev.frame),
+          memory: way.dropFrame(state.timeline.memory, ev.frame),
           frames: copy,
           frameOnEdit: null,
           select: null

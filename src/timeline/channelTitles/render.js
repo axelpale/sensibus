@@ -11,7 +11,7 @@ module.exports = (state, dispatch) => {
   const cells = document.createElement('div')
   cells.classList.add('cells')
 
-  state.timeline.way.forEach((ch, c) => {
+  state.timeline.memory.forEach((ch, c) => {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.classList.add('cell-title')
