@@ -1,6 +1,6 @@
 require('./style.css')
 const way = require('senseway')
-const wayViewer = require('./wayViewer/render')
+const memoryViewer = require('./memoryViewer/render')
 const channelEditor = require('./channelEditor/render')
 const channelTitles = require('./channelTitles/render')
 
@@ -16,7 +16,7 @@ module.exports = (state, dispatch) => {
 
   canvas.appendChild(channelEditor(state, dispatch))
   canvas.appendChild(channelTitles(state, dispatch))
-  canvas.appendChild(wayViewer(state, dispatch))
+  canvas.appendChild(memoryViewer(state, dispatch))
 
   root.appendChild(canvas)
 
