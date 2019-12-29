@@ -11,7 +11,7 @@ const reducer = (state, ev) => {
       const newChannel = way.fill(sizeReference, 0)
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: way.mix(newChannel, state.timeline.memory),
+          memory: way.mix(newChannel, state.timeline.memory),
           channels: [].concat([{
             title: '?'
           }], state.timeline.channels),
@@ -25,7 +25,7 @@ const reducer = (state, ev) => {
       const newFrame = way.fill(sizeReference, 0)
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          way: way.join(state.timeline.memory, newFrame),
+          memory: way.join(state.timeline.memory, newFrame),
           frames: [].concat(state.timeline.frames, [{
             title: '?'
           }]),
