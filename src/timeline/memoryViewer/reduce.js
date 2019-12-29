@@ -1,16 +1,23 @@
 const way = require('senseway')
 
+const UP = 1
+const DOWN = -1
+
 module.exports = (state, ev) => {
   const timeline = state.timeline
 
   switch (ev.type) {
     case 'SELECT_CELL': {
+      // Determine cell edit direction from prediction at select
+      // to prevent hysteria between predictions of edits.
+      const pred = state.predictors.prediction[ev.channel][ev.frame]
       return Object.assign({}, state, {
         timeline: Object.assign({}, timeline, {
           select: {
             channel: ev.channel,
             frame: ev.frame
-          }
+          },
+          cellEditDirection: (pred > 0) ? UP : DOWN
         })
       })
     }
@@ -19,8 +26,8 @@ module.exports = (state, ev) => {
       const curval = timeline.memory[ev.channel][ev.frame]
       const nextval = (() => {
         // Take prediction into account.
-        const pred = state.predictors.prediction[ev.channel][ev.frame]
-        if (pred >= 0) {
+        const dir = timeline.cellEditDirection
+        if (dir && dir === UP) {
           if (curval === 0) return 1
           if (curval === 1) return -1
           if (curval === -1) return 0
