@@ -8,10 +8,9 @@ module.exports = (model, memory) => {
   //   into the context of the next prediction.
   // - The computation order is important.
   //   The heavier the context, the better the estimate.
-  const filter = cell => cell.value === 0
-  const unknowns = way.toTimeOrderedArray(memory).filter(filter)
+  const cells = way.toTimeOrderedArray(memory)
   // OPTIMIZE start search from the middle and avoid going far to light areas.
-  const firstCell = unknowns.reduce((acc, cell, i) => {
+  const firstCell = cells.reduce((acc, cell, i) => {
     const begin = lib.getBegin(model, cell.time)
     const end = lib.getEnd(model, cell.time)
     const context = way.slice(memory, begin, end)
@@ -25,9 +24,9 @@ module.exports = (model, memory) => {
     return acc
   }, { weight: -1 })
   // First up, then down from the first cell.
-  const orderedUnknowns = [].concat(
-    unknowns.slice(0, firstCell.index + 1).reverse(),
-    unknowns.slice(firstCell.index + 1)
+  const orderedCells = [].concat(
+    cells.slice(0, firstCell.index + 1).reverse(),
+    cells.slice(firstCell.index + 1)
   )
   // Now unknowns are ordered so that we can predict them dynamically.
   // We need to place the predictions in somewhere.
@@ -35,10 +34,10 @@ module.exports = (model, memory) => {
   const virtual = way.clone(memory)
 
   // Predict every unknown cell
-  const cellResults = orderedUnknowns.map(unknownCell => {
-    const result = infer(model, unknownCell, virtual)
+  const cellResults = orderedCells.map(cell => {
+    const result = infer(model, cell, virtual)
     // Insert prediction into the virtual memory to boost next predictions.
-    virtual[unknownCell.channel][unknownCell.time] = result.prediction
+    virtual[cell.channel][cell.time] = result.prediction
     return result
   })
 

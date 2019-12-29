@@ -6,9 +6,8 @@ module.exports = (model, memory) => {
   // Simple approach: fiels look mostly back.
   // Use single field to check how much it agrees with context.
   // Simple multiply-accumulate is what we need.
-  const unknowns = way.toArray(memory).filter(cell => cell.value === 0)
-  const cellResults = unknowns.map(unknownCell => {
-    const result = infer(model, unknownCell, memory)
+  const cellResults = way.toArray(memory).map(cell => {
+    const result = infer(model, cell, memory)
     return result
   })
 
