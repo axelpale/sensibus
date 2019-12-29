@@ -2,16 +2,20 @@
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
-  if (state.timeline.channelOnEdit === null) {
+  if (state.timeline.select === null) {
     return root
   }
 
-  const c = state.timeline.channelOnEdit
+  const c = state.timeline.select.channel
   const title = state.timeline.channels[c].title
 
-  const row = document.createElement('div')
-  row.classList.add('row')
-  row.classList.add('row-input')
+  root.classList.add('row')
+  const col = document.createElement('div')
+  col.classList.add('col-md')
+
+  const hel = document.createElement('h2')
+  hel.innerHTML = 'Channel'
+  col.appendChild(hel)
 
   const form = document.createElement('form')
 
@@ -44,14 +48,10 @@ module.exports = (state, dispatch) => {
 
   form.appendChild(newline)
 
-  row.appendChild(form)
-  root.appendChild(row)
+  col.appendChild(form)
+  root.appendChild(col)
 
   // Events
-
-  setTimeout(() => {
-    text.focus()
-  }, 200)
 
   form.addEventListener('submit', ev => {
     ev.preventDefault()

@@ -1,15 +1,28 @@
 
 module.exports = (state, dispatch) => {
+  const root = document.createElement('div')
+
+  if (state.timeline.select === null) {
+    return root
+  }
+
   const timeline = state.timeline
+  const t = timeline.select.frame
+  const frameTitle = timeline.frames[t].title
+
+  root.classList.add('row')
+  const col = document.createElement('div')
+  col.classList.add('col-md')
+
+  const hel = document.createElement('h2')
+  hel.innerHTML = 'Frame'
+  col.appendChild(hel)
 
   const form = document.createElement('form')
 
-  const t = timeline.frameOnEdit
-  const title = timeline.frames[t].title
-
   const text = document.createElement('input')
   text.type = 'text'
-  text.value = title
+  text.value = frameTitle
   form.appendChild(text)
 
   const okBtn = document.createElement('button')
@@ -32,11 +45,15 @@ module.exports = (state, dispatch) => {
   downBtn.innerHTML = 'Move down'
   form.appendChild(downBtn)
 
-  // Events
+  const breakBtn = document.createElement('button')
+  breakBtn.type = 'button'
+  breakBtn.innerHTML = 'Break below'
+  form.appendChild(breakBtn)
 
-  setTimeout(() => {
-    text.focus()
-  }, 200)
+  col.appendChild(form)
+  root.appendChild(col)
+
+  // Events
 
   form.addEventListener('submit', ev => {
     ev.preventDefault()
@@ -78,5 +95,12 @@ module.exports = (state, dispatch) => {
     })
   })
 
-  return form
+  breakBtn.addEventListener('click', ev => {
+    dispatch({
+      type: 'CREATE_BREAK',
+      beforeFrame: t
+    })
+  })
+
+  return root
 }

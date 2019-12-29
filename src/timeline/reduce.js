@@ -35,6 +35,14 @@ const reducer = (state, ev) => {
       })
     }
 
+    case 'CREATE_BREAK': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          breaks: [].concat(state.timeline.breaks, [ev.beforeFrame])
+        })
+      })
+    }
+
     case 'SELECT_NONE': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {

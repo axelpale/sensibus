@@ -6,6 +6,7 @@ module.exports = (local) => {
     frameOnEdit: null,
     select: null,
     version: 1,
-    memory: local.memory
+    memory: local.memory,
+    breaks: local.breaks
   }
 }

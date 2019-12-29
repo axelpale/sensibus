@@ -1,6 +1,9 @@
 require('./style.css')
 const navbar = require('./navbar/render')
 const timeline = require('./timeline/render')
+const cellEditor = require('./timeline/cellEditor/render')
+const channelEditor = require('./timeline/channelEditor/render')
+const frameEditor = require('./timeline/frameEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 
@@ -16,6 +19,9 @@ module.exports = (state, dispatch) => {
 
     const container = document.createElement('div')
     container.classList.add('container-fluid')
+    container.appendChild(cellEditor(state, dispatch))
+    container.appendChild(channelEditor(state, dispatch))
+    container.appendChild(frameEditor(state, dispatch))
     container.appendChild(predictors(state, dispatch))
     container.appendChild(performance(state, dispatch))
     sidebar.appendChild(container)
