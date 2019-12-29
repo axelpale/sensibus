@@ -4,8 +4,6 @@ const predictors = require('./predictors/reduce')
 const performance = require('./performance/reduce')
 
 module.exports = (state, ev) => {
-  console.log(ev)
-  console.log(state)
   if (!state) {
     state = {
       sidebar: true
