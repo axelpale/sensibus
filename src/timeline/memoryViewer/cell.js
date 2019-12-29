@@ -50,11 +50,21 @@ module.exports = (state, dispatch, c, t) => {
   icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
 
   cell.addEventListener('click', ev => {
-    dispatch({
-      type: 'EDIT_CELL',
-      channel: c,
-      frame: t
-    })
+    const sel = state.timeline.select
+    // TODO store.getState() if we go lazy
+    if (sel && sel.channel === c && sel.frame === t) {
+      dispatch({
+        type: 'EDIT_CELL',
+        channel: c,
+        frame: t
+      })
+    } else {
+      dispatch({
+        type: 'SELECT_CELL',
+        channel: c,
+        frame: t
+      })
+    }
   })
 
   return cell

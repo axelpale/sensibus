@@ -4,24 +4,9 @@ module.exports = (state, ev) => {
   const timeline = state.timeline
 
   switch (ev.type) {
-    case 'EDIT_CELL': {
-      const sel = timeline.select
-
-      const curval = timeline.memory[ev.channel][ev.frame]
-      const nextval = (() => {
-        // If the cell is already selected, change the value
-        if (sel && sel.channel === ev.channel && sel.frame === ev.frame) {
-          // TODO Take prediction into account.
-          if (curval === 0) return 1
-          if (curval === 1) return -1
-          if (curval === -1) return 0
-        } // else
-        return curval
-      })()
-
+    case 'SELECT_CELL': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, timeline, {
-          memory: way.set(timeline.memory, ev.channel, ev.frame, nextval),
           select: {
             channel: ev.channel,
             frame: ev.frame
@@ -30,11 +15,26 @@ module.exports = (state, ev) => {
       })
     }
 
-    case 'OPEN_FRAME_TITLE_EDITOR': {
+    case 'EDIT_CELL': {
+      const curval = timeline.memory[ev.channel][ev.frame]
+      const nextval = (() => {
+        // Take prediction into account.
+        const pred = state.predictors.prediction[ev.channel][ev.frame]
+        if (pred >= 0) {
+          if (curval === 0) return 1
+          if (curval === 1) return -1
+          if (curval === -1) return 0
+        } else {
+          if (curval === 0) return -1
+          if (curval === -1) return 1
+          if (curval === 1) return 0
+        }
+        return curval
+      })()
+
       return Object.assign({}, state, {
-        timeline: Object.assign({}, state.timeline, {
-          frameOnEdit: ev.frame,
-          select: null
+        timeline: Object.assign({}, timeline, {
+          memory: way.set(timeline.memory, ev.channel, ev.frame, nextval)
         })
       })
     }
