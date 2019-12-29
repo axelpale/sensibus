@@ -1,6 +1,7 @@
 const redux = require('redux')
 const reducer = require('./reduce')
 const renderer = require('./render')
+const hydrator = require('./hydrate')
 const clearElem = require('./lib/clearElem')
 
 // Hydrate to localStorage
@@ -35,10 +36,7 @@ store.subscribe(() => {
     container.appendChild(maybeElem)
   }
 
-  hydrate({
-    sidebar: state.sidebar,
-    timeline: state.timeline
-  })
+  hydrate(hydrator(state))
 })
 
 dispatch({ type: '__INIT__' })
