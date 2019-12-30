@@ -50,6 +50,11 @@ module.exports = (state, dispatch) => {
   breakBtn.innerHTML = 'Break below'
   form.appendChild(breakBtn)
 
+  const delBreakBtn = document.createElement('button')
+  delBreakBtn.type = 'button'
+  delBreakBtn.innerHTML = 'Remove Break'
+  form.appendChild(delBreakBtn)
+
   col.appendChild(form)
   root.appendChild(col)
 
@@ -99,6 +104,13 @@ module.exports = (state, dispatch) => {
     dispatch({
       type: 'CREATE_BREAK',
       beforeFrame: t
+    })
+  })
+
+  delBreakBtn.addEventListener('click', ev => {
+    dispatch({
+      type: 'REMOVE_BREAK',
+      frame: t
     })
   })
 

@@ -43,6 +43,16 @@ const reducer = (state, ev) => {
       })
     }
 
+    case 'REMOVE_BREAK': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          breaks: state.timeline.breaks.filter(t => {
+            return t !== ev.frame && t !== ev.frame + 1
+          })
+        })
+      })
+    }
+
     case 'SELECT_NONE': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
