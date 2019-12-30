@@ -3,10 +3,22 @@ const way = require('senseway')
 const memoryViewer = require('./memoryViewer/render')
 const channelTitles = require('./channelTitles/render')
 
-module.exports = (state, dispatch) => {
+exports.init = (state, dispatch) => {
   const root = document.createElement('div')
   root.classList.add('timeline-root')
+  root.id = 'timeline-root'
 
+  return root
+}
+
+exports.update = (state, dispatch) => {
+  // Remove old canvas
+  const root = document.getElementById('timeline-root')
+  if (root.firstChild) {
+    root.removeChild(root.firstChild)
+  }
+
+  // New canvas
   const canvas = document.createElement('div')
   canvas.classList.add('timeline-canvas')
 
@@ -17,6 +29,4 @@ module.exports = (state, dispatch) => {
   canvas.appendChild(memoryViewer(state, dispatch))
 
   root.appendChild(canvas)
-
-  return root
 }

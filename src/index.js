@@ -2,7 +2,6 @@ const redux = require('redux')
 const reducer = require('./reduce')
 const renderer = require('./render')
 const hydrator = require('./hydrate')
-const clearElem = require('./lib/clearElem')
 
 // Hydrate to localStorage
 const storageName = 'sensibus-state'
@@ -24,19 +23,12 @@ const store = redux.createStore(reducer, initialState)
 const dispatch = ev => store.dispatch(ev)
 
 // Render
-const rootElementId = 'container'
 store.subscribe(() => {
   const state = store.getState()
-
-  const container = document.getElementById(rootElementId)
-  clearElem(container)
-
-  const maybeElem = renderer(state, dispatch)
-  if (maybeElem) {
-    container.appendChild(maybeElem)
-  }
-
+  renderer.update(state, dispatch)
   hydrate(hydrator(state))
 })
+
+renderer.init(store.getState(), dispatch)
 
 dispatch({ type: '__INIT__' })
