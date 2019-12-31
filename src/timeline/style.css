@@ -1,6 +1,6 @@
 .timeline-root {
   min-width: 100%;
-  padding: 25rem;
+  padding: 20rem 0 20rem 0;
   overflow: scroll;
 }
 
