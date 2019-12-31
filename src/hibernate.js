@@ -1,7 +1,5 @@
-const predictors = require('./predictors/hydrate')
-const timeline = require('./timeline/hydrate')
-
-// TODO rename hydrate to hibernate
+const predictors = require('./predictors/hibernate')
+const timeline = require('./timeline/hibernate')
 
 module.exports = (state) => {
   return {

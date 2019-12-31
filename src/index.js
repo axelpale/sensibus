@@ -1,9 +1,9 @@
 const redux = require('redux')
 const reducer = require('./reduce')
 const renderer = require('./render')
-const hydrator = require('./hydrate')
+const hibernator = require('./hibernate')
 
-// Hydrate to localStorage
+// Hibernate to localStorage
 const storageName = 'sensibus-state'
 const storedState = window.localStorage.getItem(storageName)
 let initialState
@@ -13,7 +13,7 @@ if (storedState) {
   initialState = {}
 }
 
-const hydrate = (state) => {
+const hibernate = (state) => {
   const stateJson = JSON.stringify(state)
   window.localStorage.setItem(storageName, stateJson)
 }
@@ -26,7 +26,7 @@ const dispatch = ev => store.dispatch(ev)
 store.subscribe(() => {
   const state = store.getState()
   renderer.update(state, dispatch)
-  hydrate(hydrator(state))
+  hibernate(hibernator(state))
 })
 
 renderer.init(store.getState(), dispatch)

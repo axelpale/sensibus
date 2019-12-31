@@ -6,10 +6,10 @@ module.exports = (local) => {
   }
 
   collection.getPredictorIds().forEach(prid => {
-    // Hydrate state of those predictors that have set a state.
+    // Hibernate state of those predictors that have set a state.
     const model = local[prid]
     if (model) {
-      nextLocal[prid] = collection.hydrate(prid, model)
+      nextLocal[prid] = collection.hibernate(prid, model)
     }
   })
 

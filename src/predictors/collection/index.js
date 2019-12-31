@@ -30,6 +30,6 @@ exports.getSelectedModel = (state) => {
   return state.predictors[name]
 }
 
-exports.hydrate = (predictorId, model) => {
-  return exports.predictors[predictorId].hydrate(model)
+exports.hibernate = (predictorId, model) => {
+  return exports.predictors[predictorId].hibernate(model)
 }

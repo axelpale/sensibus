@@ -1,6 +1,6 @@
 const download = require('./download')
 const template = require('./template.ejs')
-const hydrate = require('../hydrate')
+const hibernate = require('../hibernate')
 require('./custom.css')
 
 const listenId = (root, elemId, handler) => {
@@ -26,7 +26,7 @@ module.exports = (state, dispatch) => {
 
   listenId(root, 'file-save', ev => {
     // Click to download
-    const ex = hydrate(state)
+    const ex = hibernate(state)
     const raw = JSON.stringify(ex)
     const pretty = raw
       .replace(/},/g, '},\n')
