@@ -3,23 +3,41 @@ const way = require('senseway')
 const UP = 1
 const DOWN = -1
 
+const updateSelect = (state, channel, frame) => {
+  // Determine cell edit direction from prediction at select
+  // to prevent hysteria between predictions of edits.
+  const pred = state.predictors.prediction[channel][frame]
+  return Object.assign({}, state, {
+    timeline: Object.assign({}, state.timeline, {
+      select: {
+        channel: channel,
+        frame: frame
+      },
+      cellEditDirection: (pred > 0) ? UP : DOWN
+    })
+  })
+}
+
 module.exports = (state, ev) => {
   const timeline = state.timeline
 
   switch (ev.type) {
     case 'SELECT_CELL': {
-      // Determine cell edit direction from prediction at select
-      // to prevent hysteria between predictions of edits.
-      const pred = state.predictors.prediction[ev.channel][ev.frame]
-      return Object.assign({}, state, {
-        timeline: Object.assign({}, timeline, {
-          select: {
-            channel: ev.channel,
-            frame: ev.frame
-          },
-          cellEditDirection: (pred > 0) ? UP : DOWN
-        })
-      })
+      return updateSelect(state, ev.channel, ev.frame)
+    }
+
+    case 'SELECT_FRAME': {
+      const sel = state.timeline.select
+      const c = sel ? sel.channel : 0
+      const t = ev.frame
+      return updateSelect(state, c, t)
+    }
+
+    case 'SELECT_CHANNEL': {
+      const sel = state.timeline.select
+      const c = ev.channel
+      const t = sel ? sel.frame : 0
+      return updateSelect(state, c, t)
     }
 
     case 'EDIT_CELL': {

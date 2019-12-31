@@ -24,6 +24,13 @@ module.exports = (state, dispatch) => {
     const val = state.timeline.channels[c].title
     cell.innerHTML = '<div class="cell-text">' + val + '</div>'
 
+    cell.addEventListener('click', () => {
+      dispatch({
+        type: 'SELECT_CHANNEL',
+        channel: c
+      })
+    })
+
     cells.appendChild(cell)
   })
 

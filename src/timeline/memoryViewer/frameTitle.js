@@ -14,5 +14,12 @@ module.exports = (state, dispatch, time) => {
   label.innerHTML = timeline.frames[time].title
   root.appendChild(label)
 
+  root.addEventListener('click', () => {
+    dispatch({
+      type: 'SELECT_FRAME',
+      frame: time
+    })
+  })
+
   return root
 }
