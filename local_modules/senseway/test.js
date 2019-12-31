@@ -209,18 +209,21 @@ test('insert', (t) => {
 })
 
 test('insertChannel', (t) => {
-  t.deepEqual(way.insertChannel(ONES, 1, [2, 2, 2]), [
+  t.deepEqual(way.insertChannel(ONES, 1, [[2, 2, 2]]), [
     [1, 1, 1],
     [2, 2, 2],
     [1, 1, 1]
   ])
-  t.deepEqual(way.insertChannel(ONES, 2, [2, 2, 2]), [
+  t.deepEqual(way.insertChannel(ONES, 2, [[2, 2, 2]]), [
     [1, 1, 1],
     [1, 1, 1],
     [2, 2, 2]
   ])
   t.throws(() => {
     way.insertChannel(ONES, 2, [2, 2])
+  }, /must match/)
+  t.throws(() => {
+    way.insertChannel(ONES, 2, [[2, 2]])
   }, /must match/)
   t.end()
 })
@@ -307,8 +310,8 @@ test('multiply', (t) => {
 
 test('negate', (t) => {
   t.deepEqual(way.negate(V), [
-    [-1, 0, -1],
-    [0, -1, 0]
+    [-1, -0, -1],
+    [-0, -1, -0]
   ])
   t.end()
 })

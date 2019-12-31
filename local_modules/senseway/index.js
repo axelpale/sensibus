@@ -212,12 +212,12 @@ exports.insert = (wayA, t, wayB) => {
 }
 
 exports.insertChannel = (way, c, channel) => {
-  if (way.length > 0 && way[0].length !== channel.length) {
+  if (way.length > 0 && way[0].length !== channel[0].length) {
     throw new Error('Channel lengths must match.')
   }
 
   const copy = way.slice()
-  copy.splice(c, 0, channel)
+  copy.splice(c, 0, channel[0])
   return copy
 }
 
