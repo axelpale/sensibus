@@ -47,7 +47,7 @@ module.exports = (state, ev) => {
       channelsCopy.splice(source, 1)
       channelsCopy.splice(target, 0, removedChannelConf)
 
-      const removedChannel = state.timeline.memory[source]
+      const removedChannel = [state.timeline.memory[source]]
       const afterDrop = way.dropChannel(state.timeline.memory, source)
       const afterInsert = way.insertChannel(afterDrop, target, removedChannel)
 

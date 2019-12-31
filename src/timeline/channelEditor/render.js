@@ -28,14 +28,6 @@ module.exports = (state, dispatch) => {
     })
   })
 
-  listen(root, '#channelTitleSubmit', 'click', ev => {
-    dispatch({
-      type: 'EDIT_CHANNEL_TITLE',
-      channel: c,
-      title: root.querySelector('#channelTitle').value
-    })
-  })
-
   listen(root, '#channelRemove', 'click', ev => {
     dispatch({
       type: 'REMOVE_CHANNEL',
@@ -56,6 +48,20 @@ module.exports = (state, dispatch) => {
       type: 'MOVE_CHANNEL',
       channel: c,
       offset: 1
+    })
+  })
+
+  listen(root, '#channelCreateLeft', 'click', ev => {
+    dispatch({
+      type: 'CREATE_CHANNEL',
+      belowChannel: c
+    })
+  })
+
+  listen(root, '#channelCreateRight', 'click', ev => {
+    dispatch({
+      type: 'CREATE_CHANNEL',
+      belowChannel: c + 1
     })
   })
 

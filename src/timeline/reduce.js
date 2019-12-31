@@ -7,15 +7,20 @@ const way = require('senseway')
 const reducer = (state, ev) => {
   switch (ev.type) {
     case 'CREATE_CHANNEL': {
-      const sizeReference = way.channel(state.timeline.memory, 0)
+      const atC = ev.belowChannel ? ev.belowChannel : 0
+      const memory = state.timeline.memory
+
+      const sizeReference = way.channel(memory, 0)
       const newChannel = way.fill(sizeReference, 0)
+      const nextMemory = way.insertChannel(memory, atC, newChannel)
+
+      const nextTitles = state.timeline.channels.slice()
+      nextTitles.splice(atC, 0, { title: '' })
+
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          memory: way.mix(newChannel, state.timeline.memory),
-          channels: [].concat([{
-            title: '?'
-          }], state.timeline.channels),
-          channelOnEdit: 0 // Open name edit input
+          memory: nextMemory,
+          channels: nextTitles
         })
       })
     }
@@ -28,9 +33,7 @@ const reducer = (state, ev) => {
           memory: way.join(state.timeline.memory, newFrame),
           frames: [].concat(state.timeline.frames, [{
             title: '?'
-          }]),
-          // Open name edit input
-          frameOnEdit: way.len(state.timeline.memory)
+          }])
         })
       })
     }
