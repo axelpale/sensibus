@@ -52,6 +52,20 @@ module.exports = (state, dispatch) => {
     })
   })
 
+  listen(root, '#frameCreateUp', 'click', ev => {
+    dispatch({
+      type: 'CREATE_FRAME',
+      frame: t + 1
+    })
+  })
+
+  listen(root, '#frameCreateDown', 'click', ev => {
+    dispatch({
+      type: 'CREATE_FRAME',
+      frame: t
+    })
+  })
+
   listen(root, '#frameCreateBreak', 'click', ev => {
     dispatch({
       type: 'CREATE_BREAK',

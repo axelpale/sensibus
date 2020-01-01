@@ -26,14 +26,20 @@ const reducer = (state, ev) => {
     }
 
     case 'CREATE_FRAME': {
-      const sizeReference = way.frame(state.timeline.memory, 0)
+      const memory = state.timeline.memory
+      const atT = ev.frame ? ev.frame : way.len(memory)
+
+      const sizeReference = way.frame(memory, 0)
       const newFrame = way.fill(sizeReference, 0)
+      const nextMemory = way.insert(memory, atT, newFrame)
+
+      const nextTitles = state.timeline.frames.slice()
+      nextTitles.splice(atT, 0, { title: '' })
+
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          memory: way.join(state.timeline.memory, newFrame),
-          frames: [].concat(state.timeline.frames, [{
-            title: '?'
-          }])
+          memory: nextMemory,
+          frames: nextTitles
         })
       })
     }
