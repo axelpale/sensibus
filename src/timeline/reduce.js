@@ -3,7 +3,17 @@ const channelEditor = require('./channelEditor/reduce')
 const memoryViewer = require('./memoryViewer/reduce')
 const way = require('senseway')
 
-const reducer = (state, ev) => {
+module.exports = (state, ev) => {
+  // Default timeline
+  if (!state.timeline) {
+    state = Object.assign({}, state, {
+      timeline: defaultTimeline
+    })
+  }
+
+  state = channelEditor(state, ev)
+  state = memoryViewer(state, ev)
+
   switch (ev.type) {
     case 'CREATE_CHANNEL': {
       const atC = ev.belowChannel ? ev.belowChannel : 0
@@ -73,21 +83,4 @@ const reducer = (state, ev) => {
       return state
     }
   }
-}
-
-module.exports = (state, ev) => {
-  // Default timeline
-  if (!state.timeline) {
-    state = Object.assign({}, state, {
-      timeline: defaultTimeline
-    })
-  }
-
-  return [
-    reducer,
-    channelEditor,
-    memoryViewer
-  ].reduce((acc, re) => {
-    return re(acc, ev)
-  }, state)
 }
