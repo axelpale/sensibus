@@ -98,7 +98,11 @@ module.exports = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           memory: afterInsert,
           frames: copy,
-          frameOnEdit: target
+          frameOnEdit: target,
+          select: {
+            channel: state.timeline.select.channel || 0,
+            frame: target
+          }
         })
       })
     }
