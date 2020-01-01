@@ -40,6 +40,11 @@ module.exports = (state, model, dispatch) => {
   const emptyField = way.fill(model.fields[0].posField, 0) // TODO use mod para
   const selected = way.set(emptyField, c, -model.fieldOffset, 1)
 
+  const titleFn = (q, ci, ti) => {
+    const chTitle = state.timeline.channels[ci].title
+    return q.toFixed(2) + ' ' + chTitle
+  }
+
   let innerHTML = ''
 
   // Get prediction data for the selected cell.
@@ -52,8 +57,8 @@ module.exports = (state, model, dispatch) => {
   const priors = model.priors.map(tritToProb)
   const posField = way.map(model.fields[c].posField, tritToProb)
   const negField = way.map(model.fields[c].negField, tritToProb)
-  const posGain = gain(priors, posField)
-  const negGain = gain(priors, negField)
+  const posGain = way.set(gain(priors, posField), c, -model.fieldOffset, 0)
+  const negGain = way.set(gain(priors, negField), c, -model.fieldOffset, 0)
 
   // General info that does not depend if the selected cell is unknown or not.
   innerHTML += generalTemplate({
@@ -65,30 +70,37 @@ module.exports = (state, model, dispatch) => {
     posField: renderWay(model.fields[c].posField, {
       heading: 'If ' + channelTitle + ' then',
       caption: 'in average.',
-      selected: selected
+      selected: selected,
+      title: titleFn
     }),
     negField: renderWay(model.fields[c].negField, {
       heading: 'If not ' + channelTitle + ' then',
       caption: 'in average.',
-      selected: selected
+      selected: selected,
+      title: titleFn
     }),
     posGain: renderWay(posGain, {
-      heading: 'Difference to channel mean around ' + channelTitle,
-      selected: selected
+      heading: 'Difference to channel average around ' + channelTitle,
+      selected: selected,
+      title: titleFn
     }),
     negGain: renderWay(negGain, {
-      heading: 'Difference to channel mean around not ' + channelTitle,
-      selected: selected
+      heading: 'Difference to channel average around not ' + channelTitle,
+      selected: selected,
+      title: titleFn
+    }),
+    priors: renderWay(model.priors.map(t => [t]), {
+      heading: 'Channel averages',
+      selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
+      title: titleFn
     })
   })
 
   if (cellResult) {
     // A unknown cell is selected. Show how we predict its value.
-    const ctx = cellResult.context
-    const selected = way.set(way.fill(ctx, 0), c, -model.fieldOffset, 1)
 
     innerHTML += template({
-      contextHtml: renderWay(ctx, {
+      contextHtml: renderWay(cellResult.context, {
         heading: 'Selection context',
         selected: selected
       }),
