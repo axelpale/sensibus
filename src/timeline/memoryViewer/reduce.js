@@ -67,7 +67,6 @@ module.exports = (state, ev) => {
     case 'EDIT_FRAME_TITLE': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          frameOnEdit: null,
           frames: state.timeline.frames.map((frameConf, t) => {
             if (t === ev.frame) {
               return Object.assign({}, frameConf, {
@@ -98,7 +97,6 @@ module.exports = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           memory: afterInsert,
           frames: copy,
-          frameOnEdit: target,
           select: {
             channel: state.timeline.select.channel || 0,
             frame: target
@@ -115,7 +113,6 @@ module.exports = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           memory: way.dropFrame(state.timeline.memory, ev.frame),
           frames: copy,
-          frameOnEdit: null,
           select: null
         })
       })

@@ -5,7 +5,6 @@ module.exports = (state, ev) => {
     case 'EDIT_CHANNEL_TITLE': {
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          channelOnEdit: null,
           channels: state.timeline.channels.map((chConf, c) => {
             if (c === ev.channel) {
               return Object.assign({}, chConf, {
@@ -26,7 +25,6 @@ module.exports = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           memory: way.dropChannel(state.timeline.memory, ev.channel),
           channels: copy,
-          channelOnEdit: null,
           select: {
             channel: state.timeline.select.channel >= ev.channel
               ? state.timeline.select.channel - 1

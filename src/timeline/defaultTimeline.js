@@ -7,8 +7,6 @@ module.exports = {
     { title: 'Frame 1' },
     { title: 'Frame 2' }
   ],
-  channelOnEdit: null,
-  frameOnEdit: null,
   select: {
     channel: 0,
     frame: 0
