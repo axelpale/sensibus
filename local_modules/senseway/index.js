@@ -137,6 +137,9 @@ exports.html = (way, opts) => {
   const caption = opts.caption ? opts.caption : ''
   const selected = opts.selected ? opts.selected : exports.fill(way, 0)
   const normalize = opts.normalize ? true : false
+  const title = opts.title ? opts.title : (q, c, t) => {
+    return q + ' @[' + c + '][' + t + ']'
+  }
 
   const len = exports.len(way)
   const width = exports.width(way)
@@ -168,8 +171,7 @@ exports.html = (way, opts) => {
       if (selected[c][t] === 1) classStr += ' way-selected'
       str += 'class="' + classStr + '" '
 
-      const title = q + ' @[' + c + '][' + t + ']'
-      str += 'title="' + title + '" '
+      str += 'title="' + title(q, c, t) + '" '
       str += 'data-channel="' + c + '" '
       str += 'data-time="' + t + '" '
 
