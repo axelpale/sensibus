@@ -8,8 +8,12 @@ exports.predictors = {
   firstOrder: require('./firstOrder')
 }
 
-exports.getPredictor = (predictorName) => {
-  const p = exports.predictors[predictorName]
+exports.getPredictorIds = () => {
+  return Object.keys(exports.predictors)
+}
+
+exports.getPredictor = (predictorId) => {
+  const p = exports.predictors[predictorId]
   if (p) {
     return p
   }
@@ -24,4 +28,8 @@ exports.getSelectedPredictor = (state) => {
 exports.getSelectedModel = (state) => {
   const name = state.predictors.selection
   return state.predictors[name]
+}
+
+exports.hibernate = (predictorId, model) => {
+  return exports.predictors[predictorId].hibernate(model)
 }

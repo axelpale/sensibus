@@ -15,5 +15,9 @@ module.exports = (state, ev) => {
   state = predictors(state, ev)
   state = performance(state, ev)
 
-  return state
+  switch (ev.type) {
+    default: {
+      return state
+    }
+  }
 }

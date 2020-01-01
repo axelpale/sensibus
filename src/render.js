@@ -1,13 +1,41 @@
 require('./style.css')
 const navbar = require('./navbar/render')
 const timeline = require('./timeline/render')
+const cellEditor = require('./timeline/cellEditor/render')
+const channelEditor = require('./timeline/channelEditor/render')
+const frameEditor = require('./timeline/frameEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 
-module.exports = (state, dispatch) => {
+exports.init = (state, dispatch) => {
+  const container = document.getElementById('container')
+
+  // Root elem
   const root = document.createElement('div')
   root.classList.add('root')
-  root.appendChild(timeline(state, dispatch))
+  root.id = 'root'
+
+  // Timeline
+  root.appendChild(timeline.init(state, dispatch))
+
+  // Sidebar
+  const sidebarContainer = document.createElement('div')
+  sidebarContainer.classList.add('sidebar-container')
+  sidebarContainer.id = 'sidebarContainer'
+  root.appendChild(sidebarContainer)
+
+  // Add to DOM
+  container.appendChild(root)
+}
+
+exports.update = (state, dispatch) => {
+  timeline.update(state, dispatch)
+
+  // Clear sidebar container
+  const sidebarContainer = document.getElementById('sidebarContainer')
+  if (sidebarContainer.firstChild) {
+    sidebarContainer.removeChild(sidebarContainer.firstChild)
+  }
 
   if (state.sidebar) {
     const sidebar = document.createElement('div')
@@ -16,11 +44,14 @@ module.exports = (state, dispatch) => {
 
     const container = document.createElement('div')
     container.classList.add('container-fluid')
+    container.appendChild(cellEditor(state, dispatch))
+    container.appendChild(channelEditor(state, dispatch))
+    container.appendChild(frameEditor(state, dispatch))
     container.appendChild(predictors(state, dispatch))
     container.appendChild(performance(state, dispatch))
     sidebar.appendChild(container)
 
-    root.appendChild(sidebar)
+    sidebarContainer.appendChild(sidebar)
   } else {
     // Sidebar closed
     const opener = document.createElement('div')
@@ -31,7 +62,7 @@ module.exports = (state, dispatch) => {
     openerIcon.width = 30
     openerIcon.height = 30
     opener.appendChild(openerIcon)
-    root.appendChild(opener)
+    sidebarContainer.appendChild(opener)
 
     opener.addEventListener('click', ev => {
       dispatch({
@@ -39,6 +70,4 @@ module.exports = (state, dispatch) => {
       })
     })
   }
-
-  return root
 }

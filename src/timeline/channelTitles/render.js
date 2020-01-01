@@ -11,7 +11,7 @@ module.exports = (state, dispatch) => {
   const cells = document.createElement('div')
   cells.classList.add('cells')
 
-  state.timeline.way.forEach((ch, c) => {
+  state.timeline.memory.forEach((ch, c) => {
     const cell = document.createElement('div')
     cell.classList.add('cell')
     cell.classList.add('cell-title')
@@ -24,9 +24,9 @@ module.exports = (state, dispatch) => {
     const val = state.timeline.channels[c].title
     cell.innerHTML = '<div class="cell-text">' + val + '</div>'
 
-    cell.addEventListener('click', ev => {
+    cell.addEventListener('click', () => {
       dispatch({
-        type: 'OPEN_CHANNEL_TITLE_EDITOR',
+        type: 'SELECT_CHANNEL',
         channel: c
       })
     })

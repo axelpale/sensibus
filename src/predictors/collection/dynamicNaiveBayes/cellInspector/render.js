@@ -63,9 +63,9 @@ module.exports = (state, model, dispatch) => {
   // General info that does not depend if the selected cell is unknown or not.
   innerHTML += generalTemplate({
     channelTitle: channelTitle,
-    c: state.timeline.select.channel,
-    t: state.timeline.select.frame,
-    memory: state.timeline.way,
+    c: c,
+    t: t,
+    givenValue: state.timeline.memory[c][t],
     predictedValue: cellResult ? cellResult.prediction.toFixed(2) : 'N/A',
     posField: renderWay(model.fields[c].posField, {
       heading: 'If ' + channelTitle + ' then',

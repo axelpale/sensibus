@@ -1,16 +1,34 @@
-const reduxish = require('reduxish')
+const redux = require('redux')
+const reducer = require('./reduce')
+const renderer = require('./render')
+const hibernator = require('./hibernate')
 
-const renderers = [
-  require('./render')
-]
+// Hibernate to localStorage
+const storageName = 'sensibus-state'
+const storedState = window.localStorage.getItem(storageName)
+let initialState
+if (storedState) {
+  initialState = JSON.parse(storedState)
+} else {
+  initialState = {}
+}
 
-const reducers = [
-  require('./reduce')
-]
+const hibernate = (state) => {
+  const stateJson = JSON.stringify(state)
+  window.localStorage.setItem(storageName, stateJson)
+}
 
-reduxish({
-  storageName: 'sensibus-state',
-  rootElementId: 'container',
-  renderers: renderers,
-  reducers: reducers
+// Init store
+const store = redux.createStore(reducer, initialState)
+const dispatch = ev => store.dispatch(ev)
+
+// Render
+store.subscribe(() => {
+  const state = store.getState()
+  renderer.update(state, dispatch)
+  hibernate(hibernator(state))
 })
+
+renderer.init(store.getState(), dispatch)
+
+dispatch({ type: '__INIT__' })

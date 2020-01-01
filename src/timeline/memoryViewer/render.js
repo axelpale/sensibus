@@ -6,13 +6,18 @@ module.exports = (state, dispatch) => {
   const timeline = state.timeline
   const root = document.createElement('div')
 
-  const W = way.width(timeline.way)
-  const LEN = way.len(timeline.way)
+  const W = way.width(timeline.memory)
+  const LEN = way.len(timeline.memory)
 
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
     const row = document.createElement('div')
     row.classList.add('timeline-row')
+
+    if (timeline.breaks.indexOf(t) >= 0) {
+      row.classList.add('timeline-break')
+    }
+
     root.appendChild(row)
 
     row.appendChild(frameTitle(state, dispatch, t))

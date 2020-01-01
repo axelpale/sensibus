@@ -1,5 +1,6 @@
 const download = require('./download')
 const template = require('./template.ejs')
+const hibernate = require('../hibernate')
 require('./custom.css')
 
 const listenId = (root, elemId, handler) => {
@@ -25,8 +26,18 @@ module.exports = (state, dispatch) => {
 
   listenId(root, 'file-save', ev => {
     // Click to download
-    const ex = state
-    download('sensibus-backup.json', JSON.stringify(ex, null, 2))
+    const ex = hibernate(state)
+    const raw = JSON.stringify(ex)
+    const pretty = raw
+      .replace(/},/g, '},\n')
+      .replace(/":\[{/g, '":[\n{')
+      .replace(/":{/g, '":{\n')
+      .replace(/":\[\[/g, '":[\n[')
+      .replace(/]],/g, ']\n],')
+      .replace(/],/g, '],\n')
+      .replace(/,"(\w)/g, ',\n"$1')
+    // TODO forget about pretty printing to prevent string replace errors
+    download('sensibus-backup.json', pretty)
   })
 
   const openInput = root.querySelector('#file-open')

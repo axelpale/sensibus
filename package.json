@@ -32,9 +32,7 @@
   "dependencies": {
     "deep-equal": "^1.0.1",
     "lodash": "^4.17.15",
-    "mcbsp": "file:./local_modules/mcbsp",
-    "reduxish": "file:./local_modules/reduxish",
-    "sensepat": "file:./local_modules/sensepat",
+    "redux": "^4.0.5",
     "senseway": "file:./local_modules/senseway"
   }
 }

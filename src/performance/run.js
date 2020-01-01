@@ -7,7 +7,7 @@ module.exports = (state) => {
   //   clone the memory but set the known value to 0
   //   make prediction
   //   compare prediction to the known value
-  const mem = state.timeline.way
+  const mem = state.timeline.memory
   const predictor = predictorCollection.getSelectedPredictor(state)
   const config = predictorCollection.getSelectedModel(state)
 
