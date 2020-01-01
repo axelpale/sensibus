@@ -55,7 +55,10 @@ module.exports = (state, ev) => {
         timeline: Object.assign({}, state.timeline, {
           memory: afterInsert,
           channels: channelsCopy,
-          channelOnEdit: target
+          select: {
+            channel: target,
+            frame: state.timeline.select.frame || 0
+          }
         })
       })
     }
