@@ -16,6 +16,11 @@ module.exports = (state, dispatch) => {
 
     if (timeline.breaks.indexOf(t) >= 0) {
       row.classList.add('timeline-break')
+      row.classList.add('timeline-after-break')
+    }
+
+    if (timeline.breaks.indexOf(t + 1) >= 0) {
+      row.classList.add('timeline-before-break')
     }
 
     root.appendChild(row)
