@@ -1,6 +1,5 @@
 const defaultTimeline = require('./defaultTimeline')
 const channelEditor = require('./channelEditor/reduce')
-const channelTitles = require('./channelTitles/reduce')
 const memoryViewer = require('./memoryViewer/reduce')
 const way = require('senseway')
 
@@ -87,7 +86,6 @@ module.exports = (state, ev) => {
   return [
     reducer,
     channelEditor,
-    channelTitles,
     memoryViewer
   ].reduce((acc, re) => {
     return re(acc, ev)
