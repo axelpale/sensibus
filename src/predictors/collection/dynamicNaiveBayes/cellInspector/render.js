@@ -60,10 +60,10 @@ module.exports = (state, model, dispatch) => {
   const posGain = way.set(gain(priors, posField), c, -model.fieldOffset, 0)
   const negGain = way.set(gain(priors, negField), c, -model.fieldOffset, 0)
   const posDiff = way.map(posField, (p, c, t) => {
-    return priors[c] - p
+    return p - priors[c]
   })
   const negDiff = way.map(negField, (p, c, t) => {
-    return priors[c] - p
+    return p - priors[c]
   })
 
   // General info that does not depend if the selected cell is unknown or not.
