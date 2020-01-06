@@ -121,6 +121,7 @@ test('clone', (t) => {
 
 test('create', (t) => {
   t.deepEqual(way.create(2, 3, 1), ONES)
+  t.deepEqual(way.create(5, 0, 1), [[], [], [], [], []])
   t.end()
 })
 
