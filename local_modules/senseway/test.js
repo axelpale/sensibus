@@ -429,6 +429,17 @@ test('slices', (t) => {
   t.end()
 })
 
+test('slicesByList', (t) => {
+  t.deepEqual(way.slicesByList(V, [1, 2]), [
+    [[1], [0]],
+    [[0], [1]],
+    [[1], [0]]
+  ])
+  t.deepEqual(way.slicesByList(V, []), [V])
+  t.deepEqual(way.slicesByList([], [1, 2]), [[]])
+  t.end()
+})
+
 test('sum', (t) => {
   t.equal(way.sum(ONES), 6)
   t.equal(way.sum(V), 3)

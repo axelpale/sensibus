@@ -424,6 +424,19 @@ exports.slices = (way, sliceLen, timeOffset) => {
   })
 }
 
+exports.slicesByList = (way, sliceTimes) => {
+  const len = exports.len(way)
+  const okTimes = sliceTimes.filter(t => t < len)
+  const ts = [0].concat(okTimes, [len])
+  const slices = []
+  for (let i = 0; i < ts.length - 1; i += 1) {
+    const begin = ts[i]
+    const end = ts[i + 1]
+    slices.push(exports.slice(way, begin, end))
+  }
+  return slices
+}
+
 exports.sum = (way) => {
   // Sum elements together.
   return way.reduce((acc, ch) => ch.reduce((ac, q) => ac + q, acc), 0)
