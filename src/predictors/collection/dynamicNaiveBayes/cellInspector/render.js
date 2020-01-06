@@ -59,6 +59,12 @@ module.exports = (state, model, dispatch) => {
   const negField = way.map(model.fields[c].negField, tritToProb)
   const posGain = way.set(gain(priors, posField), c, -model.fieldOffset, 0)
   const negGain = way.set(gain(priors, negField), c, -model.fieldOffset, 0)
+  const posDiff = way.map(posField, (p, c, t) => {
+    return priors[c] - p
+  })
+  const negDiff = way.map(negField, (p, c, t) => {
+    return priors[c] - p
+  })
 
   // General info that does not depend if the selected cell is unknown or not.
   innerHTML += generalTemplate({
@@ -80,11 +86,21 @@ module.exports = (state, model, dispatch) => {
       title: titleFn
     }),
     posGain: renderWay(posGain, {
-      heading: 'Difference to channel average around ' + channelTitle,
+      heading: 'Information gained in respect to channel average around ' + channelTitle,
       selected: selected,
       title: titleFn
     }),
     negGain: renderWay(negGain, {
+      heading: 'Information gained in respect to channel average around not ' + channelTitle,
+      selected: selected,
+      title: titleFn
+    }),
+    posDiff: renderWay(posDiff, {
+      heading: 'Difference to channel average around ' + channelTitle,
+      selected: selected,
+      title: titleFn
+    }),
+    negDiff: renderWay(negDiff, {
       heading: 'Difference to channel average around not ' + channelTitle,
       selected: selected,
       title: titleFn
