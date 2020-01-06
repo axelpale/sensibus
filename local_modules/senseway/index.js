@@ -237,7 +237,10 @@ exports.last = (way, n) => {
 }
 
 exports.len = (way) => {
-  return way[0].length
+  if (way.length > 0) {
+    return way[0].length
+  }
+  return 0
 }
 
 exports.map = (way, fn) => {
@@ -392,7 +395,7 @@ exports.slice = (way, begin, end) => {
   //
   const len = end - begin
   const width = exports.width(way)
-  const wayLen = way[0].length
+  const wayLen = exports.len(way)
 
   const filler = 0
   const leftPadLen = Math.min(len, Math.max(0, -begin))
