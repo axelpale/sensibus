@@ -1,5 +1,6 @@
 require('./style.css')
 const navbar = require('./navbar/render')
+const storage = require('./storage/render')
 const timeline = require('./timeline/render')
 const cellEditor = require('./timeline/cellEditor/render')
 const channelEditor = require('./timeline/channelEditor/render')
@@ -43,12 +44,32 @@ exports.update = (state, dispatch) => {
     sidebar.appendChild(navbar(state, dispatch))
 
     const container = document.createElement('div')
+    container.classList.add('sidebar-content')
     container.classList.add('container-fluid')
-    container.appendChild(cellEditor(state, dispatch))
-    container.appendChild(channelEditor(state, dispatch))
-    container.appendChild(frameEditor(state, dispatch))
-    container.appendChild(predictors(state, dispatch))
-    container.appendChild(performance(state, dispatch))
+
+    switch (state.sidebarPage) {
+      case 'inspect':
+        container.appendChild(predictors(state, dispatch))
+        break
+
+      case 'edit':
+        container.appendChild(cellEditor(state, dispatch))
+        container.appendChild(channelEditor(state, dispatch))
+        container.appendChild(frameEditor(state, dispatch))
+        break
+
+      case 'performance':
+        container.appendChild(performance(state, dispatch))
+        break
+
+      case 'storage':
+        container.appendChild(storage(state, dispatch))
+        break
+
+      default:
+        break
+    }
+
     sidebar.appendChild(container)
 
     sidebarContainer.appendChild(sidebar)

@@ -25,5 +25,11 @@ module.exports = (state, dispatch) => {
     predictedValue: predictedValue
   })
 
+  root.querySelector('#edit-selectnone').addEventListener('click', ev => {
+    dispatch({
+      type: 'SELECT_NONE'
+    })
+  })
+
   return root.firstChild
 }

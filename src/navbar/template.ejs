@@ -9,29 +9,17 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">File</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#" id="file-new">New</a>
-          <div class="custom-file-button">
-            <input type="file" id="file-open">
-            <label for="file-open">Open</label>
-          </div>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" id="file-save">Save As...</a>
-        </div>
+      <li class="nav-item<%= sidebarPage === 'inspect' ? ' active' : '' %>">
+        <a class="nav-link" href="#" id="navbarInspect">Inspect</a>
       </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Edit</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="#" id="edit-addchannel">Add Channel</a>
-          <a class="dropdown-item" href="#" id="edit-addframe">Add Frame</a>
-          <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="#" id="edit-selectnone">Select None</a>
-        </div>
+      <li class="nav-item<%= sidebarPage === 'edit' ? ' active' : '' %>">
+        <a class="nav-link" href="#" id="navbarEdit">Edit</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">About</a>
+      <li class="nav-item<%= sidebarPage === 'performance' ? ' active' : '' %>">
+        <a class="nav-link" href="#" id="navbarPerformance">Performance</a>
+      </li>
+      <li class="nav-item<%= sidebarPage === 'storage' ? ' active' : '' %>">
+        <a class="nav-link" href="#" id="navbarStorage">Storage</a>
       </li>
     </ul>
   </div>

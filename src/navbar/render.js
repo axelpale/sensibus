@@ -1,7 +1,5 @@
-const download = require('./download')
 const template = require('./template.ejs')
-const hibernate = require('../hibernate')
-require('./custom.css')
+require('./sidebar.css')
 
 const listenId = (root, elemId, handler) => {
   const el = root.querySelector('#' + elemId)
@@ -10,7 +8,9 @@ const listenId = (root, elemId, handler) => {
 
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
-  root.innerHTML = template({})
+  root.innerHTML = template({
+    sidebarPage: state.sidebarPage
+  })
 
   listenId(root, 'navbar-brand', ev => {
     dispatch({
@@ -18,57 +18,28 @@ module.exports = (state, dispatch) => {
     })
   })
 
-  listenId(root, 'file-new', ev => {
+  listenId(root, 'navbarInspect', ev => {
     dispatch({
-      type: 'RESET_STATE'
+      type: 'OPEN_PAGE',
+      page: 'inspect'
     })
   })
-
-  listenId(root, 'file-save', ev => {
-    // Click to download
-    const ex = hibernate(state)
-    const raw = JSON.stringify(ex)
-    const pretty = raw
-      .replace(/},/g, '},\n')
-      .replace(/":\[{/g, '":[\n{')
-      .replace(/":{/g, '":{\n')
-      .replace(/":\[\[/g, '":[\n[')
-      .replace(/]],/g, ']\n],')
-      .replace(/],/g, '],\n')
-      .replace(/,"(\w)/g, ',\n"$1')
-    // TODO forget about pretty printing to prevent string replace errors
-    download('sensibus-backup.json', pretty)
-  })
-
-  const openInput = root.querySelector('#file-open')
-  openInput.addEventListener('change', ev => {
-    const selectedFile = openInput.files[0]
-    const reader = new window.FileReader()
-    reader.onload = (evt) => {
-      const parsedState = JSON.parse(evt.target.result)
-      dispatch({
-        type: 'IMPORT_STATE',
-        state: parsedState
-      })
-    }
-    reader.readAsText(selectedFile, 'UTF-8')
-  }, false)
-
-  listenId(root, 'edit-addchannel', ev => {
+  listenId(root, 'navbarEdit', ev => {
     dispatch({
-      type: 'CREATE_CHANNEL'
+      type: 'OPEN_PAGE',
+      page: 'edit'
     })
   })
-
-  listenId(root, 'edit-addframe', ev => {
+  listenId(root, 'navbarPerformance', ev => {
     dispatch({
-      type: 'CREATE_FRAME'
+      type: 'OPEN_PAGE',
+      page: 'performance'
     })
   })
-
-  listenId(root, 'edit-selectnone', ev => {
+  listenId(root, 'navbarStorage', ev => {
     dispatch({
-      type: 'SELECT_NONE'
+      type: 'OPEN_PAGE',
+      page: 'storage'
     })
   })
 

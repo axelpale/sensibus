@@ -1,18 +1,5 @@
-const defaultTimeline = require('../timeline/defaultTimeline')
-
 module.exports = (state, ev) => {
   switch (ev.type) {
-    case 'RESET_STATE': {
-      return Object.assign({}, state, {
-        timeline: defaultTimeline
-      })
-    }
-
-    case 'IMPORT_STATE': {
-      // TODO support import from version 0
-      return Object.assign({}, state, ev.state)
-    }
-
     case 'CLOSE_SIDEBAR': {
       return Object.assign({}, state, {
         sidebar: false
@@ -22,6 +9,13 @@ module.exports = (state, ev) => {
     case 'OPEN_SIDEBAR': {
       return Object.assign({}, state, {
         sidebar: true
+      })
+    }
+
+    case 'OPEN_PAGE': {
+      return Object.assign({}, state, {
+        sidebar: true,
+        sidebarPage: ev.page
       })
     }
 

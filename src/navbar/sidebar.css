@@ -1,0 +1,22 @@
+.sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: 30em;
+  max-width: 90%;
+  background: white;
+  overflow-y: scroll;
+  border-left: 1px solid gray;
+}
+
+.sidebar-opener {
+  position: fixed;
+  top: 0;
+  right: 0;
+  padding: 1rem;
+}
+
+.sidebar-content {
+  padding-top: 0.8rem;
+}

@@ -9,21 +9,3 @@ html, body {
   padding: 0;
   margin: 0;
 }
-
-.sidebar {
-  position: fixed;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 30em;
-  max-width: 90%;
-  background: white;
-  overflow-y: scroll;
-}
-
-.sidebar-opener {
-  position: fixed;
-  top: 0;
-  right: 0;
-  padding: 1rem;
-}
