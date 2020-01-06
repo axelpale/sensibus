@@ -1,3 +1,4 @@
+const storage = require('./storage/reduce')
 const navbar = require('./timeline/reduce')
 const timeline = require('./navbar/reduce')
 const predictors = require('./predictors/reduce')
@@ -11,6 +12,7 @@ module.exports = (state, ev) => {
     }
   }
 
+  state = storage(state, ev)
   state = navbar(state, ev)
   state = timeline(state, ev)
   state = predictors(state, ev)
