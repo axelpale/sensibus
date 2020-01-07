@@ -66,19 +66,5 @@ module.exports = (state, dispatch) => {
     })
   })
 
-  listen(root, '#frameCreateBreak', 'click', ev => {
-    dispatch({
-      type: 'CREATE_BREAK',
-      beforeFrame: t
-    })
-  })
-
-  listen(root, '#frameRemoveBreak', 'click', ev => {
-    dispatch({
-      type: 'REMOVE_BREAK',
-      frame: t
-    })
-  })
-
   return root
 }
