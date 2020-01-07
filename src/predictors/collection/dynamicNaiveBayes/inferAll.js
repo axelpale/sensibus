@@ -37,7 +37,11 @@ module.exports = (model, memory) => {
   const cellResults = orderedCells.map(cell => {
     const result = infer(model, cell, virtual)
     // Insert prediction into the virtual memory to boost next predictions.
-    virtual[cell.channel][cell.time] = result.prediction
+    // Insert only if the original value was unknown, because
+    // otherwise false predictions would mess things up.
+    if (cell.value === 0) {
+      virtual[cell.channel][cell.time] = result.prediction
+    }
     return result
   })
 
