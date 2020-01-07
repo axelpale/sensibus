@@ -57,8 +57,8 @@
   left: 0;
   width: 4.2rem;
   height: 4.2rem;
-  background: url('img/spine-arrow.png') center repeat-y;
-  opacity: 0.26;
+  background: url('img/spine.png') center repeat-y;
+  opacity: 1;
 }
 
 .cell .cell-icon {
