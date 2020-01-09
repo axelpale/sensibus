@@ -86,12 +86,14 @@ module.exports = (state, model, dispatch) => {
       title: titleFn
     }),
     posGain: renderWay(posGain, {
-      heading: 'Information gained in respect to channel average around ' + channelTitle,
+      heading: 'Dependent on ' + channelTitle,
+      caption: 'by KL-divergence.',
       selected: selected,
       title: titleFn
     }),
     negGain: renderWay(negGain, {
-      heading: 'Information gained in respect to channel average around not ' + channelTitle,
+      heading: 'Dependent on not ' + channelTitle,
+      caption: 'by KL-divergence.',
       selected: selected,
       title: titleFn
     }),
