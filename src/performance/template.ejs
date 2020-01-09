@@ -46,9 +46,9 @@
           <th scope="row">Accuracy</th>
           <td><%= accuracy.toFixed(2) %></td>
         </tr>
-        <tr title="F-score – harmonic mean of precision and recall">
-          <th scope="row">Score</th>
-          <td><%= f1score.toFixed(4) %></td>
+        <tr>
+          <th scope="row" title="F-score – harmonic mean of precision and recall">Score</th>
+          <td title="<%= f1score.toFixed(8) %>"><%= f1score.toFixed(4) %></td>
         </tr>
       </tbody>
     </table>

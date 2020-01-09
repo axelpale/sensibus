@@ -77,6 +77,16 @@ module.exports = (config, memory) => {
     fieldOffset: fieldOffset,
     fieldLength: fieldLength,
     priors: priors,
-    fields: fields
+    fields: fields,
+    weights: way.map(sumsAbs, m => {
+      // Experimental sample size weighting.
+      // Improves F1-Score.
+      // Tried also these less efficient ones:
+      //   1 - 1 / m
+      //   1 - 1 / (1 + m)^3
+      //   1 - 1 / (1 + m)^3.3
+      // Possible peak near 3.2. Needs more data.
+      return 1 - 1 / Math.pow(1 + m, 1 / Math.PI) // experimental
+    }).map(w => w[0])
   }
 }

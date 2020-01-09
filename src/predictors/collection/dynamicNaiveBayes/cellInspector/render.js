@@ -111,6 +111,11 @@ module.exports = (state, model, dispatch) => {
       heading: 'Channel averages',
       selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
+    }),
+    weights: renderWay(model.weights.map(t => [t]), {
+      heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
+      selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
+      title: titleFn
     })
   })
 

@@ -11,11 +11,13 @@ module.exports = (model, cell, memory) => {
   const ctxEnd = lib.getEnd(model, cell.time)
   const context = way.slice(memory, ctxBegin, ctxEnd)
 
+  // Prediction p, weighted by mass m of context cell and sample size
   const fac = (avg, c, t) => {
     const ctx = context[c][t]
     const p = (1 + (ctx > 0 ? avg : -avg)) / 2
     const m = Math.abs(ctx)
-    return Math.pow(p, m)
+    const s = model.weights[c]
+    return Math.pow(p, m * s)
   }
 
   const posLikelihoodFactors = way.map(posField, fac)
