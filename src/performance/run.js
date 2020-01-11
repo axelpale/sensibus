@@ -15,7 +15,10 @@ module.exports = (state) => {
     return elem.value !== 0
   }).map(knownElem => {
     return {
-      target: knownElem,
+      // Make cell unknown to prevent predictor just using it to get max score.
+      target: Object.assign({}, knownElem, {
+        value: 0
+      }),
       memory: way.set(mem, knownElem.channel, knownElem.time, 0)
     }
   })
