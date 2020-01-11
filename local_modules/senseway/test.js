@@ -189,6 +189,14 @@ test('frame', (t) => {
   t.end()
 })
 
+test('get', t => {
+  t.equal(way.get(V, 1, 0), 0)
+  t.equal(way.get(V, 1, 1), 1)
+  t.equal(way.get(V, -2, -1), 0)
+  t.equal(way.get(V, 495, 122122), 0)
+  t.end()
+})
+
 test('increase', (t) => {
   t.deepEqual(way.increase(ONES, 1), [
     [2, 2, 2],

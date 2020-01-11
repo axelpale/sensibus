@@ -131,6 +131,15 @@ exports.frame = (way, t) => {
   return way.map(ch => [ch[t]]) // frame is an array of arrays
 }
 
+exports.get = (way, c, t) => {
+  const w = exports.width(way)
+  const l = exports.len(way)
+  if (0 < c && c < w && 0 < t && t < l) {
+    return way[c][t]
+  }
+  return 0
+}
+
 exports.html = (way, opts) => {
   const rev = opts.reversed ? true : false
   const heading = opts.heading ? opts.heading : ''
