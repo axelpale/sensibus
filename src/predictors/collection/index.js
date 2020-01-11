@@ -2,6 +2,7 @@ exports.DEFAULT_PREDICTOR = 'channelMean'
 
 exports.predictors = {
   fiftyFifty: require('./fiftyFifty'),
+  copyPrevious: require('./copyPrevious'),
   channelMean: require('./channelMean'),
   naiveCorrelator: require('./naiveCorrelator'),
   dynamicNaiveBayes: require('./dynamicNaiveBayes'),
