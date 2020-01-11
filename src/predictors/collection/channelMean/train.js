@@ -11,7 +11,7 @@ module.exports = (config, memory) => {
     return b > 0 ? a / b : 0
   }).map(m => m[0])
 
-  return {
+  return Object.assign({}, config, {
     channelMeans: channelMeans
-  }
+  })
 }
