@@ -1,6 +1,7 @@
 const defaultTimeline = require('./defaultTimeline')
 const channelEditor = require('./channelEditor/reduce')
 const memoryViewer = require('./memoryViewer/reduce')
+const predictNextTitle = require('./predictNextTitle')
 const way = require('senseway')
 
 module.exports = (state, ev) => {
@@ -40,15 +41,19 @@ module.exports = (state, ev) => {
 
       const sizeReference = way.frame(memory, 0)
       const newFrame = way.fill(sizeReference, 0)
-      const nextMemory = way.insert(memory, atT, newFrame)
+      const newMemory = way.insert(memory, atT, newFrame)
 
-      const nextTitles = state.timeline.frames.slice()
-      nextTitles.splice(atT, 0, { title: '' })
+      const prevFrameConfig = state.timeline.frames[atT - 1]
+      const prevTitle = prevFrameConfig ? prevFrameConfig.title : ''
+      const newTitle = predictNextTitle(prevTitle)
+
+      const newFrameConfigs = state.timeline.frames.slice()
+      newFrameConfigs.splice(atT, 0, { title: newTitle })
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          memory: nextMemory,
-          frames: nextTitles
+          memory: newMemory,
+          frames: newFrameConfigs
         })
       })
     }
