@@ -36,24 +36,28 @@ module.exports = (state, ev) => {
     }
 
     case 'CREATE_FRAME': {
-      const memory = state.timeline.memory
-      const atT = ev.frame ? ev.frame : way.len(memory)
+      const L = state.timeline
+      const memory = L.memory
+      const atT = ev.frame
 
       const sizeReference = way.frame(memory, 0)
       const newFrame = way.fill(sizeReference, 0)
       const newMemory = way.insert(memory, atT, newFrame)
 
-      const prevFrameConfig = state.timeline.frames[atT - 1]
+      const prevFrameConfig = L.frames[atT - 1]
       const prevTitle = prevFrameConfig ? prevFrameConfig.title : ''
       const newTitle = predictNextTitle(prevTitle)
 
-      const newFrameConfigs = state.timeline.frames.slice()
+      const newFrameConfigs = L.frames.slice()
       newFrameConfigs.splice(atT, 0, { title: newTitle })
 
       return Object.assign({}, state, {
-        timeline: Object.assign({}, state.timeline, {
+        timeline: Object.assign({}, L, {
           memory: newMemory,
-          frames: newFrameConfigs
+          frames: newFrameConfigs,
+          select: L.select ? Object.assign({}, L.select, {
+            frame: atT
+          }) : null
         })
       })
     }
