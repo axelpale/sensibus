@@ -15,17 +15,16 @@ module.exports = (state) => {
     return elem.value !== 0
   }).map(knownElem => {
     return {
-      // Make cell unknown to prevent predictor just using it to get max score.
-      target: Object.assign({}, knownElem, {
-        value: 0
-      }),
+      target: knownElem,
       memory: way.set(mem, knownElem.channel, knownElem.time, 0)
     }
   })
 
   const results = trainingSets.reduce((acc, trainSet) => {
+    // Make cell unknown to prevent predictor just using it to get max score.
+    const hiddenTarget = Object.assign({}, trainSet.target, { value: 0 })
     const model = predictor.train(config, trainSet.memory)
-    const results = predictor.infer(model, trainSet.target, trainSet.memory)
+    const results = predictor.infer(model, hiddenTarget, trainSet.memory)
 
     // Scoring Guidelines.
     // Initially we did the scoring with trits and multiplication:
