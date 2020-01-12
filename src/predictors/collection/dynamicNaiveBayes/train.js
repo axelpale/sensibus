@@ -23,6 +23,8 @@ module.exports = (config, memory) => {
   // See https://en.wikipedia.org/wiki/Beta_distribution#Bayesian_inference
   // See also Sunrise problem.
   // Let us use channel priors as initial knowledge of mass one.
+  // This is similar to Jeffreys' prior but for conditional probabilities.
+  // See sensibus notes 2020-01-11-19
   const protoAbs = way.create(fieldWidth, fieldLength, 1)
   const protoSum = way.map(protoAbs, (q, c) => priors[c])
 
@@ -30,7 +32,7 @@ module.exports = (config, memory) => {
   // The fields resemble probabilities given the target.
   const accInit = memory.map(ch => {
     return {
-      posSumField: protoSum,
+      posSumField: protoSum, // sum field given the condition is positive
       posAbsField: protoAbs,
       negSumField: protoSum,
       negAbsField: protoAbs
