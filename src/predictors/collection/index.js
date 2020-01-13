@@ -5,7 +5,7 @@ exports.predictors = {
   copyPrevious: require('./copyPrevious'),
   channelMean: require('./channelMean'),
   naiveCorrelator: require('./naiveCorrelator'),
-  dynamicNaiveBayes: require('./dynamicNaiveBayes')
+  naiveBayes: require('./naiveBayes')
   // firstOrder: require('./firstOrder')
 }
 
