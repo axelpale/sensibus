@@ -1,7 +1,9 @@
 module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
-  root.innerHTML = '<p>Guess that value of the previous frame repeats</p>'
+  root.innerHTML = '<h3>How it works</h3>' +
+    '<p>This predictor guesses that the value of ' +
+    'the previous frame repeats. It performs surprisingly well.</p>'
 
   return root
 }
