@@ -1,4 +1,5 @@
 const defaultTimeline = require('../timeline/defaultTimeline')
+const migrate = require('../migrate')
 
 module.exports = (state, ev) => {
   switch (ev.type) {
@@ -10,7 +11,8 @@ module.exports = (state, ev) => {
 
     case 'IMPORT_STATE': {
       // TODO support import from version 0
-      return Object.assign({}, state, ev.state)
+      const validState = migrate(ev.state)
+      return Object.assign({}, state, validState)
     }
 
     default:

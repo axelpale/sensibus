@@ -23,14 +23,22 @@ exports.getPredictor = (predictorId) => {
 
 exports.getSelectedPredictor = (state) => {
   const name = state.predictors.selection
-  return exports.predictors[name]
+  return exports.getPredictor(name)
 }
 
 exports.getSelectedModel = (state) => {
   const name = state.predictors.selection
-  return state.predictors[name]
+  if (name in exports.predictors) {
+    return state.predictors[name]
+  } // else
+  return state.predictors[exports.DEFAULT_PREDICTOR]
+}
+
+exports.has = (predictorId) => {
+  return Object.prototype.hasOwnProperty.call(exports.predictors, predictorId)
 }
 
 exports.hibernate = (predictorId, model) => {
-  return exports.predictors[predictorId].hibernate(model)
+  const pr = exports.getPredictor(predictorId)
+  return pr.hibernate(model)
 }
