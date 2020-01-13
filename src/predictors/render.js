@@ -7,15 +7,15 @@ module.exports = (state, dispatch) => {
   const col = document.createElement('div')
   col.classList.add('col-md')
 
-  const renderer = collection.getSelectedPredictor(state).render
-  const local = collection.getSelectedModel(state)
-  col.appendChild(renderer(state, local, dispatch))
-
   const heading = document.createElement('h2')
-  heading.innerHTML = 'Settings'
+  heading.innerHTML = 'Predict'
   col.appendChild(heading)
 
   col.appendChild(predictorSelector(state, dispatch))
+
+  const renderer = collection.getSelectedPredictor(state).render
+  const local = collection.getSelectedModel(state)
+  col.appendChild(renderer(state, local, dispatch))
 
   root.appendChild(col)
 
