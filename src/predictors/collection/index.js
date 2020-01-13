@@ -5,8 +5,8 @@ exports.predictors = {
   copyPrevious: require('./copyPrevious'),
   channelMean: require('./channelMean'),
   naiveCorrelator: require('./naiveCorrelator'),
-  dynamicNaiveBayes: require('./dynamicNaiveBayes'),
-  firstOrder: require('./firstOrder')
+  dynamicNaiveBayes: require('./dynamicNaiveBayes')
+  // firstOrder: require('./firstOrder')
 }
 
 exports.getPredictorIds = () => {
