@@ -1,4 +1,5 @@
 const way = require('senseway')
+const mutualInfo = require('./mutualInfo')
 
 const sumToProb = (sum, sumAbs) => (b > 0) ? (1 + sum / sumAbs) / 2 : 0.5
 const probToTrit = p => 2 * p - 1
@@ -72,23 +73,49 @@ module.exports = (config, memory) => {
     })
   })
 
+  const getCondProb = (varChan, varFrame, condition, condChan, condFrame) => {
+    // Get probability at (varChan, varFrame) given
+    // condition at (condChan, condFrame).
+    // If such probability is outside of fields, undefined is returned.
+    //
+    const varOffset = varFrame - condFrame // pair length - 1
+    const probField = fields[condChan][condition].probField
+    const adjustedVarFrame = fieldOffset + varOffset
+    const condProb = probField[varChan][adjustedVarFrame]
+    return condProb
+  }
+
+  const getMutualInfo = (xChan, xFrame, yChan, yFrame) => {
+    // Compute mutual information between x and y, I(x;y).
+    // We know that symmetry holds I(x;y) = I(y;x).
+    // The fields capture at least one of these symmetric identities.
+    // To ease computation, we choose the one that we can compute directly.
+    let px, py, pxgy, pxgny
+    if (xFrame - yFrame < fieldOffset) { // TODO check
+      // I(x;y)
+      px = priors[xChan]
+      py = priors[yChan]
+      pxgy = getCondProb(xChan, xFrame, '1', yChan, yFrame)
+      pxgny = getCondProb(xChan, xFrame, '-1', yChan, yFrame)
+    } else {
+      // I(y;x)
+      px = priors[yChan]
+      py = priors[xChan]
+      pxgy = getCondProb(yChan, yFrame, '1', xChan, xFrame)
+      pxgny = getCondProb(yChan, yFrame, '-1', xChan, xFrame)
+    }
+    // TODO what if pxgy or pxgny is undefined
+    return mutualInfo(px, py, pxgy, pxgny)
+  }
+
   // Feature selection via mRMR filter.
   // Min-Redundancy - Max-Relevance
   // Here, our field is a set of features we would like to filter.
   // The class is the target cell on which the field is conditioned.
-  const klDivergence = (pxgy, px) => {
-    // Kullback-Leibler divergence Dkl(Pxgy||Px)
-    const pos = pxgy * Math.log2(pxgy / px)
-    const neg = (1 - pxgy) * Math.log2((1 - pxgy) / (1 - px))
-    return pos + neg
-  }
-  const mutualInformation = (px, py, pxgy, pxgny) => {
-    // Mutual Information I(X;Y)
-    return py * klDivergence(pxgy, px) + (1 - py) * klDivergence(pxgny, px)
-  }
+  //
   // Min-Redundancy
   // Average mutual information between selected features.
-  // TODO compute mutualInformations only once.
+  // TODO compute mutualInfos only once.
   // TODO make into function so that can be called with different feat sets.
   const redundancy = way.reduce(proto, (acc, y, yc, yt) => {
     const py = priors[yc]
@@ -96,7 +123,7 @@ module.exports = (config, memory) => {
       const px = priors[xc]
       const pxgy = fields[yc].posField[xc][xt]
       const pxgny = fields[yc].negField[xc][xt]
-      return ac + mutualInformation(px, py, pxgy, pxgny)
+      return ac + mutualInfo(px, py, pxgy, pxgny)
     }, 0)
   }, 0) / (fieldSize * fieldSize)
 
@@ -109,7 +136,7 @@ module.exports = (config, memory) => {
     const relevance = way.reduce(fieldSet.posField, (acc, pxgy, xc, xt) => {
       const px = priors[xc]
       const pxgny = fieldSet.negField[xc][xt]
-      return acc + mutualInformation(px, py, pxgy, pxgny)
+      return acc + mutualInfo(px, py, pxgy, pxgny)
     }, 0) / fieldSize
     // TODO deal with xc==yc && xt==yt
 
