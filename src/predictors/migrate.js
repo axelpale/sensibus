@@ -1,10 +1,13 @@
 const collection = require('./collection')
 
 module.exports = (local) => {
+  if (!local) {
+    local = {}
+  }
   const nextLocal = {}
 
   // If predictor name is deprecated
-  if (collection.has(local.selection)) {
+  if (local.selection && collection.has(local.selection)) {
     nextLocal.selection = local.selection
   } else {
     nextLocal.selection = collection.DEFAULT_PREDICTOR
