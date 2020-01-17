@@ -91,13 +91,25 @@ module.exports = (config, memory) => {
     // The fields capture at least one of these symmetric identities.
     // To ease computation, we choose the one that we can compute directly.
     let px, py, pxgy, pxgny
-    if (xFrame - yFrame < fieldOffset) { // TODO check
+
+    if (Math.abs(xFrame - yFrame) >= fieldLength) {
+      // Pattern length too long to fit field. No such pair available.
+      return 0
+    }
+
+    // Let f = if x|y fits in the field.
+    // xFrame = 0, yFrame = 0, fieldLength = 1, fieldOffset = 0 => f = true
+    // xFrame = 0, yFrame = 1, fieldLength = 2, fieldOffset = -1 => f = false
+    if (yFrame <= xFrame) {
+      if (xFrame - yFrame <= fieldLength + fieldOffset - 1)
+    }
+    if (xFrame - yFrame < fieldLength + fieldOffset) { // TODO check
       // I(x;y)
       px = priors[xChan]
       py = priors[yChan]
       pxgy = getCondProb(xChan, xFrame, '1', yChan, yFrame)
       pxgny = getCondProb(xChan, xFrame, '-1', yChan, yFrame)
-    } else {
+    } else if () {
       // I(y;x)
       px = priors[yChan]
       py = priors[xChan]
