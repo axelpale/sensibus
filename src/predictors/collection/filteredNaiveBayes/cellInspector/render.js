@@ -34,11 +34,13 @@ module.exports = (state, model, dispatch) => {
     return root
   }
 
+  const fieldOffset = model.fieldLength - 1
+
   const c = state.timeline.select.channel
   const t = state.timeline.select.frame
   const channelTitle = state.timeline.channels[c].title
   const emptyField = way.fill(model.fields[0].posField, 0) // TODO use mod para
-  const selected = way.set(emptyField, c, -model.fieldOffset, 1)
+  const selected = way.set(emptyField, c, fieldOffset, 1)
 
   const titleFn = (q, ci, ti) => {
     const chTitle = state.timeline.channels[ci].title
@@ -57,8 +59,8 @@ module.exports = (state, model, dispatch) => {
   const priors = model.priors.map(tritToProb)
   const posField = way.map(model.fields[c].posField, tritToProb)
   const negField = way.map(model.fields[c].negField, tritToProb)
-  const posGain = way.set(gain(priors, posField), c, -model.fieldOffset, 0)
-  const negGain = way.set(gain(priors, negField), c, -model.fieldOffset, 0)
+  const posGain = way.set(gain(priors, posField), c, fieldOffset, 0)
+  const negGain = way.set(gain(priors, negField), c, fieldOffset, 0)
   const posDiff = way.map(posField, (p, c, t) => {
     return p - priors[c]
   })

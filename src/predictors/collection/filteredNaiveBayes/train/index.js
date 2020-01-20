@@ -8,8 +8,8 @@ module.exports = (config, memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
-  const fieldOffset = config.fieldOffset
   const fieldLength = config.fieldLength
+  const fieldOffset = 1 - fieldLength
   const fieldWidth = way.width(memory)
   const fieldSize = fieldLength * fieldWidth
   const proto = way.create(fieldWidth, fieldLength, 0)

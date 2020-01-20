@@ -1,9 +1,7 @@
 // Slice navigation.
-// How the field is positioned on the conditioned element?
-// Offset of 0 means that the element is on the oldest row
-// and that the field is towards future.
+// How the conditioned element is positioned on the field?
 // An example for correct slice positioning:
-//   let fieldLen = 3 and fieldOffset = -1 and u.time = 0.
-//   We expect the context begin at time = -1 and end at time = 2.
-exports.getBegin = (model, t) => t + model.fieldOffset
-exports.getEnd = (model, t) => t + model.fieldOffset + model.fieldLength
+//   Let fieldLen = 3 and t = 0.
+//   We expect the field begin at time = -2 and end exclusively at time = 1.
+exports.getBegin = (model, t) => t + 1 - model.fieldLength
+exports.getEnd = (model, t) => t + 1
