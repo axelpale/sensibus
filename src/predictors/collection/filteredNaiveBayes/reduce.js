@@ -9,7 +9,6 @@ module.exports = (model, memory, ev) => {
   if (!model) {
     model = {
       fieldLength: 5,
-      fieldOffset: -3,
       fields: [],
       priors: [],
       prediction: way.fill(memory, 0)
@@ -20,13 +19,6 @@ module.exports = (model, memory, ev) => {
     case 'SELECT_FIELD_LENGTH':
       model = Object.assign({}, model, {
         fieldLength: ev.length
-      })
-      model = Object.assign({}, model, train(model, memory))
-      return Object.assign({}, model, inferAll(model, memory))
-
-    case 'SELECT_FIELD_OFFSET':
-      model = Object.assign({}, model, {
-        fieldOffset: ev.offset
       })
       model = Object.assign({}, model, train(model, memory))
       return Object.assign({}, model, inferAll(model, memory))
