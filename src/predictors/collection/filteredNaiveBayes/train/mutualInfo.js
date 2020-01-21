@@ -1,4 +1,4 @@
-const divergence = require('divergence')
+const divergence = require('./divergence')
 
 module.exports = (px, py, pxgy, pxgny) => {
   // Mutual Information I(X;Y)
