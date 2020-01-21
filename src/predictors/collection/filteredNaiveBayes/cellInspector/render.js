@@ -118,6 +118,14 @@ module.exports = (state, model, dispatch) => {
       heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
       selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
+    }),
+    redundancies: renderWay(model.redundancies.map(r => [r]), {
+      heading: 'Average Redundancy',
+      title: titleFn
+    }),
+    relevances: renderWay(model.relevances.map(r => [r]), {
+      heading: 'Average Relevance',
+      title: titleFn
     })
   })
 
