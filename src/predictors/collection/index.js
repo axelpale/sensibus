@@ -1,4 +1,4 @@
-exports.DEFAULT_PREDICTOR = 'channelMean'
+exports.DEFAULT_PREDICTOR = 'naiveBayes'
 
 exports.predictors = {
   fiftyFifty: require('./fiftyFifty'),
