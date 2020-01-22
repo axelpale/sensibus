@@ -10,7 +10,7 @@ let initialState
 if (storedState) {
   initialState = JSON.parse(storedState)
 } else {
-  initialState = {}
+  initialState = null
 }
 
 const hibernate = (state) => {
