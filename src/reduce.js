@@ -8,7 +8,7 @@ module.exports = (state, ev) => {
   if (!state) {
     state = {
       sidebar: true,
-      sidebarPage: 'inspect'
+      sidebarPage: 'storage'
     }
   }
 
