@@ -6,7 +6,7 @@ module.exports = (state, local, dispatch) => {
 
   root.innerHTML = '<h3>How it works</h3>' +
     '<p>For each different value of each channel, this predictor ' +
-    'notices how the neighborhood of the value look like in average. ' +
+    'notices how the neighborhood of the value looks like in average. ' +
     'To predict an unknown value, it compares the neighborhood ' +
     'of the unknown to the average neighborhood of each possible value. ' +
     'It chooses the value whose neighborhood best resembles ' +
