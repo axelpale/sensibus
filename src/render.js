@@ -7,6 +7,7 @@ const channelEditor = require('./timeline/channelEditor/render')
 const frameEditor = require('./timeline/frameEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
+const sidebarOpener = require('./navbar/sidebarOpener')
 
 exports.init = (state, dispatch) => {
   const container = document.getElementById('container')
@@ -75,20 +76,6 @@ exports.update = (state, dispatch) => {
     sidebarContainer.appendChild(sidebar)
   } else {
     // Sidebar closed
-    const opener = document.createElement('div')
-    opener.classList.add('sidebar-opener')
-    opener.classList.add('bg-dark')
-    const openerIcon = document.createElement('img')
-    openerIcon.src = 'img/icon.png'
-    openerIcon.width = 30
-    openerIcon.height = 30
-    opener.appendChild(openerIcon)
-    sidebarContainer.appendChild(opener)
-
-    opener.addEventListener('click', ev => {
-      dispatch({
-        type: 'OPEN_SIDEBAR'
-      })
-    })
+    sidebarContainer.appendChild(sidebarOpener(state, dispatch))
   }
 }
