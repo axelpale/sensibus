@@ -1,5 +1,5 @@
 const getCondProb = require('./getCondProb')
-const mutualInfo = require('./mutualInfo')
+const problib = require('problib')
 const way = require('senseway')
 
 module.exports = (fields, priors, xChan, xFrame, yChan, yFrame) => {
@@ -30,5 +30,5 @@ module.exports = (fields, priors, xChan, xFrame, yChan, yFrame) => {
     pxgny = getCondProb(fields, priors, yChan, yFrame, -1, xChan, xFrame)
   }
   // TODO what if pxgy or pxgny is undefined
-  return mutualInfo(px, py, pxgy, pxgny)
+  return problib.mutualInfo(px, py, pxgy, pxgny)
 }
