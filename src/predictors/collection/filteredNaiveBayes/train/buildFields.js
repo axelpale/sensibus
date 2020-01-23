@@ -33,7 +33,7 @@ module.exports = (slices, priors) => {
   const sumQuads = slices.reduce((acc, slice) => {
     return acc.map((vs, c) => {
       // Value of the conditioning cell in this slice.
-      const condition = slice[c][1 - fieldLength]
+      const condition = slice[c][fieldLength - 1]
       // if condition=1 let us add values to sumField
       if (condition > 0) {
         return {
