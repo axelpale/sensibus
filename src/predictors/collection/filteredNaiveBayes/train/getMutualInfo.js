@@ -20,14 +20,14 @@ module.exports = (fields, priors, xChan, xFrame, yChan, yFrame) => {
     // I(x;y)
     px = priors[xChan]
     py = priors[yChan]
-    pxgy = getCondProb(fields, priors, xChan, xFrame, '1', yChan, yFrame)
-    pxgny = getCondProb(fields, priors, xChan, xFrame, '-1', yChan, yFrame)
+    pxgy = getCondProb(fields, priors, xChan, xFrame, 1, yChan, yFrame)
+    pxgny = getCondProb(fields, priors, xChan, xFrame, -1, yChan, yFrame)
   } else {
     // I(y;x)
     px = priors[yChan]
     py = priors[xChan]
-    pxgy = getCondProb(fields, priors, yChan, yFrame, '1', xChan, xFrame)
-    pxgny = getCondProb(fields, priors, yChan, yFrame, '-1', xChan, xFrame)
+    pxgy = getCondProb(fields, priors, yChan, yFrame, 1, xChan, xFrame)
+    pxgny = getCondProb(fields, priors, yChan, yFrame, -1, xChan, xFrame)
   }
   // TODO what if pxgy or pxgny is undefined
   return mutualInfo(px, py, pxgy, pxgny)

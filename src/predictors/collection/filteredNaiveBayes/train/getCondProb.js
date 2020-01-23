@@ -1,8 +1,7 @@
 const way = require('senseway')
 
 module.exports = (fields, priors, varC, varT, condition, condC, condT) => {
-  // Get probability at (varC, varT) given
-  // condition at (condC, condT).
+  // Get probability at (varC, varT) given condition at (condC, condT).
   // If such probability is outside of fields, undefined is returned.
   //
   if (condition === 0) {
@@ -17,11 +16,12 @@ module.exports = (fields, priors, varC, varT, condition, condC, condT) => {
   }
 
   if (varOffset <= 0) {
-    // Conditional probability can be found directly from prob field
+    // Conditional probability can be found directly from prob field.
+    // Condition at fieldLength - 1.
     const probField = fields[condC][condition].prob
-    const adjustedVarTime = 1 - fieldLength + varOffset
-    const condProb = probField[varC][adjustedVarTime]
-    return condProb
+    const adjustedVarTime = fieldLength - 1 + varOffset
+    const probVarGivenCond = probField[varC][adjustedVarTime]
+    return probVarGivenCond
   } // else
 
   // Conditional probability not directly in prob field.
@@ -33,11 +33,11 @@ module.exports = (fields, priors, varC, varT, condition, condC, condT) => {
   // Ex 1. Let L=2, Voff=1. Then P(C|V) in V's field at t=0.
   // Ex 2. Let L=5, Voff=3. Then P(C|V) in V's field at t=1
   const adjustedCondTime = fieldLength - 1 - varOffset
-  const condProb = probField[condC][adjustedCondTime]
+  const probCondGivenVar = probField[condC][adjustedCondTime]
 
   if (condition > 0) {
     // P(C=1|V=1)
-    return condProb * priors[varC] / priors[condC]
+    return probCondGivenVar * priors[varC] / priors[condC]
   } // else condition < 0
-  return (1 - condProb) * priors[varC] / (1 - priors[condC])
+  return (1 - probCondGivenVar) * priors[varC] / (1 - priors[condC])
 }
