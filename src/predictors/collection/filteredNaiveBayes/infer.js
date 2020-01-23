@@ -2,9 +2,9 @@ const way = require('senseway')
 const lib = require('./lib')
 
 module.exports = (model, cell, memory) => {
-  const posField = model.fields[cell.channel].posField
-  const negField = model.fields[cell.channel].negField
-  const posPrior = (1 + model.priors[cell.channel]) / 2
+  const posField = model.fields[cell.channel]['1'].prob
+  const negField = model.fields[cell.channel]['-1'].prob
+  const posPrior = model.priors[cell.channel]
   const negPrior = 1 - posPrior
 
   const ctxBegin = lib.getBegin(model, cell.time)
@@ -12,11 +12,11 @@ module.exports = (model, cell, memory) => {
   const context = way.slice(memory, ctxBegin, ctxEnd)
 
   // Prediction p, weighted by mass m of context cell and sample size
-  const fac = (avg, c, t) => {
+  const fac = (condProb, c, t) => {
     const ctx = context[c][t]
-    const p = (1 + (ctx > 0 ? avg : -avg)) / 2
+    const p = (ctx > 0) ? condProb : 1 - condProb
     const m = Math.abs(ctx)
-    const s = model.weights[c]
+    const s = model.weights[cell.channel][c][t]
     return Math.pow(p, m * s)
   }
 

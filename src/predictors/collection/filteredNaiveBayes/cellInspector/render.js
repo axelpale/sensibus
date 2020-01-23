@@ -22,10 +22,6 @@ const gain = (priors, posterior) => {
   })
 }
 
-const tritToProb = t => {
-  return (1 + t) / 2
-}
-
 module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
@@ -39,7 +35,7 @@ module.exports = (state, model, dispatch) => {
   const c = state.timeline.select.channel
   const t = state.timeline.select.frame
   const channelTitle = state.timeline.channels[c].title
-  const emptyField = way.fill(model.fields[0].posField, 0) // TODO use mod para
+  const emptyField = way.fill(model.fields[0]['1'].prob, 0) // TODO use mod para
   const selected = way.set(emptyField, c, fieldOffset, 1)
 
   const titleFn = (q, ci, ti) => {
@@ -56,9 +52,9 @@ module.exports = (state, model, dispatch) => {
     })
   })()
 
-  const priors = model.priors.map(tritToProb)
-  const posField = way.map(model.fields[c].posField, tritToProb)
-  const negField = way.map(model.fields[c].negField, tritToProb)
+  const priors = model.priors
+  const posField = model.fields[c]['1'].prob
+  const negField = model.fields[c]['-1'].prob
   const posGain = way.set(gain(priors, posField), c, fieldOffset, 0)
   const negGain = way.set(gain(priors, negField), c, fieldOffset, 0)
   const posDiff = way.map(posField, (p, c, t) => {
@@ -75,13 +71,13 @@ module.exports = (state, model, dispatch) => {
     t: t,
     givenValue: state.timeline.memory[c][t],
     predictedValue: cellResult ? cellResult.prediction.toFixed(2) : 'N/A',
-    posField: renderWay(model.fields[c].posField, {
+    posField: renderWay(posField, {
       heading: 'If ' + channelTitle + ' then',
       caption: 'in average.',
       selected: selected,
       title: titleFn
     }),
-    negField: renderWay(model.fields[c].negField, {
+    negField: renderWay(negField, {
       heading: 'If not ' + channelTitle + ' then',
       caption: 'in average.',
       selected: selected,
@@ -112,11 +108,6 @@ module.exports = (state, model, dispatch) => {
     priors: renderWay(model.priors.map(t => [t]), {
       heading: 'Channel averages',
       selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
-      title: titleFn
-    }),
-    weights: renderWay(model.weights.map(t => [t]), {
-      heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
-      selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
     }),
     redundancies: renderWay(model.redundancies.map(r => [r]), {
