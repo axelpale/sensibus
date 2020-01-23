@@ -63,10 +63,14 @@ module.exports = (config, memory) => {
     return relevance
   })
 
+  // TODO find via mRMR
+  const weights = priors.map(foo => way.fill(proto, 1))
+
   return {
     fieldLength: fieldLength,
     priors: priors,
     fields: fields,
+    weights: weights,
     redundancies: priors.map(foo => redundancy),
     relevances: relevances
   }
