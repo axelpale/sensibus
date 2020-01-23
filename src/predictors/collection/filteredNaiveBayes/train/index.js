@@ -71,6 +71,7 @@ module.exports = (config, memory) => {
     priors: priors,
     fields: fields,
     weights: weights,
+    mutualInfos: mutualInfos,
     redundancies: priors.map(foo => redundancy),
     relevances: relevances
   }

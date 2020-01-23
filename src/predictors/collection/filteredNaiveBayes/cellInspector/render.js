@@ -121,7 +121,9 @@ module.exports = (state, model, dispatch) => {
   })
 
   if (cellResult) {
-    // A unknown cell is selected. Show how we predict its value.
+    // A cell is selected. Show how we predict its value.
+
+    const mi = model.mutualInfos[cellResult.cell.channel][fieldOffset]
 
     innerHTML += template({
       contextHtml: renderWay(cellResult.context, {
@@ -141,7 +143,10 @@ module.exports = (state, model, dispatch) => {
       posSupport: cellResult.posSupport,
       negSupport: cellResult.negSupport,
       posProb: cellResult.posProb,
-      negProb: cellResult.negProb
+      negProb: cellResult.negProb,
+      mutualInfo: renderWay(mi, {
+        heading: 'Mutual information with the channel'
+      })
     })
   }
 
