@@ -8,6 +8,7 @@
   background: white;
   overflow-y: scroll;
   border-left: 1px solid gray;
+  z-index: 10; /* channel-titles 5 */
 }
 
 .sidebar-opener {
@@ -16,6 +17,7 @@
   right: 0;
   padding: 1rem;
   border-bottom-left-radius: 2rem;
+  z-index: 10; /* channel-titles 5 */
 }
 
 .sidebar-content {

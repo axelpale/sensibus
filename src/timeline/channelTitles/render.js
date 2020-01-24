@@ -1,8 +1,7 @@
 module.exports = (state, dispatch) => {
-  const root = document.createElement('div')
-
   const row = document.createElement('div')
   row.classList.add('timeline-row')
+  row.classList.add('channel-titles')
 
   const rowTitle = document.createElement('div')
   rowTitle.classList.add('timeline-row-title')
@@ -36,7 +35,6 @@ module.exports = (state, dispatch) => {
   })
 
   row.appendChild(cells)
-  root.appendChild(row)
 
-  return root
+  return row
 }
