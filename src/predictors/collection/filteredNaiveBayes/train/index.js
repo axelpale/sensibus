@@ -35,7 +35,7 @@ module.exports = (config, memory) => {
   const proto = way.create(fieldWidth, fieldLength, 0)
 
   // We compute mutual information between all variables only once.
-  // The result is a four-dimensional array.
+  // The result is a four-dimensional array, a mapping between two fields.
   // OPTIMIZE by noting that many values are equal
   const mutualInfos = way.map(proto, (y, yc, yt) => {
     return way.map(proto, (x, xc, xt) => {
