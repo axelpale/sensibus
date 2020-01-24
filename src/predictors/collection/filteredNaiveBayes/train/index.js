@@ -3,6 +3,7 @@ const buildFields = require('./buildFields')
 const sumToProb = require('./sumToProb')
 const getMutualInfo = require('./getMutualInfo')
 const getRedundancy = require('./getRedundancy')
+const getRelevance = require('./getRelevance')
 
 module.exports = (config, memory) => {
   // How the field is positioned on the conditioned element?
@@ -11,7 +12,6 @@ module.exports = (config, memory) => {
   const fieldLength = config.fieldLength
   const fieldOffset = 1 - fieldLength
   const fieldWidth = way.width(memory)
-  const fieldSize = fieldLength * fieldWidth
 
   // Base rate
   const sums = way.sums(memory)
@@ -52,15 +52,8 @@ module.exports = (config, memory) => {
   // Relevance is computed for each channel and for each value.
   // Sum mutual information between selected features and conditioning cell.
 
-  const relevances = fields.map((channelFields, condChan) => {
-    const conditionMIField = mutualInfos[condChan][fieldLength - 1]
-    const relevance = way.sum(conditionMIField) / fieldSize
-    // TODO deal with xc==yc && xt==yt
-
-    // We arrive to min-redundancy-max-relevance score
-    // TODO const mRMRScore = relevance - redundancy
-
-    return relevance
+  const relevances = priors.map((foo, condChan) => {
+    return getRelevance(mutualInfos, condChan, initSubset)
   })
 
   // TODO find via mRMR
