@@ -109,14 +109,6 @@ module.exports = (state, model, dispatch) => {
       heading: 'Channel averages',
       selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
-    }),
-    redundancies: renderWay(model.redundancies.map(r => [r]), {
-      heading: 'Average Redundancy',
-      title: titleFn
-    }),
-    relevances: renderWay(model.relevances.map(r => [r]), {
-      heading: 'Average Relevance',
-      title: titleFn
     })
   })
 

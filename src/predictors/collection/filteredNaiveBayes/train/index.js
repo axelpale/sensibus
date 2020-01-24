@@ -2,8 +2,7 @@ const way = require('senseway')
 const buildFields = require('./buildFields')
 const sumToProb = require('./sumToProb')
 const getMutualInfo = require('./getMutualInfo')
-const getRedundancy = require('./getRedundancy')
-const getRelevance = require('./getRelevance')
+const findBestSubset = require('./findBestSubset')
 
 module.exports = (config, memory) => {
   // How the field is positioned on the conditioned element?
@@ -28,9 +27,6 @@ module.exports = (config, memory) => {
   // Here, our context is the set of features we would like to filter.
   // The class is the target cell on which the field is conditioned.
 
-  // Redundancy.
-  // Average mutual information between selected features.
-
   // Create a dummy field to loop over
   const proto = way.create(fieldWidth, fieldLength, 0)
 
@@ -43,21 +39,14 @@ module.exports = (config, memory) => {
     })
   })
 
-  // Selected features marked with 1, other with 0.
-  const initSubset = way.fill(proto, 1)
-
-  const redundancy = getRedundancy(mutualInfos, initSubset)
-
-  // Relevance.
-  // Relevance is computed for each channel and for each value.
-  // Sum mutual information between selected features and conditioning cell.
-
-  const relevances = priors.map((foo, condChan) => {
-    return getRelevance(mutualInfos, condChan, initSubset)
+  // Find min-redundant-max-relevant feature sets.
+  const subsetSearch = priors.map((foo, condChan) => {
+    return findBestSubset(mutualInfos, condChan)
   })
 
-  // TODO find via mRMR
-  const weights = priors.map(foo => way.fill(proto, 1))
+  const weights = subsetSearch.map(result => {
+    return result.increments[result.bestAt]
+  })
 
   return {
     fieldLength: fieldLength,
@@ -65,7 +54,6 @@ module.exports = (config, memory) => {
     fields: fields,
     weights: weights,
     mutualInfos: mutualInfos,
-    redundancies: priors.map(foo => redundancy),
-    relevances: relevances
+    mrmr: subsetSearch
   }
 }
