@@ -400,6 +400,13 @@ test('set', (t) => {
   t.end()
 })
 
+test('size', (t) => {
+  t.equal(way.size(ONES), 6)
+  t.equal(way.size([]), 0)
+  t.equal(way.size([[]]), 0)
+  t.end()
+})
+
 test('slice', (t) => {
   t.deepEqual(way.slice(V, 1, 3), [
     [0, 1],
