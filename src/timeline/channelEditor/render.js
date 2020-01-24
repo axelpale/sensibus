@@ -29,6 +29,7 @@ module.exports = (state, dispatch) => {
   })
 
   listen(root, '#channelRemove', 'click', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'REMOVE_CHANNEL',
       channel: c
@@ -36,6 +37,7 @@ module.exports = (state, dispatch) => {
   })
 
   listen(root, '#channelMoveLeft', 'click', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'MOVE_CHANNEL',
       channel: c,
@@ -44,6 +46,7 @@ module.exports = (state, dispatch) => {
   })
 
   listen(root, '#channelMoveRight', 'click', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'MOVE_CHANNEL',
       channel: c,
@@ -52,6 +55,7 @@ module.exports = (state, dispatch) => {
   })
 
   listen(root, '#channelCreateLeft', 'click', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'CREATE_CHANNEL',
       belowChannel: c
@@ -59,6 +63,7 @@ module.exports = (state, dispatch) => {
   })
 
   listen(root, '#channelCreateRight', 'click', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'CREATE_CHANNEL',
       belowChannel: c + 1

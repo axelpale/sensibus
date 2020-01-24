@@ -13,30 +13,35 @@ module.exports = (state, dispatch) => {
   })
 
   listenId(root, 'navbar-brand', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'CLOSE_SIDEBAR'
     })
   })
 
   listenId(root, 'navbarInspect', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'OPEN_PAGE',
       page: 'inspect'
     })
   })
   listenId(root, 'navbarEdit', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'OPEN_PAGE',
       page: 'edit'
     })
   })
   listenId(root, 'navbarPerformance', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'OPEN_PAGE',
       page: 'performance'
     })
   })
   listenId(root, 'navbarStorage', ev => {
+    ev.preventDefault()
     dispatch({
       type: 'OPEN_PAGE',
       page: 'storage'
