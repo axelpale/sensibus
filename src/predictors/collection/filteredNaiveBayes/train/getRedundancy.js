@@ -1,3 +1,6 @@
+// Redundancy.
+// Average mutual information between selected features.
+//
 const way = require('senseway')
 
 module.exports = (mutualInfoFields, subset) => {
