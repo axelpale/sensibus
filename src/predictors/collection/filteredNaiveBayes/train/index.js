@@ -2,6 +2,7 @@ const way = require('senseway')
 const buildFields = require('./buildFields')
 const sumToProb = require('./sumToProb')
 const getMutualInfo = require('./getMutualInfo')
+const getRedundancy = require('./getRedundancy')
 
 module.exports = (config, memory) => {
   // How the field is positioned on the conditioned element?
@@ -42,11 +43,10 @@ module.exports = (config, memory) => {
     })
   })
 
-  const redundancy = way.reduce(mutualInfos, (acc, mis) => {
-    return acc + way.reduce(mis, (ac, mi) => {
-      return ac + mi
-    }, 0)
-  }, 0) / (fieldSize * fieldSize)
+  // Selected features marked with 1, other with 0.
+  const initSubset = way.fill(proto, 1)
+
+  const redundancy = getRedundancy(mutualInfos, initSubset)
 
   // Relevance.
   // Relevance is computed for each channel and for each value.
