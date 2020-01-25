@@ -18,6 +18,7 @@
   padding: 1rem;
   border-bottom-left-radius: 2rem;
   z-index: 10; /* channel-titles 5 */
+  cursor: pointer;
 }
 
 .sidebar-content {

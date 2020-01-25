@@ -1,0 +1,8 @@
+.in-page-branding h1 {
+  text-align: center;
+  padding: 1rem;
+}
+.in-page-branding h1 img {
+  vertical-align: bottom;
+  margin-right: 0.23rem;
+}

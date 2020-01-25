@@ -1,7 +1,7 @@
 const download = require('./download')
 const template = require('./template.ejs')
 const hibernate = require('../hibernate')
-require('./custom.css')
+require('./style.css')
 
 const listenId = (root, elemId, handler) => {
   const el = root.querySelector('#' + elemId)
