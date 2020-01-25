@@ -42,12 +42,22 @@ exports.init = (state, dispatch) => {
 
 exports.update = (state, dispatch) => {
   if (changed([state.timeline, state.predictors.prediction])) {
-    // Remove old canvas
     const root = document.getElementById('timeline-root')
-    if (root.firstChild) {
-      root.removeChild(root.firstChild)
-    }
+    // Note root scroll location
+    // const x = root.scrollX
+    // const y = root.scrollY
+    // Append new canvas
     const canvas = renderCanvas(state, dispatch)
-    root.appendChild(canvas)
+    // Remove old canvas if not empty.
+    if (root.firstChild) {
+      root.appendChild(canvas)
+      root.removeChild(root.firstChild)
+    } else {
+      root.appendChild(canvas)
+    }
+    // LOGIC HACK; if-clause's expression
+    // The if-clause looks like the root.appendChild(canvas) could be
+    // moved before if for code simplicity. However, appending affects
+    // the if-clause and therefore the code must be duplicated.
   }
 }
