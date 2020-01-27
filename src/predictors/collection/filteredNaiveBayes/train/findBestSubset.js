@@ -3,7 +3,7 @@ const findBestIncrement = require('./findBestIncrement')
 
 module.exports = (miFields, condChan) => {
   const increments = [{
-    score: 0,
+    score: -1,
     subset: way.fill(miFields, 0)
   }]
   let bestAt = 0
@@ -16,11 +16,11 @@ module.exports = (miFields, condChan) => {
     const prevSubset = prevIncrement.subset
     const bestIncrement = findBestIncrement(miFields, condChan, prevSubset)
 
-    if (prevSubset.score < bestIncrement.score) {
+    if (prevIncrement.score < bestIncrement.score) {
       // Increment was better. Continue search.
       increments.push(bestIncrement)
       bestAt = increments.length - 1
-    } else if (prevSubset.score === bestIncrement.score) {
+    } else if (prevIncrement.score === bestIncrement.score) {
       // Increment was equally good. Continue search but prefer
       // the smallest equally good set in the end.
       increments.push(bestIncrement)

@@ -12,7 +12,7 @@ module.exports = (mutualInfoFields, condChan, subset) => {
   let size = 0
 
   way.each(miField, (mi, xc, xt) => {
-    if (subset[xc][xt] > 0 && condChan !== xc && condFrame !== xt) {
+    if (subset[xc][xt] > 0 && !(condChan === xc && condFrame === xt)) {
       relSum += mi
       size += 1
     }

@@ -10,8 +10,8 @@ module.exports = (state, local, dispatch) => {
     'To predict an unknown value, it compares the neighborhood ' +
     'of the unknown to the average neighborhood of each possible value. ' +
     'It chooses the value whose neighborhood best resembles ' +
-    'the neighborhood of the unknown, when weighted by the prior probability ' +
-    'in which the value occurs in the data. ' +
+    'the neighborhood of the unknown, when weighted by the prior ' +
+    'probability in which the value occurs in the data. ' +
     'These are the basics of the naïve Bayes classification.</p>'
 
   // Selection related data
