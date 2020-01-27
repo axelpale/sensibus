@@ -60,17 +60,17 @@ module.exports = (state, model, dispatch) => {
   const content = document.createElement('div')
   content.innerHTML = contentTemplate({
     contextHtml: renderWay(cellResult.context, {
-      heading: 'Selection context',
+      heading: 'Neigh&shy;bor&shy;hood of the se&shy;lec&shy;ted cell',
       selected: selected,
       title: titleFn
     }),
     posFactorsHtml: renderWay(cellResult.posFactors, {
-      heading: 'Likelihood factors for positive',
+      heading: 'Like&shy;li&shy;hood fac&shy;tors for posi&shy;tive',
       selected: selected,
       title: titleFn
     }),
     negFactorsHtml: renderWay(cellResult.negFactors, {
-      heading: 'Likelihood factors for negative',
+      heading: 'Like&shy;lih&shy;ood fac&shy;tors for nega&shy;tive',
       selected: selected,
       title: titleFn
     }),
