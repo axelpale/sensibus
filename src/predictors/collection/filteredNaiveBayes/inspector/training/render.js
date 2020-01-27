@@ -1,9 +1,11 @@
 const headingTemplate = require('./heading.ejs')
 const contentTemplate = require('./content.ejs')
 const filteringTemplate = require('./filtering.ejs')
+const incrementTemplate = require('./increment.ejs')
 const way = require('senseway')
 const renderWay = require('../renderWay')
 const problib = require('problib')
+require('./style.css')
 
 const gain = (priors, posterior) => {
   return way.map(posterior, (pos, c, t) => {
@@ -128,10 +130,20 @@ module.exports = (state, model, dispatch) => {
     }),
     filterIncrements: model.mrmr[c].increments.map((increment, i) => {
       const best = (model.mrmr[c].bestAt === i)
-      return renderWay(increment.subset, {
-        heading: 'Subset #' + i + (best ? ' (best)' : ''),
-        caption: 'Score ' + increment.score,
-        title: titleFn
+      return incrementTemplate({
+        subset: renderWay(increment.subset, {
+          heading: 'Subset #' + i + (best ? ' (best)' : ''),
+          caption: 'Score ' + increment.score +
+            '<br>Relevance ' + increment.relevance.toFixed(3) +
+            '<br>Redundance ' + increment.redundancy.toFixed(3),
+          selected: selected,
+          title: titleFn
+        }),
+        mrmrField: renderWay(increment.mrmrField, {
+          heading: 'Subset #' + i + ' mRMR-scores of candidates',
+          selected: selected,
+          title: titleFn
+        })
       })
     }),
     weight: renderWay(model.weights[c], {

@@ -19,6 +19,7 @@ module.exports = (mutualInfoFields, condChan, subset) => {
   })
 
   if (size > 0) {
+    // Average
     return relSum / size
   }
 
