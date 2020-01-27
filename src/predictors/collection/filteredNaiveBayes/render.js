@@ -1,5 +1,5 @@
 const renderControls = require('./controls/render')
-const cellInspector = require('./cellInspector/render')
+const inspector = require('./inspector/render')
 
 module.exports = (state, local, dispatch) => {
   const root = document.createElement('div')
@@ -15,7 +15,7 @@ module.exports = (state, local, dispatch) => {
     'These are the basics of the naïve Bayes classification.</p>'
 
   // Selection related data
-  root.appendChild(cellInspector(state, local, dispatch))
+  root.appendChild(inspector(state, local, dispatch))
 
   // Controls
   root.appendChild(renderControls(state, local, dispatch))
