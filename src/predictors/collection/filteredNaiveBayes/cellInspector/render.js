@@ -116,6 +116,7 @@ module.exports = (state, model, dispatch) => {
     // A cell is selected. Show how we predict its value.
 
     const mi = model.mutualInfos[cellResult.cell.channel][fieldOffset]
+    const weight = model.weights[cellResult.cell.channel]
 
     innerHTML += template({
       contextHtml: renderWay(cellResult.context, {
@@ -138,6 +139,9 @@ module.exports = (state, model, dispatch) => {
       negProb: cellResult.negProb,
       mutualInfo: renderWay(mi, {
         heading: 'Mutual information with the channel'
+      }),
+      weight: renderWay(weight, {
+        heading: 'Selected mRMR features'
       })
     })
   }
