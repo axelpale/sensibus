@@ -3,15 +3,16 @@ const inferAll = require('./inferAll')
 const way = require('senseway')
 
 module.exports = (model, memory, ev) => {
-  // Compute prediction
-  // TODO do not do at every event
   // Default
   if (!model) {
     model = {
       fieldLength: 5,
       fields: [],
       priors: [],
-      prediction: way.fill(memory, 0)
+      prediction: way.fill(memory, 0),
+      inspectorChannel: 0,
+      trainingInsights: false,
+      inferringInsights: false
     }
   }
 
@@ -37,6 +38,30 @@ module.exports = (model, memory, ev) => {
       model = Object.assign({}, model, train(model, memory))
       return Object.assign({}, model, inferAll(model, memory))
       // OPTIMIZE only predict on CREATE_CHANNEL and CREATE_FRAME
+
+    case 'SELECT_INSPECTOR_CHANNEL': {
+      return Object.assign({}, model, {
+        inspectorChannel: ev.channel
+      })
+    }
+
+    case 'TOGGLE_TRAINING_INSIGHTS': {
+      // Optional boolean parameter ev.toggle
+      const curVal = !!model.trainingInsights
+      const newVal = typeof ev.toggleTo === 'boolean' ? ev.toggleTo : !curVal
+      return Object.assign({}, model, {
+        trainingInsights: newVal
+      })
+    }
+
+    case 'TOGGLE_INFERRING_INSIGHTS': {
+      // Optional boolean parameter ev.toggle
+      const curVal = !!model.inferringInsights
+      const newVal = typeof ev.toggleTo === 'boolean' ? ev.toggleTo : !curVal
+      return Object.assign({}, model, {
+        inferringInsights: newVal
+      })
+    }
 
     default:
       return model

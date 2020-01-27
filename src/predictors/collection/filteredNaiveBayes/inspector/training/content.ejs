@@ -1,0 +1,33 @@
+<p>
+  During training, every channel receives a dedicated field of conditional probabilities and other modeling data.
+  Select a channel to view its modeling data.
+</p>
+
+<div class="channel-selector">
+  <select id="training-channel-selector" name="training-channel-selector">
+  <% channels.forEach((chanConf, c) => { %>
+    <% const sel = (c === selectedChannel) %>
+    <option value="<%= c %>"<%= sel ? ' selected' : '' %>>#<%= c %> <%= chanConf.title %></option>
+  <% }) %>
+  </select>
+</div>
+
+<h4>Prior probabilities</h4>
+
+<div>
+  <%= priors %>
+</div>
+
+<h4>Conditional probabilities</h4>
+
+<div>
+<%= posField %>
+<%= posDiff %>
+<%= posGain %>
+</div>
+
+<div>
+<%= negField %>
+<%= negDiff %>
+<%= negGain %>
+</div>
