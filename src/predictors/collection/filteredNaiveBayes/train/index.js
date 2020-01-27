@@ -45,7 +45,7 @@ module.exports = (config, memory) => {
   })
 
   const weights = subsetSearch.map(result => {
-    return result.increments[result.bestAt]
+    return result.increments[result.bestAt].subset
   })
 
   return {
