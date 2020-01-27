@@ -121,9 +121,22 @@ module.exports = (state, model, dispatch) => {
 
   const filtering = document.createElement('div')
   filtering.innerHTML = filteringTemplate({
-    mutualInfo: '',
-    weight: '',
-    filter: ''
+    mutualInfo: renderWay(model.mutualInfos[c][0], {
+      heading: 'Mutual information with ' + channelTitle,
+      selected: selected,
+      title: titleFn
+    }),
+    filterIncrements: model.mrmr[c].increments.map((increment, i) => {
+      const best = (model.mrmr[c].bestAt === i)
+      return renderWay(increment.subset, {
+        heading: 'Subset #' + i + (best ? ' (best)' : ''),
+        caption: 'Score ' + increment.score,
+        title: titleFn
+      })
+    }),
+    weight: renderWay(model.weights[c], {
+      heading: 'Filtered Weights'
+    })
   })
 
   root.appendChild(filtering)

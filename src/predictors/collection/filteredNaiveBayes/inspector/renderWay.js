@@ -1,6 +1,7 @@
 const way = require('senseway')
 
 module.exports = (mem, opts) => {
+  // Extend defaults
   opts = Object.assign({
     reversed: true,
     heading: '',
