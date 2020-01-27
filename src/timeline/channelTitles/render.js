@@ -22,7 +22,8 @@ module.exports = (state, dispatch) => {
     }
 
     const val = state.timeline.channels[c].title
-    cell.innerHTML = '<div class="cell-text">' + val + '</div>'
+    cell.innerHTML = '<div class="cell-spine"></div>' +
+      '<div class="cell-text">' + val + '</div>'
 
     cell.addEventListener('click', () => {
       dispatch({
