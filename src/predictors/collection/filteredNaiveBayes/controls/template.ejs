@@ -1,0 +1,16 @@
+<h3>Model parameters</h3>
+
+<form>
+  <div class="form-group">
+    <label for="field-length">Field length</label>
+    <select class="form-control" id="field-length">
+      <% fieldLengths.forEach(len => { %>
+        <% if (len === currentFieldLength) { %>
+          <option value="<%= len %>" selected="selected"><%= len %></option>
+        <% } else { %>
+          <option value="<%= len %>"><%= len %></option>
+        <% } %>
+      <% }) %>
+    </select>
+  </div>
+</form>

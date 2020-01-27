@@ -374,6 +374,17 @@ exports.set = (way, c, t, value) => {
   return w
 }
 
+exports.size = (way) => {
+  // Number of elements; width x length.
+  //
+  const w = way.length
+  if (w === 0) {
+    return 0
+  }
+  const l = way[0].length
+  return w * l
+}
+
 exports.slice = (way, begin, end) => {
   // Get a part of the way.
   //
