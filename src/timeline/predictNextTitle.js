@@ -11,17 +11,17 @@ module.exports = title => {
     return '' + nextInt
   }
 
-  const fiDate = /(?<label>ma|ti|ke|to|pe|la|su)\s(?<dd>\d+)\.(?<mm>\d+)\.?/i
+  const fiDate = /(ma|ti|ke|to|pe|la|su)\s(\d+)\.(\d+)\.?/i
   const fiDateFound = title.match(fiDate) // null if not found
   if (fiDateFound) {
     const labels = ['ma', 'ti', 'ke', 'to', 'pe', 'la', 'su']
-    const foundLabel = fiDateFound.groups.label
+    const foundLabel = fiDateFound[1]
     const labelIndex = labels.indexOf(foundLabel)
     const nextIndex = (labelIndex + 1) % labels.length
     const nextLabel = labels[nextIndex]
 
-    const month = parseInt(fiDateFound.groups.mm)
-    const day = parseInt(fiDateFound.groups.dd)
+    const day = parseInt(fiDateFound[2])
+    const month = parseInt(fiDateFound[3])
 
     const currentYear = (new Date()).getFullYear()
     const newDate = new Date(currentYear, month - 1, day + 1)
