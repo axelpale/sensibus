@@ -1,11 +1,11 @@
-const defaultTimeline = require('../timeline/defaultTimeline')
+const newTimeline = require('./newTimeline')
 const migrate = require('../migrate')
 
 module.exports = (state, ev) => {
   switch (ev.type) {
     case 'RESET_STATE': {
       return Object.assign({}, state, {
-        timeline: defaultTimeline
+        timeline: newTimeline
       })
     }
 
