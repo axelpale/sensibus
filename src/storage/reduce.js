@@ -5,7 +5,8 @@ module.exports = (state, ev) => {
   switch (ev.type) {
     case 'RESET_STATE': {
       return Object.assign({}, state, {
-        timeline: newTimeline
+        timeline: newTimeline,
+        sidebarPage: 'edit'
       })
     }
 
