@@ -73,6 +73,16 @@ module.exports = (state, model, dispatch) => {
     t: t,
     givenValue: state.timeline.memory[c][t],
     predictedValue: cellResult ? cellResult.prediction.toFixed(2) : 'N/A',
+    priors: renderWay(model.priors.map(t => [t]), {
+      heading: 'Channel averages',
+      selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
+      title: titleFn
+    }),
+    weights: renderWay(model.weights.map(t => [t]), {
+      heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
+      selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
+      title: titleFn
+    }),
     posField: renderWay(model.fields[c].posField, {
       heading: 'If ' + channelTitle + ' then',
       caption: 'in average.',
@@ -105,16 +115,6 @@ module.exports = (state, model, dispatch) => {
     negDiff: renderWay(negDiff, {
       heading: 'Difference to channel average around not ' + channelTitle,
       selected: selected,
-      title: titleFn
-    }),
-    priors: renderWay(model.priors.map(t => [t]), {
-      heading: 'Channel averages',
-      selected: model.priors.map((t, ci) => ci === c ? [1] : [0]),
-      title: titleFn
-    }),
-    weights: renderWay(model.weights.map(t => [t]), {
-      heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
-      selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
     })
   })
