@@ -79,7 +79,7 @@ module.exports = (state, model, dispatch) => {
       title: titleFn
     }),
     weights: renderWay(model.weights.map(t => [t]), {
-      heading: 'Channel weights (1 - 1/(1+n)^(1/π))',
+      heading: 'Weighting based on sample size',
       selected: model.weights.map((t, ci) => ci === c ? [1] : [0]),
       title: titleFn
     }),
