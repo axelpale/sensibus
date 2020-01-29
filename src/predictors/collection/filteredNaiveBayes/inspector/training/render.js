@@ -139,8 +139,13 @@ module.exports = (state, model, dispatch) => {
           selected: selected,
           title: titleFn
         }),
-        mrmrField: renderWay(increment.mrmrField, {
-          heading: 'Subset #' + i + ' mRMR-scores of candidates',
+        candidateRelevances: renderWay(increment.candidateRelevances, {
+          heading: 'Subset #' + i + ' rele&shy;vance of can&shy;di&shy;date incre&shy;ments',
+          selected: selected,
+          title: titleFn
+        }),
+        candidateRedundancies: renderWay(increment.candidateRedundancies, {
+          heading: 'Subset #' + i + ' redun&shy;dancy of can&shy;di&shy;date incre&shy;ments',
           selected: selected,
           title: titleFn
         })

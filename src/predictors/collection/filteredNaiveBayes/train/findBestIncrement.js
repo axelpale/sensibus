@@ -15,7 +15,8 @@ module.exports = (miFields, condChan, subset) => {
   const candidateCells = way.toArray(subset).filter(cell => cell.value === 0)
 
   // For understanding and visualisation,
-  const mrmrField = way.fill(subset, -1)
+  const redundancyField = way.fill(subset, 0)
+  const relevanceField = way.fill(subset, 0)
 
   candidateCells.forEach(cell => {
     const candidateSubset = way.set(subset, cell.channel, cell.time, 1)
@@ -30,7 +31,8 @@ module.exports = (miFields, condChan, subset) => {
       bestSubset = candidateSubset
     }
 
-    mrmrField[cell.channel][cell.time] = score
+    redundancyField[cell.channel][cell.time] = redundancy
+    relevanceField[cell.channel][cell.time] = relevance
   })
 
   if (bestSubset) {
@@ -39,7 +41,8 @@ module.exports = (miFields, condChan, subset) => {
       subset: bestSubset,
       redundancy: bestRedundancy,
       relevance: bestRelevance,
-      mrmrField: mrmrField
+      candidateRedundancies: redundancyField,
+      candidateRelevances: relevanceField
     }
   }
 

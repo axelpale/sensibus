@@ -7,7 +7,8 @@ module.exports = (miFields, condChan) => {
     subset: way.fill(miFields, 0),
     redundancy: 1,
     relevance: 0,
-    mrmrField: way.fill(miFields, -1)
+    candidateRedundancies: way.fill(miFields, 0),
+    candidateRelevances: way.fill(miFields, 0)
   }]
   let bestAt = 0
 
