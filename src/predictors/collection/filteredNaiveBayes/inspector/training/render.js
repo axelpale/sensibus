@@ -123,7 +123,7 @@ module.exports = (state, model, dispatch) => {
 
   const filtering = document.createElement('div')
   filtering.innerHTML = filteringTemplate({
-    mutualInfo: renderWay(model.mutualInfos[c][0], {
+    mutualInfo: renderWay(model.mutualInfos[c][fieldOffset], {
       heading: 'Mutual information with ' + channelTitle,
       selected: selected,
       title: titleFn
