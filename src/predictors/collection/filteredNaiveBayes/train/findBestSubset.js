@@ -1,9 +1,9 @@
 const way = require('senseway')
-const findBestIncrement = require('./findBestIncrement')
+const findNextIncrement = require('./findNextIncrement')
 
 module.exports = (miFields, condChan) => {
   // Default increment.
-  const increments = [findBestIncrement(miFields, condChan, null)]
+  const increments = [findNextIncrement(miFields, condChan, null)]
   let bestAt = 0
 
   // Limit search to number of features
@@ -12,7 +12,7 @@ module.exports = (miFields, condChan) => {
   while (increments.length <= maxIncrements) {
     const prevIncrement = increments[increments.length - 1]
     const prevSubset = prevIncrement.subset
-    const bestIncrement = findBestIncrement(miFields, condChan, prevSubset)
+    const bestIncrement = findNextIncrement(miFields, condChan, prevSubset)
 
     if (bestIncrement === null) {
       // No increment found
