@@ -5,6 +5,18 @@ const getRelevance = require('./getRelevance')
 // Incremental search.
 // Repeatedly find (c,t) in candidate set that maximises mRMR.
 module.exports = (miFields, condChan, subset) => {
+  if (!subset) {
+    // Initial increment when subset null
+    return {
+      score: -1,
+      subset: way.fill(miFields, 0),
+      redundancy: 1,
+      relevance: 0,
+      candidateRedundancies: way.fill(miFields, 1),
+      candidateRelevances: way.fill(miFields, 0)
+    }
+  }
+
   let bestScore = -1 // what is theoretical min?
   let bestRedundancy = 1
   let bestRelevance = 0

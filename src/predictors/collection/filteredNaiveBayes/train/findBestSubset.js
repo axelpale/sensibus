@@ -2,14 +2,8 @@ const way = require('senseway')
 const findBestIncrement = require('./findBestIncrement')
 
 module.exports = (miFields, condChan) => {
-  const increments = [{
-    score: -1,
-    subset: way.fill(miFields, 0),
-    redundancy: 1,
-    relevance: 0,
-    candidateRedundancies: way.fill(miFields, 1),
-    candidateRelevances: way.fill(miFields, 0)
-  }]
+  // Default increment.
+  const increments = [findBestIncrement(miFields, condChan, null)]
   let bestAt = 0
 
   // Limit search to number of features
