@@ -133,7 +133,7 @@ module.exports = (state, model, dispatch) => {
       return incrementTemplate({
         subset: renderWay(increment.subset, {
           heading: 'Subset #' + i + (best ? ' (best)' : ''),
-          caption: 'Score ' + increment.score +
+          caption: 'Score ' + increment.score.toFixed(3) +
             '<br>Relevance ' + increment.relevance.toFixed(3) +
             '<br>Redundance ' + increment.redundancy.toFixed(3),
           selected: selected,
