@@ -7,10 +7,15 @@ module.exports = (model, cell, memory) => {
   const ctxEnd = lib.getEnd(model, cell.time)
   const context = way.slice(memory, ctxBegin, ctxEnd)
 
-  return inference.infer(
+  const inferResult = inference.infer(
     model.priors[cell.channel],
     model.fields[cell.channel],
     model.weights[cell.channel],
     context
   )
+
+  // For backward-compatibility, add cell
+  inferResult.cell = cell
+
+  return inferResult
 }
