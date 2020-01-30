@@ -1,19 +1,22 @@
-const way = require('senseway')
 const scoreIncrement = require('./scoreIncrement')
 const findIncrements = require('./findNextIncrement')
 
-module.exports = (miFields, condChan) => {
+module.exports = (priors, fields, miFields, slices, condChan) => {
   // Default increment.
   const increments = findIncrements(miFields, condChan)
+  let bestAccuracy = 0
   let bestAt = 0
-  let bestScore
 
   increments.forEach((increment, i) => {
-    const score = scoreIncrement(etc, increment)
-    if (bestScore < score) {
+    const accuracy = scoreIncrement(priors, fields, slices, condChan, increment)
+    if (bestAccuracy < accuracy) {
+      bestAccuracy = accuracy
       bestAt = i
     }
   })
 
-  return increments[bestAt]
+  return {
+    increments: increments,
+    bestAt: bestAt
+  }
 }

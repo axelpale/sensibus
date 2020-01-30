@@ -33,7 +33,7 @@ module.exports = (config, memory) => {
   // We compute mutual information between all variables only once.
   // The result is a four-dimensional array, a mapping between two fields.
   // OPTIMIZE by noting that many values are equal
-  const mutualInfos = way.map(proto, (y, yc, yt) => {
+  const miFields = way.map(proto, (y, yc, yt) => {
     return way.map(proto, (x, xc, xt) => {
       return getMutualInfo(fields, priors, xc, xt, yc, yt)
     })
@@ -41,7 +41,7 @@ module.exports = (config, memory) => {
 
   // Find min-redundant-max-relevant feature sets.
   const subsetSearch = priors.map((foo, condChan) => {
-    return findBestSubset(mutualInfos, condChan)
+    return findBestSubset(priors, fields, miFields, slices, condChan)
   })
 
   const weights = subsetSearch.map(result => {
@@ -53,7 +53,7 @@ module.exports = (config, memory) => {
     priors: priors,
     fields: fields,
     weights: weights,
-    mutualInfos: mutualInfos,
-    mrmr: subsetSearch
+    mutualInfos: miFields,
+    filtering: subsetSearch
   }
 }
