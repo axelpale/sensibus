@@ -1,5 +1,5 @@
 const scoreIncrement = require('./scoreIncrement')
-const findIncrements = require('./findNextIncrement')
+const findIncrements = require('./findIncrements')
 
 module.exports = (priors, fields, miFields, slices, condChan) => {
   // Default increment.

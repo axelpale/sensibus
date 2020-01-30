@@ -128,8 +128,8 @@ module.exports = (state, model, dispatch) => {
       selected: selected,
       title: titleFn
     }),
-    filterIncrements: model.mrmr[c].increments.map((increment, i) => {
-      const best = (model.mrmr[c].bestAt === i)
+    filterIncrements: model.filtering[c].increments.map((increment, i) => {
+      const best = (model.filtering[c].bestAt === i)
       return incrementTemplate({
         subset: renderWay(increment.subset, {
           heading: 'Subset #' + i + (best ? ' (best)' : ''),
