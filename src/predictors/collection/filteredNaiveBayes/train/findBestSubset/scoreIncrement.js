@@ -1,6 +1,6 @@
 const way = require('senseway')
 const problib = require('problib')
-const inference = require('../inference')
+const inference = require('../../inference')
 
 module.exports = (priors, fields, slices, condChan, increment) => {
   const len = way.len(slices[0])
