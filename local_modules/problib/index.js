@@ -14,3 +14,35 @@ exports.mutualInfo = (px, py, pxgy, pxgny) => {
   const neg = (1 - py) * exports.divergence(pxgny, px)
   return pos + neg
 }
+
+exports.precision = (confusion) => {
+  if (confusion.truePos + confusion.falsePos > 0) {
+    return confusion.truePos / (confusion.truePos + confusion.falsePos)
+  }
+  return 0
+}
+
+exports.recall = (confusion) => {
+  if (confusion.truePos + confusion.falseNeg > 0) {
+    return confusion.truePos / (confusion.truePos + confusion.falseNeg)
+  }
+  return 0
+}
+
+exports.accuracy = (confusion) => {
+  const co = confusion
+  const n = co.truePos + co.trueNeg + co.falsePos + co.falseNeg
+  if (n > 0) {
+    return (co.truePos + co.trueNeg) / n
+  }
+  return 0
+}
+
+exports.f1score = (confusion) => {
+  const precision = exports.precision(confusion)
+  const recall = exports.recall(confusion)
+  if (precision + recall > 0) {
+    return 2 * (precision * recall) / (precision + recall)
+  }
+  return 0
+}
