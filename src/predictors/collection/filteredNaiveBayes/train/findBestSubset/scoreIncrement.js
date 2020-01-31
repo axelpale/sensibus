@@ -10,10 +10,17 @@ module.exports = (priors, fields, slices, condChan, increment) => {
   const weight = increment.subset
 
   const confusion = slices.reduce((acc, slice) => {
-    const maskedSlice = way.set(slice, condChan, len - 1, 0)
-    const prediction = inference.infer(prior, field, weight, maskedSlice)
+    const actualValue = slice[condChan][len - 1]
+
+    // Skip slices where actual value is not known.
+    if (actualValue === 0) {
+      return acc
+    }
+
+    const context = way.set(slice, condChan, len - 1, 0)
+    const prediction = inference.infer(prior, field, weight, context)
     const predicted = (1 + prediction.prediction) / 2 // trit to prob
-    const actual = (1 + slice[condChan][len - 1]) / 2 // trit to prob
+    const actual = (1 + actualValue) / 2 // trit to prob
 
     acc.truePos += predicted * actual
     acc.trueNeg += (1 - predicted) * (1 - actual)
