@@ -129,26 +129,27 @@ module.exports = (state, model, dispatch) => {
       title: titleFn
     }),
     filterIncrements: model.filtering[c].increments.map((increment, i) => {
-      const best = (model.filtering[c].bestAt === i)
       return incrementTemplate({
+        i: i,
+        best: (model.filtering[c].bestAt === i),
         subset: renderWay(increment.subset, {
-          heading: 'Subset #' + i + (best ? ' (best)' : ''),
-          caption: 'Score ' + increment.score.toFixed(3) +
-            '<br>Relevance ' + increment.relevance.toFixed(3) +
-            '<br>Redundance ' + increment.redundancy.toFixed(3),
+          heading: 'Selected Subset #' + i,
           selected: selected,
           title: titleFn
         }),
         candidateRelevances: renderWay(increment.candidateRelevances, {
-          heading: 'Subset #' + i + ' rele&shy;vance of can&shy;di&shy;date incre&shy;ments',
+          heading: 'Rele&shy;vance of can&shy;di&shy;date incre&shy;ments',
           selected: selected,
           title: titleFn
         }),
         candidateRedundancies: renderWay(increment.candidateRedundancies, {
-          heading: 'Subset #' + i + ' redun&shy;dancy of can&shy;di&shy;date incre&shy;ments',
+          heading: 'Redun&shy;dancy of can&shy;di&shy;date incre&shy;ments',
           selected: selected,
           title: titleFn
-        })
+        }),
+        relevance: increment.relevance,
+        redundancy: increment.redundancy,
+        relred: increment.relevance - increment.redundancy
       })
     }),
     weight: renderWay(model.weights[c], {
