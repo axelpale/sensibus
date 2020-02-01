@@ -134,7 +134,7 @@ exports.frame = (way, t) => {
 exports.get = (way, c, t) => {
   const w = exports.width(way)
   const l = exports.len(way)
-  if (0 < c && c < w && 0 < t && t < l) {
+  if (0 <= c && c < w && 0 <= t && t < l) {
     return way[c][t]
   }
   return 0
