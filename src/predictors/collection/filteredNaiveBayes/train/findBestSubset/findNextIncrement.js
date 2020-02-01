@@ -26,7 +26,8 @@ module.exports = (miFields, condChan, subset) => {
   // Go through selected features in way.map(subset, q => 1 - q)
   const candidateCells = way.toArray(subset).filter(cell => cell.value === 0)
 
-  // For understanding and visualisation,
+  // Redundacies and relevances of candidates
+  // for understanding and visualisation,
   const redundancyField = way.fill(subset, 0)
   const relevanceField = way.fill(subset, 0)
 
