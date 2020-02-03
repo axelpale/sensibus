@@ -3,39 +3,30 @@
 //
 const way = require('senseway')
 
-module.exports = (mutualInfoFields, subset) => {
-  let subsetSize = 0
+module.exports = (mutualInfoFields, subset, candidateCell) => {
+  // Compute average mutual information between c-cell and subset cells.
+  // Assert: candidateCell not in subset
+
+  const xc = candidateCell.channel
+  const xt = candidateCell.time
+  const miField = mutualInfoFields[xc][xt]
+
   let redSum = 0
   let redSize = 0
 
-  // For each pair of selected features, compute average mutual information.
-  // Avoid summation of self-redundancies because I(X;X) >= I(X;Y).
-  // OPTIMIZE by noting that all is summed twice.
-  way.each(mutualInfoFields, (miField, yc, yt) => {
+  way.each(miField, (mi, yc, yt) => {
     if (subset[yc][yt] > 0) {
-      way.each(miField, (mi, xc, xt) => {
-        if (subset[xc][xt] > 0) {
-          subsetSize += 1
-          if (!(yc === xc && yt === xt)) {
-            redSum += mi
-            redSize += 1
-          }
-        }
-      })
+      redSum += mi
+      redSize += 1
     }
   })
 
   if (redSize > 0) {
-    // At least one pair where X != Y found.
+    // At least one possibly redundant cell found.
     return redSum / redSize
   }
 
-  if (subsetSize > 0) {
-    // No pairs found but subset still has non-zero elements.
-    // => subsetSize == 1. Single-feature subsets have redundancy 0.
-    return 0
-  }
-
-  // All subset elements zero. Return the worst redundancy.
-  return 1
+  // Empty subset. No cell in the subset is redundant with the candidate.
+  // Return least redundancy.
+  return 0
 }

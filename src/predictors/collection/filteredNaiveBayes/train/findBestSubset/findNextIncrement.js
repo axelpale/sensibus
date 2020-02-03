@@ -3,7 +3,7 @@ const getRedundancy = require('./getRedundancy')
 const getRelevance = require('./getRelevance')
 
 // Incremental search.
-// Repeatedly find (c,t) in candidate set that maximises mRMR.
+// Repeatedly find (c,t) in candidate set that maximises Rel-Red.
 module.exports = (miFields, condChan, subset) => {
   if (!subset) {
     // Initial increment when subset null
@@ -20,38 +20,48 @@ module.exports = (miFields, condChan, subset) => {
   let bestScore = -1 // what is theoretical min?
   let bestRedundancy = 1
   let bestRelevance = 0
-  let bestSubset = null
+  let bestCell = null
 
-  // Try all cells that are not selected (value === 0).
-  // Go through selected features in way.map(subset, q => 1 - q)
-  const candidateCells = way.toArray(subset).filter(cell => cell.value === 0)
+  // Conditioning cell
+  const condFrame = way.len(miFields) - 1
 
-  // Redundacies and relevances of candidates
+  // Try all cells that are not already selected i.e. with value of 0.
+  // Do not try the conditioning cell.
+  const candidateCells = way.toArray(subset)
+    .filter(cell => cell.value === 0)
+    .filter(cell => !(cell.channel === condChan && cell.time === condFrame))
+
+  // Collect redundacies and relevances of candidates
   // for understanding and visualisation,
-  const redundancyField = way.fill(subset, 0)
   const relevanceField = way.fill(subset, 0)
+  const redundancyField = way.fill(subset, 0)
 
   candidateCells.forEach(cell => {
-    const candidateSubset = way.set(subset, cell.channel, cell.time, 1)
-    const redundancy = getRedundancy(miFields, candidateSubset)
-    const relevance = getRelevance(miFields, condChan, candidateSubset)
+    // A candidate subset consists of the current subset and a candidate cell.
+    // We should evaluate redundancy and relevance of the candidate subset.
+    // However, only evaluating redundancy and relevance of the candidate cell
+    // is sufficient because other values remain the same regardless the cell.
+    // See Peng-Long-Ding 2005, Eq 7.
+
+    const relevance = getRelevance(miFields, condChan, cell)
+    const redundancy = getRedundancy(miFields, subset, cell)
     const score = relevance - redundancy
 
     if (score > bestScore) {
       bestScore = score
-      bestRedundancy = redundancy
       bestRelevance = relevance
-      bestSubset = candidateSubset
+      bestRedundancy = redundancy
+      bestCell = cell
     }
 
-    redundancyField[cell.channel][cell.time] = redundancy
     relevanceField[cell.channel][cell.time] = relevance
+    redundancyField[cell.channel][cell.time] = redundancy
   })
 
-  if (bestSubset) {
+  if (bestCell) {
     return {
       score: bestScore,
-      subset: bestSubset,
+      subset: way.set(subset, bestCell.channel, bestCell.time, 1),
       redundancy: bestRedundancy,
       relevance: bestRelevance,
       candidateRedundancies: redundancyField,

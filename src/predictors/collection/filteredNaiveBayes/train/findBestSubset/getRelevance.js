@@ -4,24 +4,12 @@
 //
 const way = require('senseway')
 
-module.exports = (mutualInfoFields, condChan, subset) => {
-  const condFrame = way.len(subset) - 1
+module.exports = (mutualInfoFields, condChan, candidateCell) => {
+  // Assert: candidate cell is not the conditioning cell.
+  const condFrame = way.len(mutualInfoFields) - 1
   const miField = mutualInfoFields[condChan][condFrame]
 
-  let relSum = 0
-  let size = 0
-
-  way.each(miField, (mi, xc, xt) => {
-    if (subset[xc][xt] > 0 && !(condChan === xc && condFrame === xt)) {
-      relSum += mi
-      size += 1
-    }
-  })
-
-  if (size > 0) {
-    // Average
-    return relSum / size
-  }
-
-  return 0
+  const xc = candidateCell.channel
+  const xt = candidateCell.time
+  return miField[xc][xt]
 }
