@@ -325,6 +325,12 @@ exports.padRight = (way, len, filler) => {
   return exports.join(way, tail)
 }
 
+exports.product = (way) => {
+  return way.reduce((acc, ch) => {
+    return acc * ch.reduce((ac, q) => ac * q, 1)
+  }, 1)
+}
+
 exports.reduce = (way, iteratee, acc) => {
   // Reduce elements to a value.
   return way.reduce((ac, ch, c) => {

@@ -355,6 +355,13 @@ test('padRight', (t) => {
   t.end()
 })
 
+test('product', t => {
+  t.equal(way.product(ONES), 1)
+  t.equal(way.product(V), 0)
+  t.equal(way.product(TWOS), 64)
+  t.end()
+})
+
 test('reduce', (t) => {
   t.equal(way.reduce(ONES, (acc, q) => acc + q, 0), 6)
   t.end()
