@@ -66,3 +66,25 @@ test('f1score', (t) => {
   }), 0.5)
   t.end()
 })
+
+test('mcc', (t) => {
+  t.equal(problib.mcc({
+    truePos: 0,
+    trueNeg: 0,
+    falsePos: 0,
+    falseNeg: 0
+  }), 0)
+  t.equal(problib.mcc({
+    truePos: 5,
+    trueNeg: 5,
+    falsePos: 5,
+    falseNeg: 5
+  }), 0)
+  t.equal(problib.mcc({
+    truePos: 10,
+    trueNeg: 10,
+    falsePos: 10,
+    falseNeg: 5
+  }), 1 / 6)
+  t.end()
+})

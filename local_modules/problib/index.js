@@ -46,3 +46,21 @@ exports.f1score = (confusion) => {
   }
   return 0
 }
+
+exports.mcc = (confusion) => {
+  // Matthews correlation coefficient
+  const co = confusion
+  const numerator = co.truePos * co.trueNeg - co.falsePos * co.falseNeg
+  const denominator = Math.sqrt(
+    (co.truePos + co.falsePos) *
+    (co.truePos + co.falseNeg) *
+    (co.trueNeg + co.falsePos) *
+    (co.trueNeg + co.falseNeg)
+  )
+
+  if (denominator === 0) {
+    return 0
+  }
+
+  return numerator / denominator
+}
