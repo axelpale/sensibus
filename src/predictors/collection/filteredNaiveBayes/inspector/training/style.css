@@ -1,3 +1,7 @@
 .subset-increment {
   border-top: 1px solid black;
 }
+.subset-increment.subset-increment-last {
+  border-bottom: 1px solid black;
+  margin-bottom: 2rem;
+}

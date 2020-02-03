@@ -131,7 +131,8 @@ module.exports = (state, model, dispatch) => {
     filterIncrements: model.filtering[c].increments.map((increment, i) => {
       return incrementTemplate({
         i: i,
-        best: (model.filtering[c].bestAt === i),
+        isBest: (model.filtering[c].bestAt === i),
+        isLast: (i === model.filtering[c].increments.length - 1),
         f1score: model.filtering[c].scores[i],
         subset: renderWay(increment.subset, {
           heading: 'Selected Subset #' + i,
