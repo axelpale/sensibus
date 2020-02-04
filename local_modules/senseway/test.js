@@ -278,6 +278,15 @@ test('map2', (t) => {
   t.end()
 })
 
+test('mask', t => {
+  t.deepEqual(way.mask(TWOS, V), [
+    [2, 0, 2],
+    [0, 2, 0]
+  ])
+  t.deepEqual(way.mask([], []), [])
+  t.end()
+})
+
 test('max', (t) => {
   t.equal(way.max(ONES), 1)
   t.equal(way.max(SEQ), 5)

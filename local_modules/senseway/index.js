@@ -262,6 +262,11 @@ exports.map2 = (wayA, wayB, fn) => {
   return wayA.map((ch, c) => ch.map((q, t) => fn(q, wayB[c][t], c, t)))
 }
 
+exports.mask = (way, mask) => {
+  // Set values in the way to zero if according values in mask are zero.
+  return way.map((ch, c) => ch.map((q, t) => mask[c][t] > 0 ? q : 0))
+}
+
 exports.max = (way) => {
   // Largest value in the way. Returns scalar.
   return way.reduce((acc, ch) => {
@@ -327,7 +332,7 @@ exports.padRight = (way, len, filler) => {
 
 exports.product = (way) => {
   return way.reduce((acc, ch) => {
-    return acc * ch.reduce((ac, q) => ac * q, 1)
+    return ch.reduce((ac, q) => ac * q, acc)
   }, 1)
 }
 
