@@ -133,7 +133,7 @@ module.exports = (state, model, dispatch) => {
         i: i,
         isBest: (model.filtering[c].bestAt === i),
         isLast: (i === model.filtering[c].increments.length - 1),
-        score: model.filtering[c].scores[i],
+        scoring: model.filtering[c].scorings[i],
         subset: renderWay(increment.subset, {
           heading: 'Selected Subset #' + i,
           selected: selected,

@@ -7,18 +7,18 @@ module.exports = (priors, fields, miFields, slices, condChan) => {
   let bestScore = -1 // min MCC score
   let bestAt = 0
 
-  const scores = increments.map((increment, i) => {
-    const score = scoreIncrement(priors, fields, slices, condChan, increment)
-    if (bestScore < score) {
-      bestScore = score
+  const scorings = increments.map((increment, i) => {
+    const scoring = scoreIncrement(priors, fields, slices, condChan, increment)
+    if (bestScore < scoring.score) {
+      bestScore = scoring.score
       bestAt = i
     }
-    return score
+    return scoring
   })
 
   return {
     increments: increments,
-    scores: scores,
+    scorings: scorings,
     bestAt: bestAt
   }
 }

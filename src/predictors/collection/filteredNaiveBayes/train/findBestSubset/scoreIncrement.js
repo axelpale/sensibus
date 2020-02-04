@@ -53,5 +53,8 @@ module.exports = (priors, fields, slices, condChan, increment) => {
     falseNeg: 0
   })
 
-  return problib.mcc(confusion)
+  return {
+    score: problib.mcc(confusion),
+    confusion: confusion
+  }
 }

@@ -8,7 +8,16 @@ module.exports = (miFields, condChan, subset) => {
   if (!subset) {
     // Initial increment when subset null
     return {
-      score: -1,
+      scoring: {
+        score: -1,
+        confusion: {
+          n: 0,
+          truePos: 0,
+          trueNeg: 0,
+          falsePos: 0,
+          falseNeg: 0
+        }
+      },
       subset: way.fill(miFields, 0),
       redundancy: 1,
       relevance: 0,

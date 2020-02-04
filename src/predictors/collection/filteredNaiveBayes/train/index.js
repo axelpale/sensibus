@@ -40,11 +40,11 @@ module.exports = (config, memory) => {
   })
 
   // Find min-redundant-max-relevant feature sets.
-  const subsetSearch = priors.map((foo, condChan) => {
+  const filtering = priors.map((foo, condChan) => {
     return findBestSubset(priors, fields, miFields, slices, condChan)
   })
 
-  const weights = subsetSearch.map(result => {
+  const weights = filtering.map(result => {
     return result.increments[result.bestAt].subset
   })
 
@@ -54,6 +54,6 @@ module.exports = (config, memory) => {
     fields: fields,
     weights: weights,
     mutualInfos: miFields,
-    filtering: subsetSearch
+    filtering: filtering
   }
 }
