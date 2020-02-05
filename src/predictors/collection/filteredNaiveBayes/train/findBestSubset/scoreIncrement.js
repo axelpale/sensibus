@@ -26,6 +26,7 @@ module.exports = (priors, fields, slices, condChan, increment) => {
     // variance of the performance score.
     // Also, if the data has lots of holes, this penalises
     // features that truly help prediction in these situations.
+    // TODO be less strict with subset inclusion.
     const contextSize = way.sumAbs(way.mask(slice, weight))
     if (contextSize < subsetSize) {
       return acc
