@@ -45,7 +45,7 @@ module.exports = (config, memory) => {
   })
 
   const weights = filtering.map(result => {
-    return result.increments[result.bestAt].subset
+    return result.increments[result.bestIncrementAt].subset
   })
 
   return {

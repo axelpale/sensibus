@@ -48,7 +48,9 @@ module.exports = (scorings) => {
     a = b
     b = b + subseqSize
     // Extend the last subsequence to the end.
-    if (b + subseqSize > seqSize) {
+    // Note the first predicate. Endless loop without it
+    // because b=seqSize always fulfills the while-loop condition.
+    if (b < seqSize && b + subseqSize > seqSize) {
       b = seqSize
     }
   }

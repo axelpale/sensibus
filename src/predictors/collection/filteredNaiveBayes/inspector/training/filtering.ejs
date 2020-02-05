@@ -1,8 +1,14 @@
 <h4>Filtering</h4>
 <div><%= mutualInfo %></div>
 <div><%
-  filterIncrements.forEach(incr => {
+  increments.forEach(incr => {
     %><div><%= incr %></div><%
   })
 %></div>
+<div><%
+  subsequences.forEach(subseq => {
+    %><%= subseq %><%
+  })
+%></div>
+<h5>Best feature subset</h5>
 <div><%= weight %></div>

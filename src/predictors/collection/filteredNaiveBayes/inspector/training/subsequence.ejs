@@ -1,0 +1,8 @@
+<div class="subset-subsequence<%= isLast ? ' subset-subsequence-last' : '' %>">
+  <h5>Increment subsequence #<%= i %><%= isBest ? ' (best)' : '' %></h5>
+  <div>Range: [<%= subseq.begin %>, <%= subseq.end %>[</div>
+  <div>Mean: <%= subseq.mean.toFixed(4) %></div>
+  <div>Variance: <%= subseq.variance.toFixed(4) %></div>
+  <div>Size penalty: <%= subseq.penalty %></div>
+  <div>Quality: <%= subseq.quality.toFixed(4) %></div>
+</div>

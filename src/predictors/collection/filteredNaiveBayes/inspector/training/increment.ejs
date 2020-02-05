@@ -1,7 +1,7 @@
 <div class="subset-increment<%= isLast ? ' subset-increment-last' : '' %>">
-  <h5>Increment #<%= i %></h5>
-  <div><%= candidateRelevances %></div>
-  <div><%= candidateRedundancies %></div>
+  <h5>Increment #<%= i %><%= isBest ? ' (best)' : '' %></h5>
+  <!--div><%= candidateRelevances %></div>
+  <div><%= candidateRedundancies %></div-->
   <div><%= subset %></div>
   <div>Relevance: <%= relevance.toFixed(3) %></div>
   <div>Redundancy: <%= redundancy.toFixed(3) %></div>

@@ -2,6 +2,7 @@ const headingTemplate = require('./heading.ejs')
 const contentTemplate = require('./content.ejs')
 const filteringTemplate = require('./filtering.ejs')
 const incrementTemplate = require('./increment.ejs')
+const subsequenceTemplate = require('./subsequence.ejs')
 const way = require('senseway')
 const renderWay = require('../renderWay')
 const problib = require('problib')
@@ -122,18 +123,19 @@ module.exports = (state, model, dispatch) => {
   // Filtering step
 
   const filtering = document.createElement('div')
+  const chanFilter = model.filtering[c]
   filtering.innerHTML = filteringTemplate({
     mutualInfo: renderWay(model.mutualInfos[c][fieldOffset], {
       heading: 'Mutual information with ' + channelTitle,
       selected: selected,
       title: titleFn
     }),
-    filterIncrements: model.filtering[c].increments.map((increment, i) => {
+    increments: chanFilter.increments.map((increment, i) => {
       return incrementTemplate({
         i: i,
-        isBest: (model.filtering[c].bestAt === i),
-        isLast: (i === model.filtering[c].increments.length - 1),
-        scoring: model.filtering[c].scorings[i],
+        isBest: (chanFilter.bestIncrementAt === i),
+        isLast: (i === chanFilter.increments.length - 1),
+        scoring: chanFilter.scorings[i],
         subset: renderWay(increment.subset, {
           heading: 'Selected Subset #' + i,
           selected: selected,
@@ -154,8 +156,17 @@ module.exports = (state, model, dispatch) => {
         relred: increment.relevance - increment.redundancy
       })
     }),
+    subsequences: chanFilter.subsequences.map((subseq, i) => {
+      return subsequenceTemplate({
+        i: i,
+        isBest: (chanFilter.bestSubseqAt === i),
+        isLast: (i === chanFilter.subsequences.length - 1),
+        subseq: subseq
+      })
+    }),
     weight: renderWay(model.weights[c], {
-      heading: 'Filtered Weights'
+      heading: 'Filtered Weights',
+      selected: selected
     })
   })
 

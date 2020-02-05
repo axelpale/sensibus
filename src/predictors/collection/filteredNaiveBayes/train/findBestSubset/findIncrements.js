@@ -4,8 +4,8 @@ const findNextIncrement = require('./findNextIncrement')
 module.exports = (miFields, condChan) => {
   const increments = [findNextIncrement(miFields, condChan, null)]
 
-  // Limit search to number of features
-  const maxIncrements = 20 // way.size(miFields)
+  // Limit search to the number of features
+  const maxIncrements = way.size(miFields)
 
   while (increments.length <= maxIncrements) {
     const prevIncrement = increments[increments.length - 1]
@@ -19,13 +19,6 @@ module.exports = (miFields, condChan) => {
 
     increments.push(nextIncrement)
   }
-
-  // DEBUG maximal increment
-  const maximalSubset = way.fill(miFields, 1)
-  const subMaxSubset = way.set(maximalSubset, 0, 0, 0)
-  const maximalIncrement = findNextIncrement(miFields, condChan, subMaxSubset)
-
-  increments.push(maximalIncrement)
 
   return increments
 }

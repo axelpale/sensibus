@@ -5,3 +5,11 @@
   border-bottom: 1px solid black;
   margin-bottom: 2rem;
 }
+
+.subset-subsequence {
+  border-top: 1px solid black;
+}
+.subset-subsequence.subset-subsequence-last {
+  border-bottom: 1px solid black;
+  margin-bottom: 2rem;
+}

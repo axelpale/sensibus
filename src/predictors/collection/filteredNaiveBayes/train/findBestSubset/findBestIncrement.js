@@ -11,7 +11,7 @@ module.exports = (priors, fields, miFields, slices, condChan) => {
     return scoreIncrement(priors, fields, slices, condChan, increment)
   })
 
-  // Find good and stable subsequence of scores.
+  // Find a good and stable subsequence of scores.
   const subseqs = findSubsequences(scorings)
   let bestSubseqQuality = -1 // min MCC score
   let bestSubseqAt = 0
