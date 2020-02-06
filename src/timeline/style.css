@@ -108,21 +108,28 @@
   height: 60%;
 }
 
-.channel-titles .cell.cell-title {
+.channel-titles .cell.channel-title {
   height: 4.2rem;
 }
-.channel-titles .cell.cell-title .cell-spine {
+.channel-titles .cell.channel-title .cell-spine {
   background: url('img/spine-arrow-up.png') center top repeat-y;
   opacity: 0.16;
 }
-.channel-titles .cell.cell-title .cell-text {
+.channel-titles .cell.channel-title .cell-text {
   top: unset;
   bottom: 0.6rem;
   height: unset;
 }
-.channel-titles .cell.cell-title-selected {
+.channel-titles .channel-title.channel-selected {
   font-weight: bold;
   background: rgba(0,0,0,0.10);
+}
+.channel-titles .channel-title-frame-selected {
+  background: rgba(0,0,0,0.10);
+}
+.channel-titles .channel-selected.channel-title-frame-selected {
+  font-weight: bold;
+  background: rgba(0,0,0,0.26);
 }
 
 .cell.cell-selected {

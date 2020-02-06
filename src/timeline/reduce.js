@@ -81,6 +81,17 @@ module.exports = (state, ev) => {
       })
     }
 
+    case 'SELECT_CHANNEL_TITLE': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: {
+            channel: ev.channel,
+            frame: -1
+          }
+        })
+      })
+    }
+
     default: {
       return state
     }

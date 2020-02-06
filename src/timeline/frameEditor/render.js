@@ -7,7 +7,9 @@ const listen = (el, query, eventName, handler) => {
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
-  if (state.timeline.select === null) {
+  // Skip the frame editor if the channel title frame is selected.
+  const select = state.timeline.select
+  if (select === null || select.frame === -1) {
     return root
   }
 

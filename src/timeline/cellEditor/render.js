@@ -5,7 +5,7 @@ module.exports = (state, dispatch) => {
   const select = state.timeline.select
 
   // Cell editor is only for cell selections
-  if (select === null || select.channel < 0) {
+  if (select === null || select.channel < 0 || select.frame < 0) {
     return root
   }
 
