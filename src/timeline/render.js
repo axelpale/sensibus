@@ -29,6 +29,14 @@ exports.init = (state, dispatch) => {
   root.classList.add('timeline-root')
   root.id = 'timeline-root'
 
+  root.addEventListener('click', ev => {
+    if (ev.target === root) {
+      dispatch({
+        type: 'SELECT_NONE'
+      })
+    }
+  })
+
   return root
 }
 
