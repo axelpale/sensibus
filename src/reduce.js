@@ -12,6 +12,9 @@ module.exports = (state, ev) => {
     }
   }
 
+  // Root reducer debug tools:
+  // console.log(state, ev)
+
   state = storage(state, ev)
   state = navbar(state, ev)
   state = timeline(state, ev)
