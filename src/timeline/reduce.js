@@ -70,6 +70,17 @@ module.exports = (state, ev) => {
       })
     }
 
+    case 'SELECT_FRAME_TITLE': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: {
+            channel: -1,
+            frame: ev.frame
+          }
+        })
+      })
+    }
+
     default: {
       return state
     }

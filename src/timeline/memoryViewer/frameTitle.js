@@ -9,6 +9,10 @@ module.exports = (state, dispatch, time) => {
     root.classList.add('frame-title-selected')
   }
 
+  if (timeline.select && timeline.select.channel === -1) {
+    root.classList.add('title-channel-selected')
+  }
+
   const label = document.createElement('div')
   label.classList.add('frame-label')
   label.innerHTML = timeline.frames[time].title
@@ -16,7 +20,7 @@ module.exports = (state, dispatch, time) => {
 
   root.addEventListener('click', () => {
     dispatch({
-      type: 'SELECT_FRAME',
+      type: 'SELECT_FRAME_TITLE',
       frame: time
     })
   })

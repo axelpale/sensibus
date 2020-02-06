@@ -6,8 +6,9 @@ const listen = (el, query, eventName, handler) => {
 
 module.exports = (state, dispatch) => {
   const root = document.createElement('div')
+  const select = state.timeline.select
 
-  if (state.timeline.select === null) {
+  if (select === null || select.channel < 0) {
     return root
   }
 
