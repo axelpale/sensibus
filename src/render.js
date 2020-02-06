@@ -54,9 +54,13 @@ exports.update = (state, dispatch) => {
         break
 
       case 'edit':
-        container.appendChild(cellEditor(state, dispatch))
-        container.appendChild(channelEditor(state, dispatch))
-        container.appendChild(frameEditor(state, dispatch))
+        if (state.timeline.select) {
+          container.appendChild(cellEditor(state, dispatch))
+          container.appendChild(channelEditor(state, dispatch))
+          container.appendChild(frameEditor(state, dispatch))
+        } else {
+          container.innerHTML = 'Select a cell to edit it.'
+        }
         break
 
       case 'performance':
