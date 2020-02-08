@@ -16,7 +16,7 @@ const renderCanvas = (state, dispatch) => {
 
   // Set fixed width because canvas contains inline-elements.
   const W = way.width(state.timeline.memory) + 0.1
-  canvas.style.width = '' + (W * 4.8).toFixed(2) + 'rem'
+  canvas.style.width = '' + (10 + W * 4.8).toFixed(2) + 'rem'
 
   canvas.appendChild(channelTitles(state, dispatch))
   canvas.appendChild(memoryViewer(state, dispatch))
