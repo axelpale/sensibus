@@ -1,1 +1,18 @@
-Editor for channel <%= chan %>
+<form id="channelForm" class="form-inline">
+  <% if (buttonOrder === 'right') { %>
+  <button id="channelRemove" type="button" class="btn btn-danger mr-2 mb-2">Delete Channel</button>
+  <% } %>
+
+  <button id="channelCreateLeft" type="button" class="btn btn-success mr-2 mb-2">+ Insert</button>
+  <button id="channelMoveLeft" type="button" class="btn btn-secondary mr-2 mb-2">&larr; Move</button>
+  <div class="form-group mr-2 mb-2">
+    <input id="channelTitle" type="text" class="form-control" value="<%= channelTitle %>">
+  </div>
+  <button type="submit" class="btn btn-primary mb-2">Set Title</button>
+  <button id="channelMoveRight" type="button" class="btn btn-secondary mr-2 mb-2">Move &rarr;</button>
+  <button id="channelCreateRight" type="button" class="btn btn-success mr-2 mb-2">Insert +</button>
+
+  <% if (buttonOrder !== 'right') { %>
+  <button id="channelRemove" type="button" class="btn btn-danger ml-2 mb-2">Delete Channel</button>
+  <% } %>
+</form>

@@ -6,6 +6,10 @@
   z-index: 5; /* selected row z-index: 2 */
 }
 
+.channel-titles.channel-editor-container {
+  height: 8.4rem;
+}
+
 .channel-titles .cell.channel-title {
   height: 4.2rem;
 }
@@ -28,4 +32,9 @@
 .channel-titles .channel-selected.channel-title-frame-selected {
   font-weight: bold;
   background: rgba(0,0,0,0.26);
+}
+
+.channel-editor-row {
+  position: absolute;
+  top: 5rem;
 }
