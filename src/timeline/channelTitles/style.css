@@ -22,9 +22,9 @@
   font-weight: bold;
   background: rgba(0,0,0,0.10);
 }
-.channel-titles .channel-title-frame-selected {
+/*.channel-titles .channel-title-frame-selected {
   background: rgba(0,0,0,0.10);
-}
+}*/
 .channel-titles .channel-selected.channel-title-frame-selected {
   font-weight: bold;
   background: rgba(0,0,0,0.26);

@@ -82,12 +82,23 @@ module.exports = (state, ev) => {
     }
 
     case 'SELECT_CHANNEL_TITLE': {
+      let newSelect
+
+      const select = state.timeline.select
+
+      if (select && select.channel === ev.channel && select.frame === -1) {
+        // Deselect to toggle
+        newSelect = null
+      } else {
+        newSelect = {
+          channel: ev.channel,
+          frame: -1
+        }
+      }
+
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
-          select: {
-            channel: ev.channel,
-            frame: -1
-          }
+          select: newSelect
         })
       })
     }
