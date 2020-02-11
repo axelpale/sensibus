@@ -1,5 +1,5 @@
 const defaultTimeline = require('./defaultTimeline')
-const channelEditor = require('./channelEditor/reduce')
+const channelTitles = require('./channelTitles/reduce')
 const memoryViewer = require('./memoryViewer/reduce')
 const predictNextTitle = require('./predictNextTitle')
 const way = require('senseway')
@@ -12,7 +12,7 @@ module.exports = (state, ev) => {
     })
   }
 
-  state = channelEditor(state, ev)
+  state = channelTitles(state, ev)
   state = memoryViewer(state, ev)
 
   switch (ev.type) {

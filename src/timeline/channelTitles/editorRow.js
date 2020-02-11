@@ -11,23 +11,18 @@ module.exports = (state, dispatch) => {
   // Assert select not null
   const c = state.timeline.select.channel
 
-  let buttonOrder
   const numChannels = state.timeline.channels.length
-  if (c < 5) {
+  if (c < 2) {
     editorRow.style.left = '10rem'
-    buttonOrder = 'left'
-  } else if (c < numChannels - 7) {
-    editorRow.style.left = (c * 4.2 - 5) + 'rem'
-    buttonOrder = 'center'
+  } else if (c < numChannels - 2) {
+    editorRow.style.left = (6 + c * 4.2) + 'rem'
   } else {
-    editorRow.style.right = '12rem'
-    buttonOrder = 'right'
+    editorRow.style.left = (numChannels * 4.2 - 2) + 'rem'
   }
 
   editorRow.innerHTML = template({
     chan: c,
-    channelTitle: state.timeline.channels[c].title,
-    buttonOrder: buttonOrder
+    channelTitle: state.timeline.channels[c].title
   })
 
   // Events

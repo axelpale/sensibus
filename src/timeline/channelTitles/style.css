@@ -7,7 +7,8 @@
 }
 
 .channel-titles.channel-editor-container {
-  height: 8.4rem;
+  height: 17rem;
+  margin-bottom: -12.8rem;
 }
 
 .channel-titles .cell.channel-title {

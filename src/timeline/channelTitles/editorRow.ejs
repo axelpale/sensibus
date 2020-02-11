@@ -1,18 +1,14 @@
-<form id="channelForm" class="form-inline">
-  <% if (buttonOrder === 'right') { %>
-  <button id="channelRemove" type="button" class="btn btn-danger mr-2 mb-2">Delete Channel</button>
-  <% } %>
-
-  <button id="channelCreateLeft" type="button" class="btn btn-success mr-2 mb-2">+ Insert</button>
-  <button id="channelMoveLeft" type="button" class="btn btn-secondary mr-2 mb-2">&larr; Move</button>
-  <div class="form-group mr-2 mb-2">
-    <input id="channelTitle" type="text" class="form-control" value="<%= channelTitle %>">
+<form id="channelForm" class="text-center">
+  <input id="channelTitle" type="text" class="form-control mb-2" value="<%= channelTitle %>">
+  <div>
+    <button id="channelMoveLeft" type="button" class="btn btn-secondary mr-1 mb-2">&larr; Move</button>
+    <button id="channelMoveRight" type="button" class="btn btn-secondary mb-2">Move &rarr;</button>
   </div>
-  <button type="submit" class="btn btn-primary mb-2">Set Title</button>
-  <button id="channelMoveRight" type="button" class="btn btn-secondary mr-2 mb-2">Move &rarr;</button>
-  <button id="channelCreateRight" type="button" class="btn btn-success mr-2 mb-2">Insert +</button>
-
-  <% if (buttonOrder !== 'right') { %>
-  <button id="channelRemove" type="button" class="btn btn-danger ml-2 mb-2">Delete Channel</button>
-  <% } %>
+  <div>
+    <button id="channelCreateLeft" type="button" class="btn btn-success mr-1 mb-2">+ Insert</button>
+    <button id="channelCreateRight" type="button" class="btn btn-success mb-2">Insert +</button>
+  </div>
+  <div>
+    <button id="channelRemove" type="button" class="btn btn-danger mb-2">Delete Channel</button>
+  </div>
 </form>
