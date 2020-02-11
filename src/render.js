@@ -7,6 +7,12 @@ const frameEditor = require('./timeline/frameEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 const sidebarOpener = require('./navbar/sidebarOpener')
+const createObserver = require('uilib').createObserver
+
+const timelineChanged = createObserver([
+  state => state.timeline,
+  state => state.predictors.prediction
+])
 
 exports.init = (state, dispatch) => {
   const container = document.getElementById('container')
@@ -17,7 +23,7 @@ exports.init = (state, dispatch) => {
   root.id = 'root'
 
   // Timeline
-  root.appendChild(timeline.init(state, dispatch))
+  root.appendChild(timeline.create(state, dispatch))
 
   // Sidebar
   const sidebarContainer = document.createElement('div')
@@ -30,7 +36,9 @@ exports.init = (state, dispatch) => {
 }
 
 exports.update = (state, dispatch) => {
-  timeline.update(state, dispatch)
+  if (timelineChanged(state)) {
+    timeline.update(state, dispatch)
+  }
 
   // Clear sidebar container
   const sidebarContainer = document.getElementById('sidebarContainer')

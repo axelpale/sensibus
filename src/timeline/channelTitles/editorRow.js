@@ -1,15 +1,18 @@
 const template = require('./editorRow.ejs')
+const listen = require('uilib').listen
 
-const listen = (el, query, eventName, handler) => {
-  el.querySelector(query).addEventListener(eventName, handler)
-}
-
-module.exports = (state, dispatch) => {
+exports.create = (state, dispatch) => {
   const editorRow = document.createElement('div')
+
+  const select = state.timeline.select
+  if (!select || select.frame !== -1) {
+    return editorRow
+  }
+
   editorRow.classList.add('channel-editor-row')
 
   // Assert select not null
-  const c = state.timeline.select.channel
+  const c = select.channel
 
   const numChannels = state.timeline.channels.length
   if (c < 2) {

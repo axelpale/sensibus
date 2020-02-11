@@ -1,23 +1,52 @@
+require('./style.css')
 const titleRow = require('./titleRow')
 const editorRow = require('./editorRow')
-require('./style.css')
+const createObserver = require('uilib').createObserver
 
-module.exports = (state, dispatch) => {
-  const root = titleRow(state, dispatch)
+const selectChanged = createObserver([
+  state => state.timeline.select
+])
 
-  const select = state.timeline.select
-  if (select && select.frame === -1) {
-    root.classList.add('channel-editor-container')
-    root.appendChild(editorRow(state, dispatch))
+let root
+let titleRowEl
+let editorRowEl
 
-    root.addEventListener('click', ev => {
-      if (ev.target === root) {
-        dispatch({
-          type: 'SELECT_NONE'
-        })
-      }
-    })
-  }
+exports.create = (state, dispatch) => {
+  root = document.createElement('div')
+  root.classList.add('channel-titles')
+
+  titleRowEl = titleRow.create(state, dispatch)
+  root.appendChild(titleRowEl)
+
+  editorRowEl = editorRow.create(state, dispatch)
+  root.appendChild(editorRowEl)
+
+  root.addEventListener('click', ev => {
+    if (ev.target === root) {
+      dispatch({
+        type: 'SELECT_NONE'
+      })
+    }
+  })
 
   return root
+}
+
+exports.update = (state, dispatch) => {
+  const newTitleRowEl = titleRow.create(state, dispatch)
+  root.replaceChild(newTitleRowEl, titleRowEl)
+  titleRowEl = newTitleRowEl
+
+  if (selectChanged(state)) {
+    const select = state.timeline.select
+    if (select && select.frame === -1) {
+      root.classList.add('channel-editor-container')
+    } else {
+      root.classList.remove('channel-editor-container')
+    }
+
+    const newEditorRowEl = editorRow.create(state, dispatch)
+    root.replaceChild(newEditorRowEl, editorRowEl)
+    editorRowEl = newEditorRowEl
+  }
 }

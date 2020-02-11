@@ -1,8 +1,7 @@
-module.exports = (state, dispatch) => {
+exports.create = (state, dispatch) => {
   const row = document.createElement('div')
 
   row.classList.add('timeline-row')
-  row.classList.add('channel-titles')
   row.classList.add('channel-title-row')
 
   const rowTitle = document.createElement('div')

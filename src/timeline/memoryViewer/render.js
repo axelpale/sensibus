@@ -2,7 +2,7 @@ const way = require('senseway')
 const frameTitle = require('./frameTitle')
 const renderCell = require('./cell')
 
-module.exports = (state, dispatch) => {
+exports.create = (state, dispatch) => {
   const timeline = state.timeline
   const root = document.createElement('div')
 
