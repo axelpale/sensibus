@@ -10,3 +10,7 @@ exports.createObserver = (selectors) => {
     return !allSame
   }
 }
+
+exports.listen = (el, query, eventName, handler) => {
+  el.querySelector(query).addEventListener(eventName, handler)
+}
