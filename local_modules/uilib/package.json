@@ -1,0 +1,20 @@
+{
+  "name": "uilib",
+  "version": "1.0.0",
+  "private": true,
+  "description": "User interface related utilities for Sensibus",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon test.js",
+    "lint": "standard",
+    "test": "tape test.js"
+  },
+  "author": "Akseli Palén",
+  "license": "MIT",
+  "devDependencies": {
+    "nodemon": "^1.19.0",
+    "standard": "^14.3.1",
+    "tape": "^4.10.1"
+  },
+  "dependencies": {}
+}
