@@ -36,6 +36,14 @@ module.exports = (state, dispatch) => {
     })
   })
 
+  listen(editorRow, '#channelTitle', 'input', ev => {
+    dispatch({
+      type: 'EDIT_CHANNEL_TITLE',
+      channel: c,
+      title: editorRow.querySelector('#channelTitle').value
+    })
+  })
+
   listen(editorRow, '#channelRemove', 'click', ev => {
     ev.preventDefault()
     dispatch({
