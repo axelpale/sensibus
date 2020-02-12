@@ -68,19 +68,30 @@ module.exports = (state, ev) => {
     }
 
     case 'REMOVE_CHANNEL': {
-      const copy = state.timeline.channels.slice()
-      copy.splice(ev.channel, 1)
+      const nextChannels = state.timeline.channels.slice()
+      nextChannels.splice(ev.channel, 1)
+
+      if (nextChannels.length === 0) {
+        // Prevent deletion of the only channel.
+        return state
+      }
+
+      const select = state.timeline.select
+      const nextLast = nextChannels.length - 1
+      const nextSelect = {
+        channel: select.channel === ev.channel
+          ? Math.min(select.channel, nextLast) // Prevent overflow
+          : select.channel < ev.channel
+            ? select.channel // The selected is before the deleted.
+            : select.channel - 1,
+        frame: 0
+      }
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
           memory: way.dropChannel(state.timeline.memory, ev.channel),
-          channels: copy,
-          select: {
-            channel: state.timeline.select.channel >= ev.channel
-              ? state.timeline.select.channel - 1
-              : state.timeline.select.channel,
-            frame: 0
-          }
+          channels: nextChannels,
+          select: nextSelect
         })
       })
     }
