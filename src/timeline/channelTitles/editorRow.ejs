@@ -1,5 +1,11 @@
 <form id="channelForm" class="text-center">
-  <input id="channelTitle" type="text" class="form-control mb-2" value="<%= channelTitle %>">
+  <div class="form-group text-left">
+    <label for="channelTitle">Channel Title</label>
+    <input id="channelTitle" type="text" class="form-control mb-2" value="<%= channelTitle %>">
+  </div>
+  <div class="text-left">
+    <label>Actions</label>
+  </div>
   <div>
     <button id="channelMoveLeft" type="button" class="btn btn-secondary mr-1 mb-2">&larr; Move</button>
     <button id="channelMoveRight" type="button" class="btn btn-secondary mb-2">Move &rarr;</button>
