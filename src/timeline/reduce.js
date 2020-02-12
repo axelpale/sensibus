@@ -27,10 +27,17 @@ module.exports = (state, ev) => {
       const nextTitles = state.timeline.channels.slice()
       nextTitles.splice(atC, 0, { title: '' })
 
+      const select = state.timeline.select
+      const nextSelect = select ? {
+        channel: atC,
+        frame: select.frame
+      } : null
+
       return Object.assign({}, state, {
         timeline: Object.assign({}, state.timeline, {
           memory: nextMemory,
-          channels: nextTitles
+          channels: nextTitles,
+          select: nextSelect
         })
       })
     }
