@@ -8,7 +8,7 @@
     "url": "git://github.com/axelpale/sensibus.git"
   },
   "scripts": {
-    "build": "webpack",
+    "build": "webpack --config client/webpack.config.js",
     "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
     "watchbuild": "nodemon --watch src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
     "lint": "standard 'src/**/*.js' && echo OK",
