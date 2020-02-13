@@ -13,7 +13,8 @@
     "watchbuild": "nodemon --watch src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
     "lint": "standard 'src/**/*.js' && echo OK",
     "lintfix": "standard --fix 'src/**/*.js' && echo OK",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "start": "node server/index.js"
   },
   "author": {
     "name": "Akseli Palén",
