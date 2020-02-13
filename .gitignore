@@ -1,5 +1,6 @@
 package-lock.json
 /client/dist/
+/dist/
 
 node_modules
 bower_components
