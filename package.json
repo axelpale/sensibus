@@ -10,9 +10,9 @@
   "scripts": {
     "build": "webpack --config client/webpack.config.js",
     "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
-    "watchbuild": "nodemon --watch src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
-    "lint": "standard 'src/**/*.js' && echo OK",
-    "lintfix": "standard --fix 'src/**/*.js' && echo OK",
+    "watchbuild": "nodemon --watch client/src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
+    "lint": "standard 'client/src/**/*.js' && echo OK",
+    "lintfix": "standard --fix 'client/src/**/*.js' && echo OK",
     "test": "npm run lint"
   },
   "author": {
