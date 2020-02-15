@@ -1,5 +1,6 @@
 const way = require('senseway')
-const frameTitle = require('./frameTitle')
+const frameTitle = require('../frameTitles/frameTitle')
+const frameEditor = require('../frameTitles/frameEditorRow')
 const renderCell = require('./cell')
 
 exports.create = (state, dispatch) => {
@@ -8,6 +9,8 @@ exports.create = (state, dispatch) => {
 
   const W = way.width(timeline.memory)
   const LEN = way.len(timeline.memory)
+
+  const select = timeline.select
 
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
@@ -24,6 +27,10 @@ exports.create = (state, dispatch) => {
     for (let c = 0; c < W; c += 1) {
       const cell = renderCell(state, dispatch, c, t)
       cells.appendChild(cell)
+    }
+
+    if (select && t === select.frame) {
+      root.appendChild(frameEditor(state, dispatch, t))
     }
   }
 

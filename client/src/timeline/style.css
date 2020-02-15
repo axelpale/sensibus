@@ -111,15 +111,10 @@
   font-weight: bold;
 }
 
-.frame-title-selected,
-.title-channel-selected {
+.frame-title-selected {
   background: rgba(0,0,0,0.10);
 }
 
 .frame-title-selected.title-channel-selected {
   background: rgba(0,0,0,0.26);
-}
-
-.frame-title.title-channel-selected {
-  background: rbga()
 }
