@@ -3,7 +3,6 @@ const navbar = require('./navbar/render')
 const storage = require('./storage/render')
 const timeline = require('./timeline/render')
 const cellEditor = require('./timeline/cellEditor/render')
-const frameEditor = require('./timeline/frameEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 const sidebarOpener = require('./navbar/sidebarOpener')
@@ -63,7 +62,6 @@ exports.update = (state, dispatch) => {
       case 'edit':
         if (state.timeline.select) {
           container.appendChild(cellEditor(state, dispatch))
-          container.appendChild(frameEditor(state, dispatch))
         } else {
           container.innerHTML = 'Select a cell to edit it.'
         }
