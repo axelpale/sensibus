@@ -36,6 +36,7 @@
     "redux": "^4.0.5",
     "reselect": "^4.0.0",
     "senseway": "file:./local_modules/senseway",
-    "uilib": "file:local_modules/uilib"
+    "uilib": "file:local_modules/uilib",
+    "worker-loader": "^2.0.0"
   }
 }

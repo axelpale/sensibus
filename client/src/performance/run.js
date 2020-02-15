@@ -1,5 +1,6 @@
 const way = require('senseway')
 const predictorCollection = require('../predictors/collection')
+const Runner = require('./runner.worker.js')
 
 module.exports = (state) => {
   // Leave-one-out cross-validation:
@@ -10,6 +11,15 @@ module.exports = (state) => {
   const mem = state.timeline.memory
   const predictor = predictorCollection.getSelectedPredictor(state)
   const config = predictorCollection.getSelectedModel(state)
+
+  // TODO
+  const perfRunner = new Runner()
+  perfRunner.onmessage = (ev) => {
+    console.log('Main received ' + ev.data)
+    perfRunner.terminate()
+  }
+  perfRunner.postMessage('Hello')
+  // TODO
 
   const trainingSets = way.toArray(mem).filter(elem => {
     return elem.value !== 0

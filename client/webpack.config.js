@@ -16,6 +16,13 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader?url=false'],
       },
+      {
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+          options: { inline: true } // For easy development
+        }
+      }
     ],
   },
   mode: 'development', // in {development, production}
