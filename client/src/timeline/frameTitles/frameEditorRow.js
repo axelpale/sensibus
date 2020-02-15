@@ -1,7 +1,8 @@
+require('./style.css')
 const template = require('./frameEditorRow.ejs')
 const listen = require('uilib').listen
 
-module.exports = (state, dispatch, time) => {
+module.exports = (state, dispatch, frame) => {
   const row = document.createElement('div')
   row.classList.add('frame-editor-row')
 
@@ -12,8 +13,8 @@ module.exports = (state, dispatch, time) => {
   }
 
   row.innerHTML = template({
-    frame: time,
-    frameTitle: state.timeline.frames[time].title
+    frame: frame,
+    frameTitle: state.timeline.frames[frame].title
   })
 
   // Bind events
@@ -22,22 +23,22 @@ module.exports = (state, dispatch, time) => {
     ev.preventDefault()
     dispatch({
       type: 'EDIT_FRAME_TITLE',
-      frame: time,
-      title: row.querySelector('#frameTitle').value
+      frame: frame,
+      title: row.querySelector('#frameTitleInput').value
     })
   })
 
   listen(row, '#frameRemove', 'click', ev => {
     dispatch({
       type: 'REMOVE_FRAME',
-      frame: time
+      frame: frame
     })
   })
 
   listen(row, '#frameMoveUp', 'click', ev => {
     dispatch({
       type: 'MOVE_FRAME',
-      frame: time,
+      frame: frame,
       offset: 1
     })
   })
@@ -45,7 +46,7 @@ module.exports = (state, dispatch, time) => {
   listen(row, '#frameMoveDown', 'click', ev => {
     dispatch({
       type: 'MOVE_FRAME',
-      frame: time,
+      frame: frame,
       offset: -1
     })
   })
@@ -53,14 +54,14 @@ module.exports = (state, dispatch, time) => {
   listen(row, '#frameCreateUp', 'click', ev => {
     dispatch({
       type: 'CREATE_FRAME',
-      frame: time + 1
+      frame: frame + 1
     })
   })
 
   listen(row, '#frameCreateDown', 'click', ev => {
     dispatch({
       type: 'CREATE_FRAME',
-      frame: time
+      frame: frame
     })
   })
 

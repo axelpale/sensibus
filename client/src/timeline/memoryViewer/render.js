@@ -14,6 +14,12 @@ exports.create = (state, dispatch) => {
 
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
+    // Frame editor
+    if (select && t === select.frame) {
+      root.appendChild(frameEditor(state, dispatch, t))
+    }
+
+    // Cells
     const row = document.createElement('div')
     row.classList.add('timeline-row')
     root.appendChild(row)
@@ -27,10 +33,6 @@ exports.create = (state, dispatch) => {
     for (let c = 0; c < W; c += 1) {
       const cell = renderCell(state, dispatch, c, t)
       cells.appendChild(cell)
-    }
-
-    if (select && t === select.frame) {
-      root.appendChild(frameEditor(state, dispatch, t))
     }
   }
 
