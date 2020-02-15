@@ -31,12 +31,8 @@ exports.create = (state, dispatch) => {
   // Events
 
   listen(editorRow, '#channelForm', 'submit', ev => {
+    // Not sure if needed but for safety.
     ev.preventDefault()
-    dispatch({
-      type: 'EDIT_CHANNEL_TITLE',
-      channel: c,
-      title: editorRow.querySelector('#channelTitle').value
-    })
   })
 
   listen(editorRow, '#channelTitle', 'input', ev => {

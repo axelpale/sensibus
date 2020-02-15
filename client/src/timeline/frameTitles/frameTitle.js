@@ -1,11 +1,11 @@
-module.exports = (state, dispatch, time) => {
+module.exports = (state, dispatch, frame) => {
   const timeline = state.timeline
 
   const root = document.createElement('div')
   root.classList.add('frame-title')
   root.classList.add('timeline-row-title')
 
-  if (timeline.select && timeline.select.frame === time) {
+  if (timeline.select && timeline.select.frame === frame) {
     root.classList.add('frame-title-selected')
   }
 
@@ -15,13 +15,14 @@ module.exports = (state, dispatch, time) => {
 
   const label = document.createElement('div')
   label.classList.add('frame-label')
-  label.innerHTML = timeline.frames[time].title
+  label.innerHTML = timeline.frames[frame].title
+  label.dataset.frame = '' + frame // for easy update
   root.appendChild(label)
 
   root.addEventListener('click', () => {
     dispatch({
       type: 'SELECT_FRAME_TITLE',
-      frame: time
+      frame: frame
     })
   })
 

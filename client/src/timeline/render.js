@@ -4,7 +4,7 @@ const memoryViewer = require('./memoryViewer/render')
 const channelTitles = require('./channelTitles/render')
 const createObserver = require('uilib').createObserver
 
-const titlesChanged = createObserver([
+const channelTitlesChanged = createObserver([
   state => state.timeline.select,
   state => state.timeline.channels
 ])
@@ -17,6 +17,10 @@ const memoryViewerChanged = createObserver([
   state => state.timeline.select,
   state => state.timeline.memory,
   state => state.predictors.prediction
+])
+
+const frameTitlesChanged = createObserver([
+  state => state.timeline.frames
 ])
 
 let root
@@ -35,6 +39,7 @@ exports.create = (state, dispatch) => {
   canvasEl.appendChild(channelTitles.create(state, dispatch))
 
   // Prediction not yet available because reducers not ran.
+  // Therefore render only dummy memory at this point.
   // TODO merge create-update in same way as done in reducers?
   memoryEl = document.createElement('div')
   canvasEl.appendChild(memoryEl)
@@ -53,7 +58,7 @@ exports.create = (state, dispatch) => {
 }
 
 exports.update = (state, dispatch) => {
-  if (titlesChanged(state)) {
+  if (channelTitlesChanged(state)) {
     channelTitles.update(state, dispatch)
   }
 
@@ -67,5 +72,9 @@ exports.update = (state, dispatch) => {
     const newMemoryEl = memoryViewer.create(state, dispatch)
     canvasEl.replaceChild(newMemoryEl, memoryEl)
     memoryEl = newMemoryEl
+  } else {
+    if (frameTitlesChanged(state)) {
+      memoryViewer.updateFrameTitles(state, dispatch)
+    }
   }
 }

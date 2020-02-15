@@ -38,3 +38,14 @@ exports.create = (state, dispatch) => {
 
   return root
 }
+
+exports.updateFrameTitles = (state, dispatch) => {
+  const labels = document.getElementsByClassName('frame-label')
+  const titles = state.timeline.frames.map(frame => frame.title)
+
+  // NOTE labels is not Array but array-like.
+  for (let i = 0; i < labels.length; i += 1) {
+    const frame = parseInt(labels[i].dataset.frame)
+    labels[i].innerHTML = titles[frame]
+  }
+}
