@@ -38,6 +38,7 @@
     "redux": "^4.0.5",
     "reselect": "^4.0.0",
     "senseway": "file:./local_modules/senseway",
+    "sqlite3": "^4.1.1",
     "uilib": "file:local_modules/uilib"
   }
 }
