@@ -1,0 +1,20 @@
+<form id="frameForm">
+  <div class="form-group">
+    <label for="frameTitle">Frame Title</label>
+    <input id="frameTitleInput" type="text" class="form-control" value="<%= frameTitle %>">
+  </div>
+  <div>
+    <label>Actions</label>
+  </div>
+  <div>
+    <button id="frameMoveUp" type="button" class="btn btn-secondary mr-1 mb-2">Move &uarr;</button>
+    <button id="frameMoveDown" type="button" class="btn btn-secondary mb-2">&darr; Move</button>
+  </div>
+  <div>
+    <button id="frameCreateUp" type="button" class="btn btn-success mr-1 mb-2">Insert Above +</button>
+    <button id="frameCreateDown" type="button" class="btn btn-success mb-2<%= frame === 0 ? '' : ' d-none' %>">Insert Below +</button>
+  </div>
+  <div>
+    <button id="frameRemove" type="button" class="btn btn-danger">Delete Frame</button>
+  </div>
+</form>

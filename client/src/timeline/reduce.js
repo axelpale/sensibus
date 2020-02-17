@@ -145,17 +145,6 @@ module.exports = (state, ev) => {
       })
     }
 
-    case 'SELECT_FRAME_TITLE': {
-      return Object.assign({}, state, {
-        timeline: Object.assign({}, state.timeline, {
-          select: {
-            channel: -1,
-            frame: ev.frame
-          }
-        })
-      })
-    }
-
     case 'SELECT_CHANNEL_TITLE': {
       let newSelect
 
@@ -168,6 +157,28 @@ module.exports = (state, ev) => {
         newSelect = {
           channel: ev.channel,
           frame: -1
+        }
+      }
+
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: newSelect
+        })
+      })
+    }
+
+    case 'SELECT_FRAME_TITLE': {
+      let newSelect
+
+      const select = state.timeline.select
+
+      if (select && select.frame === ev.frame && select.channel === -1) {
+        // Deselect
+        newSelect = null
+      } else {
+        newSelect = {
+          channel: -1,
+          frame: ev.frame
         }
       }
 

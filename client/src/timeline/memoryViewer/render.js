@@ -1,5 +1,6 @@
 const way = require('senseway')
-const frameTitle = require('./frameTitle')
+const frameTitle = require('../frameTitles/frameTitle')
+const frameEditor = require('../frameTitles/frameEditorRow')
 const renderCell = require('./cell')
 
 exports.create = (state, dispatch) => {
@@ -9,8 +10,16 @@ exports.create = (state, dispatch) => {
   const W = way.width(timeline.memory)
   const LEN = way.len(timeline.memory)
 
+  const select = timeline.select
+
   // Timeline events
   for (let t = LEN - 1; t >= 0; t -= 1) {
+    // Frame editor
+    if (select && t === select.frame) {
+      root.appendChild(frameEditor(state, dispatch, t))
+    }
+
+    // Cells
     const row = document.createElement('div')
     row.classList.add('timeline-row')
     root.appendChild(row)
@@ -28,4 +37,15 @@ exports.create = (state, dispatch) => {
   }
 
   return root
+}
+
+exports.updateFrameTitles = (state, dispatch) => {
+  const labels = document.getElementsByClassName('frame-label')
+  const titles = state.timeline.frames.map(frame => frame.title)
+
+  // NOTE labels is not Array but array-like.
+  for (let i = 0; i < labels.length; i += 1) {
+    const frame = parseInt(labels[i].dataset.frame)
+    labels[i].innerHTML = titles[frame]
+  }
 }
