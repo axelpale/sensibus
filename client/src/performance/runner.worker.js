@@ -4,7 +4,7 @@ const infers = require('../predictors/collection/infers')
 const trains = require('../predictors/collection/trains')
 
 onmessage = (ev) => {
-  console.log('Performance test begin')
+  // Begin a cross validation performance test.
 
   const mem = ev.data.memory
   const predictorId = ev.data.predictorId
@@ -21,6 +21,7 @@ onmessage = (ev) => {
     }
   })
 
+  const beginTime = Date.now()
   let confusion = {
     n: 0,
     truePos: 0,
@@ -68,13 +69,16 @@ onmessage = (ev) => {
       falseNeg: confusion.falseNeg + (1 - predicted) * actual
     }
 
+    const currentTime = Date.now()
+
     // Emit the updated confusion matrix
     postMessage({
       progress: confusion.n,
       progressMax: trainingSets.length,
-      confusion: confusion
+      confusion: confusion,
+      elapsedSeconds: Math.floor((currentTime - beginTime) / 1000)
     })
   })
 
-  console.log('Performance test end')
+  // Performance test end
 }

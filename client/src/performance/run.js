@@ -15,7 +15,7 @@ module.exports = (state, dispatch) => {
   const perfRunner = new Runner()
 
   perfRunner.onmessage = (ev) => {
-    console.log('Main received msg')
+    // Worker message; a cross validation fold
 
     if (ev.data.progress >= ev.data.progressMax) {
       perfRunner.terminate()
@@ -25,7 +25,8 @@ module.exports = (state, dispatch) => {
       type: 'PERFORMANCE_PROGRESS',
       progress: ev.data.progress,
       progressMax: ev.data.progressMax,
-      confusion: ev.data.confusion
+      confusion: ev.data.confusion,
+      elapsedSeconds: ev.data.elapsedSeconds
     })
   }
 

@@ -7,7 +7,8 @@ const defaultState = {
     trueNeg: 0,
     falsePos: 0,
     falseNeg: 0
-  }
+  },
+  elapsedSeconds: 0
 }
 
 module.exports = (state, ev) => {
@@ -23,7 +24,8 @@ module.exports = (state, ev) => {
         performance: {
           progress: ev.progress,
           progressMax: ev.progressMax,
-          confusion: ev.confusion
+          confusion: ev.confusion,
+          elapsedSeconds: ev.elapsedSeconds
         }
       })
 

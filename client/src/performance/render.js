@@ -7,6 +7,7 @@ module.exports = (state, dispatch) => {
   const root = document.createElement('div')
   root.innerHTML = template({
     predictorId: state.predictors.selection,
+    elapsedSeconds: local.elapsedSeconds,
     isRunning: local.progress !== local.progressMax,
     progress: local.progress,
     progressMax: local.progressMax,

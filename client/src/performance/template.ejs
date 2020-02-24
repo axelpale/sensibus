@@ -8,7 +8,7 @@
 
     <% if (isRunning) {
       const percent = Math.floor(100 * progress / progressMax)
-    %><div class="progress">
+    %><div class="progress mb-3">
       <div class="progress-bar" role="progressbar" style="width: <%= percent %>%" aria-valuenow="<%= progress %>" aria-valuemin="<%= progress %>" aria-valuemax="<%= progressMax %>"></div>
     </div>
     <% } %>
@@ -22,6 +22,10 @@
         <tr>
           <th scope="row">Number of tests</th>
           <td><%= confusion.n %></td>
+        </tr>
+        <tr>
+          <th scope="row">Elapsed time</th>
+          <td><%= elapsedSeconds %> sec</td>
         </tr>
         <tr>
           <th scope="row">True positives</th>
