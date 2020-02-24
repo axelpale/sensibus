@@ -6,6 +6,7 @@ module.exports = (state, dispatch) => {
   const local = state.performance
   const root = document.createElement('div')
   root.innerHTML = template({
+    predictorId: state.predictors.selection,
     isRunning: local.progress !== local.progressMax,
     progress: local.progress,
     progressMax: local.progressMax,
