@@ -2,6 +2,7 @@
 const way = require('senseway')
 const infers = require('../predictors/collection/infers')
 const trains = require('../predictors/collection/trains')
+const _ = require('lodash')
 
 onmessage = (ev) => {
   // Begin a cross validation performance test.
@@ -12,9 +13,12 @@ onmessage = (ev) => {
   const train = trains[predictorId]
   const config = ev.data.predictorConfig
 
-  const trainingSets = way.toArray(mem).filter(elem => {
+  const knownCells = way.toArray(mem).filter(elem => {
     return elem.value !== 0
-  }).map(knownElem => {
+  })
+  const shuffledCells = _.shuffle(knownCells)
+
+  const trainingSets = shuffledCells.map(knownElem => {
     return {
       target: knownElem,
       memory: way.set(mem, knownElem.channel, knownElem.time, 0)
