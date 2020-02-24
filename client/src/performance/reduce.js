@@ -29,6 +29,13 @@ module.exports = (state, ev) => {
         }
       })
 
+    case 'PERFORMANCE_END':
+      return Object.assign({}, state, {
+        performance: Object.assign({}, state.performance, {
+          progressMax: state.performance.progress
+        })
+      })
+
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR':

@@ -1,5 +1,5 @@
 const template = require('./template.ejs')
-const run = require('./run')
+const actions = require('./actions')
 const problib = require('problib')
 
 module.exports = (state, dispatch) => {
@@ -20,8 +20,12 @@ module.exports = (state, dispatch) => {
   })
 
   if (local.progress === local.progressMax) {
-    root.querySelector('button').addEventListener('click', ev => {
-      run(state, dispatch)
+    root.querySelector('#perfRunBtn').addEventListener('click', ev => {
+      actions.run(state, dispatch)
+    })
+  } else {
+    root.querySelector('#perfStopBtn').addEventListener('click', ev => {
+      actions.stop(state, dispatch)
     })
   }
 

@@ -3,7 +3,8 @@
     <h2>Performance</h2>
 
     <p>
-      <button type="button" class="btn btn-primary"<%= isRunning ? ' disabled' : '' %>>Run</button>
+      <button id="perfRunBtn" type="button" class="btn btn-primary"<%= isRunning ? ' disabled' : '' %>>Run</button>
+      <% if (isRunning) { %><button id="perfStopBtn" type="button" class="btn btn-danger">Stop</button><% } %>
     </p>
 
     <% if (isRunning) {
