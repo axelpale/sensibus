@@ -1,31 +1,37 @@
-const run = require('./run')
-
-const defaultResults = {
-  numTrainingSets: 0,
-  truePos: 0,
-  trueNeg: 0,
-  falsePos: 0,
-  falseNeg: 0
+const defaultState = {
+  progress: 0,
+  progressMax: 0,
+  confusion: {
+    n: 0,
+    truePos: 0,
+    trueNeg: 0,
+    falsePos: 0,
+    falseNeg: 0
+  }
 }
 
 module.exports = (state, ev) => {
   if (!state.performance) {
     state = Object.assign({}, state, {
-      performance: defaultResults
+      performance: defaultState
     })
   }
 
   switch (ev.type) {
-    case 'RUN_PERFORMANCE_TEST':
+    case 'PERFORMANCE_PROGRESS':
       return Object.assign({}, state, {
-        performance: run(state)
+        performance: {
+          progress: ev.progress,
+          progressMax: ev.progressMax,
+          confusion: ev.confusion
+        }
       })
 
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR':
       return Object.assign({}, state, {
-        performance: defaultResults
+        performance: defaultState
       })
 
     default:

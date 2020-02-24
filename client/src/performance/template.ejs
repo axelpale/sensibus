@@ -1,38 +1,39 @@
-<%
-  var n = numTrainingSets
-  var precision = (truePos > 0) ? truePos / (truePos + falsePos) : 0
-  var recall = (truePos > 0) ? truePos / (truePos + falseNeg) : 0
-  var accuracy = (n > 0) ? (truePos + trueNeg) / n : 0
-  var f1score = (precision + recall > 0) ? 2 * (precision * recall) / (precision + recall) : 0
-%><div class="row">
+<div class="row">
   <div class="col-md">
     <h2>Performance</h2>
 
     <p>
-      <button type="button" class="btn btn-primary">Run</button>
+      <button type="button" class="btn btn-primary"<%= isRunning ? ' disabled' : '' %>>Run</button>
     </p>
+
+    <% if (isRunning) {
+      const percent = Math.floor(100 * progress / progressMax)
+    %><div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: <%= percent %>%" aria-valuenow="<%= progress %>" aria-valuemin="<%= progress %>" aria-valuemax="<%= progressMax %>"></div>
+    </div>
+    <% } %>
 
     <table class="table table-sm">
       <tbody>
         <tr>
           <th scope="row">Number of tests</th>
-          <td><%= n %></td>
+          <td><%= confusion.n %></td>
         </tr>
         <tr>
           <th scope="row">True positives</th>
-          <td><%= truePos.toFixed(2) %></td>
+          <td><%= confusion.truePos.toFixed(2) %></td>
         </tr>
         <tr>
           <th scope="row">True negatives</th>
-          <td><%= trueNeg.toFixed(2) %></td>
+          <td><%= confusion.trueNeg.toFixed(2) %></td>
         </tr>
         <tr>
           <th scope="row">False positives</th>
-          <td><%= falsePos.toFixed(2) %></td>
+          <td><%= confusion.falsePos.toFixed(2) %></td>
         </tr>
         <tr>
           <th scope="row">False negatives</th>
-          <td><%= falseNeg.toFixed(2) %></td>
+          <td><%= confusion.falseNeg.toFixed(2) %></td>
         </tr>
         <tr title="The proportion in which predicted positives were actually positive">
           <th scope="row">Precision</th>
@@ -47,8 +48,12 @@
           <td><%= accuracy.toFixed(2) %></td>
         </tr>
         <tr>
-          <th scope="row" title="F-score – harmonic mean of precision and recall">Score</th>
+          <th scope="row" title="F-score – harmonic mean of precision and recall">F1 Score</th>
           <td title="<%= f1score.toFixed(8) %>"><%= f1score.toFixed(4) %></td>
+        </tr>
+        <tr>
+          <th scope="row" title="Matthews correlation coefficient">MCC</th>
+          <td title="<%= mcc.toFixed(8) %>"><%= mcc.toFixed(4) %></td>
         </tr>
       </tbody>
     </table>

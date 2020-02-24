@@ -9,6 +9,14 @@ exports.predictors = {
   filteredNaiveBayes: require('./filteredNaiveBayes')
 }
 
+exports.getPredictorId = (state) => {
+  const name = state.predictors.selection
+  if (name in exports.predictors) {
+    return name
+  }
+  return exports.DEFAULT_PREDICTOR
+}
+
 exports.getPredictorIds = () => {
   return Object.keys(exports.predictors)
 }
