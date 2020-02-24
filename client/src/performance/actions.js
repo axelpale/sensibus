@@ -18,11 +18,6 @@ exports.run = (state, dispatch) => {
 
   perfRunner.onmessage = (ev) => {
     // Worker message; a cross validation fold
-
-    if (ev.data.progress >= ev.data.progressMax) {
-      perfRunner.terminate()
-    }
-
     dispatch({
       type: 'PERFORMANCE_PROGRESS',
       progress: ev.data.progress,
@@ -30,6 +25,14 @@ exports.run = (state, dispatch) => {
       confusion: ev.data.confusion,
       elapsedSeconds: ev.data.elapsedSeconds
     })
+
+    if (ev.data.progress >= ev.data.progressMax) {
+      perfRunner.terminate()
+
+      dispatch({
+        type: 'PERFORMANCE_END'
+      })
+    }
   }
 
   // Begin the run
