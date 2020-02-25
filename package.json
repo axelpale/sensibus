@@ -27,7 +27,8 @@
     "standard": "*",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "worker-loader": "^2.0.0"
   },
   "dependencies": {
     "deep-equal": "^1.0.1",
@@ -36,7 +37,6 @@
     "redux": "^4.0.5",
     "reselect": "^4.0.0",
     "senseway": "file:./local_modules/senseway",
-    "uilib": "file:local_modules/uilib",
-    "worker-loader": "^2.0.0"
+    "uilib": "file:local_modules/uilib"
   }
 }
