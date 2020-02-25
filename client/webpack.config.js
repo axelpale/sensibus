@@ -20,7 +20,10 @@ module.exports = {
         test: /\.worker\.js$/,
         use: {
           loader: 'worker-loader',
-          options: { inline: true } // For easy development
+          options: {
+            name: '[name].js',
+            publicPath: 'dist/' // otherwise browser tries to download at root
+          }
         }
       }
     ],
