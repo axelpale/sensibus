@@ -1,0 +1,6 @@
+<% if (isRunning) {
+  const percent = Math.floor(100 * progress / progressMax)
+%><div class="progress mb-3">
+  <div class="progress-bar" role="progressbar" style="width: <%= percent %>%" aria-valuenow="<%= progress %>" aria-valuemin="<%= progress %>" aria-valuemax="<%= progressMax %>"></div>
+</div>
+<% } %>

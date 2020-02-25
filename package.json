@@ -27,7 +27,8 @@
     "standard": "*",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
-    "webpack-cli": "^3.3.7"
+    "webpack-cli": "^3.3.7",
+    "worker-loader": "^2.0.0"
   },
   "dependencies": {
     "deep-equal": "^1.0.1",
