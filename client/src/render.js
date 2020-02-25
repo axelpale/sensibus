@@ -48,11 +48,19 @@ exports.init = (state, dispatch) => {
 }
 
 exports.update = (state, dispatch) => {
-  if (timelineChanged(state)) {
+  const isTimelineChanged = timelineChanged(state)
+  const isSidebarChanged = sidebarChanged(state)
+  const isSidebarPageChanged = sidebarPageChanged(state)
+
+  if (isTimelineChanged) {
     timeline.update(state, dispatch)
   }
 
-  if (sidebarChanged(state)) {
+  if (isSidebarChanged) {
+    if (sidebarContainer.firstChild) {
+      sidebarContainer.removeChild(sidebarContainer.firstChild)
+    }
+
     if (state.sidebar) {
       sidebar = document.createElement('div')
       sidebar.classList.add('sidebar')
@@ -70,7 +78,7 @@ exports.update = (state, dispatch) => {
     }
   }
 
-  if (state.sidebar && sidebarPageChanged(state)) {
+  if (state.sidebar && (isSidebarPageChanged || isSidebarChanged)) {
     // Clear content container
     if (contentContainer.firstChild) {
       contentContainer.removeChild(contentContainer.firstChild)
