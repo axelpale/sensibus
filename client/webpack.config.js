@@ -25,6 +25,6 @@ module.exports = {
       }
     ],
   },
-  mode: 'development', // in {development, production}
+  mode: 'production', // in {development, production}
   devtool: 'source-map',
 }
