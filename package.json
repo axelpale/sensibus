@@ -1,6 +1,6 @@
 {
   "name": "sensibus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Time series logger and analyzer",
   "main": "index.html",
   "repository": {
@@ -10,10 +10,11 @@
   "scripts": {
     "build": "webpack --config client/webpack.config.js",
     "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
-    "watchbuild": "nodemon --watch client/src --watch local_modules --watch datasets --ext js,ejs,css,json --exec \"npm run lint && npm run build\"",
+    "watchbuild": "nodemon --watch client/src --watch local_modules --watch datasets --ext js,ejs,css,json --ignore version.js --exec \"npm run lint && npm run gv && npm run build\"",
     "lint": "standard \"client/src/**/*.js\" \"server/**/*.js\" && echo OK",
     "lintfix": "standard --fix \"client/src/**/*.js\" && echo OK",
     "test": "npm run lint",
+    "gv": "genversion client/src/version.js",
     "lintserver": "standard \"server/**/*.js\" && echo OK",
     "start": "node server/index.js",
     "watchstart": "nodemon --watch server --ext js,json --exec \"npm run lintserver && npm start\""
@@ -26,6 +27,7 @@
   "devDependencies": {
     "css-loader": "^3.2.0",
     "ejs-loader": "^0.3.3",
+    "genversion": "^2.2.0",
     "nodemon": "*",
     "standard": "*",
     "style-loader": "^1.0.0",
