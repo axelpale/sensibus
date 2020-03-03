@@ -1,0 +1,52 @@
+<table class="table table-sm">
+  <tbody>
+    <tr>
+      <th scope="row">Predictor</th>
+      <td><%= predictorId %></td>
+    </tr>
+    <tr>
+      <th scope="row">Number of tests</th>
+      <td><%= confusion.n %></td>
+    </tr>
+    <tr>
+      <th scope="row">Elapsed time</th>
+      <td><%= elapsedSeconds %> sec</td>
+    </tr>
+    <tr>
+      <th scope="row">True positives</th>
+      <td><%= confusion.truePos.toFixed(2) %></td>
+    </tr>
+    <tr>
+      <th scope="row">True negatives</th>
+      <td><%= confusion.trueNeg.toFixed(2) %></td>
+    </tr>
+    <tr>
+      <th scope="row">False positives</th>
+      <td><%= confusion.falsePos.toFixed(2) %></td>
+    </tr>
+    <tr>
+      <th scope="row">False negatives</th>
+      <td><%= confusion.falseNeg.toFixed(2) %></td>
+    </tr>
+    <tr title="The proportion in which predicted positives were actually positive">
+      <th scope="row">Precision</th>
+      <td><%= precision.toFixed(2) %></td>
+    </tr>
+    <tr title="The proportion in which actual positives were correctly predicted as positives">
+      <th scope="row">Recall</th>
+      <td><%= recall.toFixed(2) %></td>
+    </tr>
+    <tr title="The proportion of correct predictions">
+      <th scope="row">Accuracy</th>
+      <td><%= accuracy.toFixed(2) %></td>
+    </tr>
+    <tr>
+      <th scope="row" title="F-score – harmonic mean of precision and recall">F1 Score</th>
+      <td title="<%= f1score.toFixed(8) %>"><%= f1score.toFixed(4) %></td>
+    </tr>
+    <tr>
+      <th scope="row" title="Matthews correlation coefficient">MCC</th>
+      <td title="<%= mcc.toFixed(8) %>"><%= mcc.toFixed(4) %></td>
+    </tr>
+  </tbody>
+</table>

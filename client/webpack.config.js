@@ -16,8 +16,18 @@ module.exports = {
         test: /\.css$/i,
         use: ['style-loader', 'css-loader?url=false'],
       },
+      {
+        test: /\.worker\.js$/,
+        use: {
+          loader: 'worker-loader',
+          options: {
+            name: '[name].js',
+            publicPath: 'dist/' // otherwise browser tries to download at root
+          }
+        }
+      }
     ],
   },
-  mode: 'development', // in {development, production}
+  mode: 'production', // in {development, production}
   devtool: 'source-map',
 }

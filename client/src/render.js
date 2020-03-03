@@ -12,6 +12,19 @@ const timelineChanged = createObserver([
   state => state.timeline,
   state => state.predictors.prediction
 ])
+const sidebarChanged = createObserver([
+  state => state.sidebar
+])
+const sidebarPageChanged = createObserver([
+  state => state.sidebarPage
+])
+const performanceChanged = createObserver([
+  state => state.performance
+])
+
+let sidebar
+let sidebarContainer
+let contentContainer
 
 exports.init = (state, dispatch) => {
   const container = document.getElementById('container')
@@ -25,7 +38,7 @@ exports.init = (state, dispatch) => {
   root.appendChild(timeline.create(state, dispatch))
 
   // Sidebar
-  const sidebarContainer = document.createElement('div')
+  sidebarContainer = document.createElement('div')
   sidebarContainer.classList.add('sidebar-container')
   sidebarContainer.id = 'sidebarContainer'
   root.appendChild(sidebarContainer)
@@ -35,55 +48,73 @@ exports.init = (state, dispatch) => {
 }
 
 exports.update = (state, dispatch) => {
-  if (timelineChanged(state)) {
+  const isTimelineChanged = timelineChanged(state)
+  const isSidebarChanged = sidebarChanged(state)
+  const isSidebarPageChanged = sidebarPageChanged(state)
+
+  if (isTimelineChanged) {
     timeline.update(state, dispatch)
   }
 
-  // Clear sidebar container
-  const sidebarContainer = document.getElementById('sidebarContainer')
-  if (sidebarContainer.firstChild) {
-    sidebarContainer.removeChild(sidebarContainer.firstChild)
+  if (isSidebarChanged) {
+    if (sidebarContainer.firstChild) {
+      sidebarContainer.removeChild(sidebarContainer.firstChild)
+    }
+
+    if (state.sidebar) {
+      sidebar = document.createElement('div')
+      sidebar.classList.add('sidebar')
+      sidebar.appendChild(navbar(state, dispatch))
+
+      contentContainer = document.createElement('div')
+      contentContainer.classList.add('sidebar-content')
+      contentContainer.classList.add('container-fluid')
+
+      sidebar.appendChild(contentContainer)
+      sidebarContainer.appendChild(sidebar)
+    } else {
+      // Sidebar closed
+      sidebarContainer.appendChild(sidebarOpener(state, dispatch))
+    }
   }
 
-  if (state.sidebar) {
-    const sidebar = document.createElement('div')
-    sidebar.classList.add('sidebar')
-    sidebar.appendChild(navbar(state, dispatch))
+  if (state.sidebar && (isSidebarPageChanged || isSidebarChanged)) {
+    // Clear content container
+    if (contentContainer.firstChild) {
+      contentContainer.removeChild(contentContainer.firstChild)
+    }
 
-    const container = document.createElement('div')
-    container.classList.add('sidebar-content')
-    container.classList.add('container-fluid')
+    // Render navbar
+    sidebar.replaceChild(navbar(state, dispatch), sidebar.firstChild)
 
     switch (state.sidebarPage) {
       case 'inspect':
-        container.appendChild(predictors(state, dispatch))
+        contentContainer.appendChild(predictors(state, dispatch))
         break
 
       case 'edit':
         if (state.timeline.select) {
-          container.appendChild(cellEditor(state, dispatch))
+          contentContainer.appendChild(cellEditor(state, dispatch))
         } else {
-          container.innerHTML = 'Select a cell to edit it.'
+          contentContainer.innerHTML = 'Select a cell to edit it.'
         }
         break
 
       case 'performance':
-        container.appendChild(performance(state, dispatch))
+        contentContainer.appendChild(performance(state, dispatch))
         break
 
       case 'storage':
-        container.appendChild(storage(state, dispatch))
+        contentContainer.appendChild(storage(state, dispatch))
         break
 
       default:
         break
     }
+  }
 
-    sidebar.appendChild(container)
-
-    sidebarContainer.appendChild(sidebar)
-  } else {
-    // Sidebar closed
-    sidebarContainer.appendChild(sidebarOpener(state, dispatch))
+  const isPerfPage = state.sidebarPage === 'performance'
+  if (state.sidebar && isPerfPage && performanceChanged(state)) {
+    performance(state, dispatch)
   }
 }
