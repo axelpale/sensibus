@@ -1,5 +1,7 @@
 module.exports = {
   channels: [ // Dimensions
+    { title: 'Mood' },
+    { title: 'Too Much Food' },
     { title: 'Sex' },
     { title: 'Hugs' },
     { title: 'Rock \'n Roll' }
@@ -18,14 +20,13 @@ module.exports = {
     { title: '10' },
     { title: '11' }
   ],
-  select: {
-    channel: 0,
-    frame: 0
-  },
+  select: null,
   version: 1,
   memory: [
     [1, -1, 1, -1, 1, -1, 1, -1, 1, 0, 0, 0],
-    [0, 1, -1, 1, 1, -1, 1, -1, -1, 0, 0, 0],
+    [0, 1, -1, -1, 1, -1, -1, 1, -1, 0, 0, 0],
+    [0, 1, -1, -1, -1, 1, -1, -1, -1, 0, 0, 0],
+    [-1, 1, 1, -1, -1, 1, 1, -1, -1, 0, 0, 0],
     [1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0]
   ]
 }
