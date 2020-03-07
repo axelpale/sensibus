@@ -69,5 +69,11 @@ module.exports = (state, dispatch, frame) => {
     })
   })
 
+  listen(row, '#frameFormClose', 'click', ev => {
+    dispatch({
+      type: 'SELECT_NONE'
+    })
+  })
+
   return row
 }
