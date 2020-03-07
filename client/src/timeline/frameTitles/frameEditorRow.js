@@ -20,8 +20,16 @@ module.exports = (state, dispatch, frame) => {
   // Bind events
 
   listen(row, '#frameForm', 'submit', ev => {
-    // Not sure if this is needed... but to be safe.
     ev.preventDefault()
+    // Not sure if this is needed... but to be safe.
+    dispatch({
+      type: 'EDIT_FRAME_TITLE',
+      frame: frame,
+      title: row.querySelector('#frameTitleInput').value
+    })
+    dispatch({
+      type: 'SELECT_NONE'
+    })
   })
 
   listen(row, '#frameTitleInput', 'input', ev => {
