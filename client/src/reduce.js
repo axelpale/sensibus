@@ -1,6 +1,6 @@
 const storage = require('./storage/reduce')
-const navbar = require('./timeline/reduce')
-const timeline = require('./navbar/reduce')
+const sidebar = require('./timeline/reduce')
+const timeline = require('./sidebar/reduce')
 const predictors = require('./predictors/reduce')
 const performance = require('./performance/reduce')
 
@@ -16,7 +16,7 @@ module.exports = (state, ev) => {
   // console.log(state, ev)
 
   state = storage(state, ev)
-  state = navbar(state, ev)
+  state = sidebar(state, ev)
   state = timeline(state, ev)
   state = predictors(state, ev)
   state = performance(state, ev)

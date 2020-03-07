@@ -1,11 +1,11 @@
 require('./style.css')
-const navbar = require('./navbar/render')
+const sidebarView = require('./sidebar/render')
 const storage = require('./storage/render')
 const timeline = require('./timeline/render')
 const cellEditor = require('./timeline/cellEditor/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
-const sidebarOpener = require('./navbar/sidebarOpener')
+const sidebarOpener = require('./sidebar/sidebarOpener')
 const createObserver = require('uilib').createObserver
 
 const timelineChanged = createObserver([
@@ -64,7 +64,7 @@ exports.update = (state, dispatch) => {
     if (state.sidebar) {
       sidebar = document.createElement('div')
       sidebar.classList.add('sidebar')
-      sidebar.appendChild(navbar(state, dispatch))
+      sidebar.appendChild(sidebarView(state, dispatch))
 
       contentContainer = document.createElement('div')
       contentContainer.classList.add('sidebar-content')
@@ -84,8 +84,8 @@ exports.update = (state, dispatch) => {
       contentContainer.removeChild(contentContainer.firstChild)
     }
 
-    // Render navbar
-    sidebar.replaceChild(navbar(state, dispatch), sidebar.firstChild)
+    // Render sidebar
+    sidebar.replaceChild(sidebarView(state, dispatch), sidebar.firstChild)
 
     switch (state.sidebarPage) {
       case 'inspect':
