@@ -90,6 +90,7 @@
 
 .cell.cell-unknown .cell-icon {
   opacity: 0.6;
+  filter: blur(3px);
 }
 .cell.cell-unknown .cell-spine {
   opacity: 0.16;
