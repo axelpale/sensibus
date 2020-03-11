@@ -18,7 +18,7 @@ const db = new sqlite.Database(dbpath, (err) => {
   }
 
   // add tables
-  const querystr = 'CREATE TABLE TIMELINE(dump TEXT, userid TEXT)'
+  const querystr = 'CREATE TABLE IF NOT EXISTS TIMELINE(dump TEXT, userid TEXT)'
   db.run(querystr, (err) => {
     if (err) {
       return console.log(err.message)
