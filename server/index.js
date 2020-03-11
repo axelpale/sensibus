@@ -3,6 +3,8 @@ const sqlite = require('sqlite3')
 const fs = require('fs')
 const path = require('path')
 
+const router = require('./routes')
+
 const app = express()
 const port = 8888
 const dbdir = path.join(__dirname, 'db')
@@ -28,12 +30,6 @@ const db = new sqlite.Database(dbpath, (err) => {
 
 app.use(express.static('client/'))
 
-app.get('/api/timeline', function (req, res) {
-  res.json({})
-})
-
-app.post('/api/timeline', function (req, res) {
-  res.status(200).end()
-})
+app.use('/', router)
 
 app.listen(port, () => console.log(`Sensibus server listening on port ${port}`))
