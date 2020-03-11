@@ -36,6 +36,7 @@
     "worker-loader": "^2.0.0"
   },
   "dependencies": {
+    "database-service": "file:local_modules/database-service",
     "deep-equal": "^1.0.1",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
