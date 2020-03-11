@@ -1,4 +1,5 @@
 const lib = require('./lib')
+const prettyRatio = require('./prettyRatio')
 const color = lib.color
 const probToCircleRadius = lib.probToCircleRadius
 
@@ -39,8 +40,10 @@ module.exports = (state, dispatch, c, t) => {
   if (q === 0) {
     cell.classList.add('cell-unknown')
     prob = (state.predictors.prediction[c][t] + 1) / 2
-    const probHtml = Math.floor(100 * prob)
-    text.innerHTML = '' + probHtml
+    text.innerHTML = '' + prettyRatio(prob)
+    // Alternatively:
+    // const probHtml = Math.floor(100 * prob)
+    // text.innerHTML = '' + probHtml
     icon.style.opacity = 0.5
   } else {
     cell.classList.add('cell-known')
