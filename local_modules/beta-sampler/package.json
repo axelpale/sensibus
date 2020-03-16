@@ -1,0 +1,19 @@
+{
+  "name": "beta-sampler",
+  "version": "1.0.0",
+  "description": "Sampling of beta distribution",
+  "main": "index.js",
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint",
+    "bench": "node benchmark.js"
+  },
+  "author": "Akseli Palén",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "@stdlib/stdlib": "0.0.91"
+  }
+}
