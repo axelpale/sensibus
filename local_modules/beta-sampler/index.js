@@ -12,3 +12,11 @@ exports.sample = (a, b) => {
   const p = Math.random()
   return betaincinv(p, a, b)
 }
+
+exports.bin = (p, n) => {
+  // Map a probability to n discrete and equiwidth bins.
+  if (p === 1) {
+    return n - 1
+  }
+  return Math.floor(n * p)
+}
