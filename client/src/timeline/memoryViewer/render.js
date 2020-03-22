@@ -31,8 +31,8 @@ exports.create = (state, dispatch) => {
     row.appendChild(cells) // TODO move under cell creation
 
     for (let c = 0; c < W; c += 1) {
-      const cell = renderCell(state, dispatch, c, t)
-      cells.appendChild(cell)
+      const cellEl = renderCell(state, dispatch, c, t)
+      cells.appendChild(cellEl)
     }
   }
 
