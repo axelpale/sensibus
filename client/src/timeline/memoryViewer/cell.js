@@ -10,6 +10,7 @@ module.exports = (state, dispatch, c, t) => {
   const cell = document.createElement('div')
   cell.classList.add('cell')
   cell.classList.add('cell-event')
+  cell.classList.add('channel-' + c)
 
   if (sel && (sel.channel === c || sel.frame === t)) {
     cell.classList.add('cell-selected')

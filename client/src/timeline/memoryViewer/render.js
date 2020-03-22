@@ -22,6 +22,7 @@ exports.create = (state, dispatch) => {
     // Cells
     const row = document.createElement('div')
     row.classList.add('timeline-row')
+    row.classList.add('frame-' + t)
     root.appendChild(row)
 
     row.appendChild(frameTitle(state, dispatch, t))
