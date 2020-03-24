@@ -26,7 +26,7 @@ let sidebar
 let sidebarContainer
 let contentContainer
 
-exports.init = (state, dispatch) => {
+exports.init = (store, dispatch) => {
   const container = document.getElementById('container')
 
   // Root elem
@@ -35,7 +35,7 @@ exports.init = (state, dispatch) => {
   root.id = 'root'
 
   // Timeline
-  root.appendChild(timeline.create(state, dispatch))
+  root.appendChild(timeline.create(store, dispatch))
 
   // Sidebar
   sidebarContainer = document.createElement('div')
@@ -47,13 +47,14 @@ exports.init = (state, dispatch) => {
   container.appendChild(root)
 }
 
-exports.update = (state, dispatch) => {
+exports.update = (store, dispatch) => {
+  const state = store.getState()
   const isTimelineChanged = timelineChanged(state)
   const isSidebarChanged = sidebarChanged(state)
   const isSidebarPageChanged = sidebarPageChanged(state)
 
   if (isTimelineChanged) {
-    timeline.update(state, dispatch)
+    timeline.update(store, dispatch)
   }
 
   if (isSidebarChanged) {

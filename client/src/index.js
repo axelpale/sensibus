@@ -24,11 +24,11 @@ const dispatch = ev => store.dispatch(ev)
 
 // Render
 store.subscribe(() => {
+  renderer.update(store, dispatch)
   const state = store.getState()
-  renderer.update(state, dispatch)
   hibernate(hibernator(state))
 })
 
-renderer.init(store.getState(), dispatch)
+renderer.init(store, dispatch)
 
 dispatch({ type: '__INIT__' })
