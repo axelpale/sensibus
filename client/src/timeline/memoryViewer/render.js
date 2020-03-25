@@ -1,41 +1,20 @@
-const way = require('senseway')
-const frameTitle = require('../frameTitles/frameTitle')
 const frameEditor = require('../frameTitles/frameEditorRow')
-const renderCell = require('./cell')
+const renderRow = require('./row')
+const way = require('senseway')
 
 const getElsByClass = cl => Array.from(document.getElementsByClassName(cl))
+const removeClass = cl => el => el.classList.remove(cl)
+const removeEl = el => el.parentNode.removeChild(el)
+const removeClassByClass = cl => getElsByClass(cl).forEach(removeClass(cl))
+const removeElsByClass = cl => getElsByClass(cl).forEach(removeEl)
 
 exports.create = (store, dispatch) => {
-  const timeline = store.getState().timeline
+  const memory = store.getState().timeline.memory
   const root = document.createElement('div')
 
-  const W = way.width(timeline.memory)
-  const LEN = way.len(timeline.memory)
-
-  const select = timeline.select
-
-  // Timeline events
+  const LEN = way.len(memory)
   for (let t = LEN - 1; t >= 0; t -= 1) {
-    // Frame editor
-    if (select && t === select.frame) {
-      root.appendChild(frameEditor(store, dispatch, t))
-    }
-
-    // Cells
-    const row = document.createElement('div')
-    row.classList.add('timeline-row')
-    root.appendChild(row)
-
-    row.appendChild(frameTitle(store, dispatch, t))
-
-    const cells = document.createElement('div')
-    cells.classList.add('cells')
-    row.appendChild(cells) // TODO move under cell creation
-
-    for (let c = 0; c < W; c += 1) {
-      const cellEl = renderCell(store, dispatch, c, t)
-      cells.appendChild(cellEl)
-    }
+    root.appendChild(renderRow(store, dispatch, t))
   }
 
   return root
@@ -55,12 +34,15 @@ exports.updateFrameTitles = (store, dispatch) => {
 
 exports.updateSelect = (store, dispatch) => {
   // Unstyle the previous channel and frame
-  const selectedEls = getElsByClass('cell-selected')
-  selectedEls.forEach(el => el.classList.remove('cell-selected', 'cell-focus'))
+  removeClassByClass('cell-selected')
+  removeClassByClass('cell-focus')
 
   // Unstyle the previously selected frame titles
-  const titleEls = getElsByClass('frame-title-selected')
-  titleEls.forEach(el => el.classList.remove('frame-title-selected'))
+  removeClassByClass('frame-title-selected')
+  removeClassByClass('title-channel-selected')
+
+  // Remove possible frame editor
+  removeElsByClass('frame-editor-row')
 
   const select = store.getState().timeline.select
   if (select) {
@@ -70,22 +52,36 @@ exports.updateSelect = (store, dispatch) => {
     const channelClass = 'channel-' + c
     const frameClass = 'frame-' + t
 
-    if (c !== null) {
-      const els = getElsByClass(channelClass)
-      els.forEach(el => el.classList.add('cell-selected'))
+    // Set cells at channel
+    if (c >= 0) {
+      const cellEls = getElsByClass(channelClass)
+      cellEls.forEach(el => el.classList.add('cell-selected'))
     }
-    if (t !== null) {
-      const els = getElsByClass(frameClass)
-      els.forEach(el => el.classList.add('cell-selected'))
+
+    // Set cells at frame
+    if (t >= 0) {
+      const cellEls = getElsByClass(frameClass)
+      cellEls.forEach(el => el.classList.add('cell-selected'))
     }
-    if (c !== null && t !== null) {
+
+    // Set focus
+    if (c >= 0 && t >= 0) {
       const focusClass = channelClass + ' ' + frameClass
-      const els = getElsByClass(focusClass)
-      els.forEach(el => el.classList.add('cell-focus'))
+      const cellEls = getElsByClass(focusClass)
+      cellEls.forEach(el => el.classList.add('cell-focus'))
+    }
+
+    // Add frame editor gefore row when the frame title becomes selected
+    if (c === -1 && t >= 0) {
+      const editor = frameEditor(store, dispatch, t)
+      const frameEls = getElsByClass('row-frame-' + t) // Single
+      frameEls.forEach(el => {
+        el.parentNode.insertBefore(editor, el)
+      })
     }
 
     // Style the next frame title
-    if (t !== null) {
+    if (t >= 0) {
       const frameTitleClass = 'frame-title-' + t
       const els = getElsByClass(frameTitleClass)
       els.forEach(el => el.classList.add('frame-title-selected'))
