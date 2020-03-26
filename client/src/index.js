@@ -2,13 +2,15 @@ const redux = require('redux')
 const reducer = require('./reduce')
 const renderer = require('./render')
 const hibernator = require('./hibernate')
+const migrate = require('./migrate')
 
-// Hibernate to localStorage
+// Hydrate from localStorage
 const storageName = 'sensibus-state'
 const storedState = window.localStorage.getItem(storageName)
 let initialState
 if (storedState) {
-  initialState = JSON.parse(storedState)
+  const readState = JSON.parse(storedState)
+  initialState = migrate(readState)
 } else {
   initialState = null
 }

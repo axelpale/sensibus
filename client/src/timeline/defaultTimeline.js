@@ -26,6 +26,7 @@ module.exports = {
     { title: '10' },
     { title: '11' }
   ],
+  hideBefore: 0,
   select: null,
   version: 1,
   memory: [

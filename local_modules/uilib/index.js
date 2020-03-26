@@ -21,6 +21,14 @@ exports.createObserver = (selectors) => {
   }
 }
 
+exports.getElementsByClass = cl => {
+  return Array.from(document.getElementsByClassName(cl))
+}
+
 exports.listen = (el, query, eventName, handler) => {
   el.querySelector(query).addEventListener(eventName, handler)
+}
+
+exports.setHtml = (el, query, newHtml) => {
+  el.querySelector(query).innerHTML = newHtml
 }

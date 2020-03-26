@@ -2,6 +2,7 @@ require('./style.css')
 const way = require('senseway')
 const memoryViewer = require('./memoryViewer/render')
 const channelTitles = require('./channelTitles/render')
+const memoryRangeTools = require('./memoryRangeTools/render')
 const createObserver = require('uilib').createObserver
 
 const channelTitlesChanged = createObserver([
@@ -29,6 +30,10 @@ const frameTitlesChanged = createObserver([
   state => state.timeline.frames
 ])
 
+const hideBeforeChanged = createObserver([
+  state => state.timeline.hideBefore
+])
+
 let root
 let canvasEl
 let memoryEl
@@ -53,6 +58,10 @@ exports.create = (store, dispatch) => {
   canvasEl.appendChild(memoryEl)
 
   root.appendChild(canvasEl)
+
+  // Buttons to reveal or hide earlier entries.
+  // Not the best UX but simple to implement.
+  root.appendChild(memoryRangeTools.create(store, dispatch))
 
   root.addEventListener('click', ev => {
     if (ev.target === root) {
@@ -82,9 +91,10 @@ exports.update = (store, dispatch) => {
   const predictionCh = predictionChanged(state)
   const selectCh = selectChanged(state)
   const frameTitlesCh = frameTitlesChanged(state)
+  const hideBeforeCh = hideBeforeChanged(state)
 
-  if (memoryCh || predictionCh) {
-    // Update everything
+  if (memoryCh || predictionCh || hideBeforeCh) {
+    // Update full memory
     const newMemoryEl = memoryViewer.create(store, dispatch)
     canvasEl.replaceChild(newMemoryEl, memoryEl)
     memoryEl = newMemoryEl
@@ -95,5 +105,9 @@ exports.update = (store, dispatch) => {
     if (selectCh) {
       memoryViewer.updateSelect(store, dispatch)
     }
+  }
+
+  if (hideBeforeCh) {
+    memoryRangeTools.update(store, dispatch)
   }
 }

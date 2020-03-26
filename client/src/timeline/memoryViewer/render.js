@@ -1,19 +1,22 @@
 const frameEditor = require('../frameTitles/frameEditorRow')
 const renderRow = require('./row')
 const way = require('senseway')
+const ui = require('uilib')
 
-const getElsByClass = cl => Array.from(document.getElementsByClassName(cl))
+const getElementsByClass = ui.getElementsByClass
 const removeClass = cl => el => el.classList.remove(cl)
 const removeEl = el => el.parentNode.removeChild(el)
-const removeClassByClass = cl => getElsByClass(cl).forEach(removeClass(cl))
-const removeElsByClass = cl => getElsByClass(cl).forEach(removeEl)
+const removeClassByClass = cl => getElementsByClass(cl).forEach(removeClass(cl))
+const removeElsByClass = cl => getElementsByClass(cl).forEach(removeEl)
 
 exports.create = (store, dispatch) => {
-  const memory = store.getState().timeline.memory
+  const timeline = store.getState().timeline
   const root = document.createElement('div')
 
-  const LEN = way.len(memory)
-  for (let t = LEN - 1; t >= 0; t -= 1) {
+  const LEN = way.len(timeline.memory)
+  const HIDE_BEFORE = timeline.hideBefore
+
+  for (let t = LEN - 1; t >= HIDE_BEFORE; t -= 1) {
     root.appendChild(renderRow(store, dispatch, t))
   }
 
@@ -54,27 +57,27 @@ exports.updateSelect = (store, dispatch) => {
 
     // Set cells at channel
     if (c >= 0) {
-      const cellEls = getElsByClass(channelClass)
+      const cellEls = getElementsByClass(channelClass)
       cellEls.forEach(el => el.classList.add('cell-selected'))
     }
 
     // Set cells at frame
     if (t >= 0) {
-      const cellEls = getElsByClass(frameClass)
+      const cellEls = getElementsByClass(frameClass)
       cellEls.forEach(el => el.classList.add('cell-selected'))
     }
 
     // Set focus
     if (c >= 0 && t >= 0) {
       const focusClass = channelClass + ' ' + frameClass
-      const cellEls = getElsByClass(focusClass)
+      const cellEls = getElementsByClass(focusClass)
       cellEls.forEach(el => el.classList.add('cell-focus'))
     }
 
     // Add frame editor gefore row when the frame title becomes selected
     if (c === -1 && t >= 0) {
       const editor = frameEditor(store, dispatch, t)
-      const frameEls = getElsByClass('row-frame-' + t) // Single
+      const frameEls = getElementsByClass('row-frame-' + t) // Single
       frameEls.forEach(el => {
         el.parentNode.insertBefore(editor, el)
       })
@@ -83,7 +86,7 @@ exports.updateSelect = (store, dispatch) => {
     // Style the next frame title
     if (t >= 0) {
       const frameTitleClass = 'frame-title-' + t
-      const els = getElsByClass(frameTitleClass)
+      const els = getElementsByClass(frameTitleClass)
       els.forEach(el => el.classList.add('frame-title-selected'))
     }
   }

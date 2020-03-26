@@ -189,6 +189,20 @@ module.exports = (state, ev) => {
       })
     }
 
+    case 'SHOW_MORE_MEMORY': {
+      const hideBefore = state.timeline.hideBefore
+      const memLen = way.len(state.timeline.memory)
+
+      const candidate = hideBefore - ev.num
+      const newHideBefore = Math.min(Math.max(candidate, 0), memLen)
+
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          hideBefore: newHideBefore
+        })
+      })
+    }
+
     default: {
       return state
     }
