@@ -99,6 +99,10 @@
   top: 1.3rem;
   font-size: 1.27rem;
   height: 60%;
+  visibility: hidden;
+}
+.cell.cell-unknown.cell-focus .cell-text  {
+  visibility: visible;
 }
 
 .cell.cell-selected {
