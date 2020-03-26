@@ -67,7 +67,7 @@
   width: 4.2rem;
   height: 4.2rem;
   background: url('img/spine.png') center repeat-y;
-  opacity: 1;
+  opacity: 0.8;
 }
 
 .cell .cell-icon {
