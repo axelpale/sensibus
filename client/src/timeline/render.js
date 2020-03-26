@@ -13,10 +13,16 @@ const memoryWidthChanged = createObserver([
   state => way.width(state.timeline.memory)
 ])
 
-const memoryViewerChanged = createObserver([
-  state => state.timeline.select,
-  state => state.timeline.memory,
+const memoryChanged = createObserver([
+  state => state.timeline.memory
+])
+
+const predictionChanged = createObserver([
   state => state.predictors.prediction
+])
+
+const selectChanged = createObserver([
+  state => state.timeline.select
 ])
 
 const frameTitlesChanged = createObserver([
@@ -27,7 +33,9 @@ let root
 let canvasEl
 let memoryEl
 
-exports.create = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
+
   root = document.createElement('div')
   root.classList.add('timeline-root')
   root.id = 'timeline-root'
@@ -57,7 +65,9 @@ exports.create = (state, dispatch) => {
   return root
 }
 
-exports.update = (state, dispatch) => {
+exports.update = (store, dispatch) => {
+  const state = store.getState()
+
   if (channelTitlesChanged(state)) {
     channelTitles.update(state, dispatch)
   }
@@ -68,13 +78,22 @@ exports.update = (state, dispatch) => {
     canvasEl.style.width = '' + (10.1 + W * 4.8).toFixed(2) + 'rem'
   }
 
-  if (memoryViewerChanged(state)) {
-    const newMemoryEl = memoryViewer.create(state, dispatch)
+  const memoryCh = memoryChanged(state)
+  const predictionCh = predictionChanged(state)
+  const selectCh = selectChanged(state)
+  const frameTitlesCh = frameTitlesChanged(state)
+
+  if (memoryCh || predictionCh) {
+    // Update everything
+    const newMemoryEl = memoryViewer.create(store, dispatch)
     canvasEl.replaceChild(newMemoryEl, memoryEl)
     memoryEl = newMemoryEl
   } else {
-    if (frameTitlesChanged(state)) {
-      memoryViewer.updateFrameTitles(state, dispatch)
+    if (frameTitlesCh) {
+      memoryViewer.updateFrameTitles(store, dispatch)
+    }
+    if (selectCh) {
+      memoryViewer.updateSelect(store, dispatch)
     }
   }
 }

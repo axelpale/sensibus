@@ -3,7 +3,8 @@ const prettyRatios = require('./prettyRatios')
 const color = lib.color
 const probToCircleRadius = lib.probToCircleRadius
 
-module.exports = (state, dispatch, c, t) => {
+module.exports = (store, dispatch, c, t) => {
+  const state = store.getState()
   const timeline = state.timeline
   const sel = timeline.select
 
@@ -11,6 +12,7 @@ module.exports = (state, dispatch, c, t) => {
   cell.classList.add('cell')
   cell.classList.add('cell-event')
   cell.classList.add('channel-' + c)
+  cell.classList.add('frame-' + t)
 
   if (sel && (sel.channel === c || sel.frame === t)) {
     cell.classList.add('cell-selected')
@@ -54,8 +56,8 @@ module.exports = (state, dispatch, c, t) => {
   icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
 
   cell.addEventListener('click', ev => {
-    const sel = state.timeline.select
-    // TODO store.getState() if we go lazy
+    // Note, select might change.
+    const sel = store.getState().timeline.select
     if (sel && sel.channel === c && sel.frame === t) {
       dispatch({
         type: 'EDIT_CELL',

@@ -2,7 +2,9 @@ require('./style.css')
 const template = require('./frameEditorRow.ejs')
 const listen = require('uilib').listen
 
-module.exports = (state, dispatch, frame) => {
+module.exports = (store, dispatch, frame) => {
+  const state = store.getState()
+
   const row = document.createElement('div')
   row.classList.add('frame-editor-row')
 
