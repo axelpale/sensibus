@@ -1,6 +1,8 @@
 # sensibus
 
-A time series logger, analyser, and predictor for your daily feelings and activity.
+A time series logger, analyser, and predictor for your daily feelings and activity. Provides future prediction via dynamic naive bayesian methods.
+
+![Timeline Example](doc/timeline-example.jpg)
 
 ## Install
 
