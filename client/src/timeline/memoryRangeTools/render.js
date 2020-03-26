@@ -1,3 +1,4 @@
+require('./style.css')
 const uilib = require('uilib')
 const template = require('./template.ejs')
 
@@ -5,7 +6,7 @@ const listen = uilib.listen
 
 exports.create = (store, dispatch) => {
   const root = document.createElement('div')
-  root.classList.add('memory-range-tools')
+  root.classList.add('memory-range-tools', 'pt-3')
 
   root.innerHTML = template({})
 
