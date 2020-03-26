@@ -9,11 +9,13 @@ const removeClassByClass = cl => getElsByClass(cl).forEach(removeClass(cl))
 const removeElsByClass = cl => getElsByClass(cl).forEach(removeEl)
 
 exports.create = (store, dispatch) => {
-  const memory = store.getState().timeline.memory
+  const timeline = store.getState().timeline
   const root = document.createElement('div')
 
-  const LEN = way.len(memory)
-  for (let t = LEN - 1; t >= 0; t -= 1) {
+  const LEN = way.len(timeline.memory)
+  const HIDE_BEFORE = timeline.hideBefore
+
+  for (let t = LEN - 1; t >= HIDE_BEFORE; t -= 1) {
     root.appendChild(renderRow(store, dispatch, t))
   }
 
