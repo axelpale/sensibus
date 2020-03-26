@@ -1,6 +1,6 @@
 const lib = require('./lib')
 // const prettyRatios = require('./prettyRatios')
-const color = lib.color
+const color = lib.colorSunset
 const probToCircleRadius = lib.probToCircleRadius
 
 module.exports = (store, dispatch, c, t) => {
