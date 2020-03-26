@@ -101,15 +101,12 @@
   height: 60%;
   visibility: hidden;
 }
-.cell.cell-unknown.cell-focus .cell-text  {
-  visibility: visible;
-}
 
 .cell.cell-selected {
   background: rgba(0,0,0,0.10);
 }
 .cell.cell-selected.cell-focus {
-  background: rgba(0,0,0,0.26);
+  background: white;
 }
 
 .frame-title-selected {
