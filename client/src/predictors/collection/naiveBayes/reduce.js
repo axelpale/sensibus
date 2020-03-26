@@ -31,21 +31,6 @@ module.exports = (model, memory, ev) => {
       model = Object.assign({}, model, train(model, memory))
       return Object.assign({}, model, inferAll(model, memory))
 
-    case '__INIT__':
-    case 'EDIT_CELL':
-    case 'CREATE_CHANNEL':
-    case 'MOVE_CHANNEL':
-    case 'REMOVE_CHANNEL':
-    case 'CREATE_FRAME':
-    case 'MOVE_FRAME':
-    case 'REMOVE_FRAME':
-    case 'IMPORT_STATE':
-    case 'RESET_STATE':
-    case 'SELECT_PREDICTOR':
-      model = Object.assign({}, model, train(model, memory))
-      return Object.assign({}, model, inferAll(model, memory))
-      // OPTIMIZE only predict on CREATE_CHANNEL and CREATE_FRAME
-
     default:
       return model
   }

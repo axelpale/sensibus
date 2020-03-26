@@ -10,6 +10,7 @@ exports.predictors = {
 }
 
 exports.getPredictorId = (state) => {
+  // Selected predictor id
   const name = state.predictors.selection
   if (name in exports.predictors) {
     return name
