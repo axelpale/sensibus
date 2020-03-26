@@ -94,7 +94,7 @@ exports.update = (store, dispatch) => {
   const hideBeforeCh = hideBeforeChanged(state)
 
   if (memoryCh || predictionCh || hideBeforeCh) {
-    // Update everything
+    // Update full memory
     const newMemoryEl = memoryViewer.create(store, dispatch)
     canvasEl.replaceChild(newMemoryEl, memoryEl)
     memoryEl = newMemoryEl
@@ -105,5 +105,9 @@ exports.update = (store, dispatch) => {
     if (selectCh) {
       memoryViewer.updateSelect(store, dispatch)
     }
+  }
+
+  if (hideBeforeCh) {
+    memoryRangeTools.update(store, dispatch)
   }
 }

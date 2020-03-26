@@ -1,8 +1,14 @@
 require('./style.css')
-const uilib = require('uilib')
+const way = require('senseway')
+const ui = require('uilib')
 const template = require('./template.ejs')
 
-const listen = uilib.listen
+const meterText = (store) => {
+  const timeline = store.getState().timeline
+  const total = way.len(timeline.memory)
+  const n = total - timeline.hideBefore // hideBefore is 0 when all is shown
+  return 'Showing ' + n + ' frames out of ' + total
+}
 
 exports.create = (store, dispatch) => {
   const root = document.createElement('div')
@@ -10,14 +16,16 @@ exports.create = (store, dispatch) => {
 
   root.innerHTML = template({})
 
-  listen(root, '#showLessBtn', 'click', ev => {
+  ui.setHtml(root, '#showMeter', meterText(store))
+
+  ui.listen(root, '#showLessBtn', 'click', ev => {
     dispatch({
       type: 'SHOW_MORE_MEMORY',
       num: -5
     })
   })
 
-  listen(root, '#showMoreBtn', 'click', ev => {
+  ui.listen(root, '#showMoreBtn', 'click', ev => {
     dispatch({
       type: 'SHOW_MORE_MEMORY',
       num: 5
@@ -27,6 +35,7 @@ exports.create = (store, dispatch) => {
   return root
 }
 
-exports.update = (state, dispatch) => {
-
+exports.update = (store, dispatch) => {
+  const els = ui.getElementsByClass('memory-range-tools')
+  els.forEach(el => ui.setHtml(el, '#showMeter', meterText(store)))
 }
