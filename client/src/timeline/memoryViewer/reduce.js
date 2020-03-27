@@ -40,6 +40,14 @@ module.exports = (state, ev) => {
       return updateSelect(state, c, t)
     }
 
+    case 'SELECT_NONE': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: null
+        })
+      })
+    }
+
     case 'EDIT_CELL': {
       const curval = timeline.memory[ev.channel][ev.frame]
       const nextval = (() => {

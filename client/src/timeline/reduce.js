@@ -137,14 +137,6 @@ module.exports = (state, ev) => {
       })
     }
 
-    case 'SELECT_NONE': {
-      return Object.assign({}, state, {
-        timeline: Object.assign({}, state.timeline, {
-          select: null
-        })
-      })
-    }
-
     case 'SELECT_CHANNEL_TITLE': {
       let newSelect
 
