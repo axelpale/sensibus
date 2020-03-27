@@ -59,6 +59,7 @@ module.exports = (state, ev) => {
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR': {
+      // Get predictor
       const predictorId = collection.getPredictorId(state)
       const predictor = collection.getPredictor(predictorId)
       const predictorModel = state.predictors[predictorId]
@@ -69,6 +70,7 @@ module.exports = (state, ev) => {
       const inferModel = predictor.inferAll(trainedModel, memory)
       const postInferModel = Object.assign({}, trainedModel, inferModel)
 
+      // Update predictor model and prediction memory.
       const update = {}
       update[predictorId] = postInferModel
       update.prediction = postInferModel.prediction
