@@ -2,7 +2,7 @@ require('./style.css')
 const sidebarView = require('./sidebar/render')
 const storage = require('./storage/render')
 const timeline = require('./timeline/render')
-const cellEditor = require('./timeline/cellEditor/render')
+const view = require('./view/render')
 const predictors = require('./predictors/render')
 const performance = require('./performance/render')
 const sidebarOpener = require('./sidebar/sidebarOpener')
@@ -21,6 +21,9 @@ const sidebarPageChanged = createObserver([
 const performanceChanged = createObserver([
   state => state.performance
 ])
+// const selectChanged = createObserver([
+//   state => state.timeline.select
+// ])
 
 let sidebar
 let sidebarContainer
@@ -49,6 +52,7 @@ exports.init = (store, dispatch) => {
 
 exports.update = (store, dispatch) => {
   const state = store.getState()
+  // const isSelectChanged = selectChanged(state)
   const isTimelineChanged = timelineChanged(state)
   const isSidebarChanged = sidebarChanged(state)
   const isSidebarPageChanged = sidebarPageChanged(state)
@@ -58,6 +62,7 @@ exports.update = (store, dispatch) => {
   }
 
   if (isSidebarChanged) {
+    // Clear element.
     if (sidebarContainer.firstChild) {
       sidebarContainer.removeChild(sidebarContainer.firstChild)
     }
@@ -79,26 +84,21 @@ exports.update = (store, dispatch) => {
     }
   }
 
-  if (state.sidebar && (isSidebarPageChanged || isSidebarChanged)) {
-    // Clear content container
+  // Run page updates
+  if (state.sidebar) {
+    // First, clear content container
     if (contentContainer.firstChild) {
       contentContainer.removeChild(contentContainer.firstChild)
     }
 
-    // Render sidebar
-    sidebar.replaceChild(sidebarView(state, dispatch), sidebar.firstChild)
-
+    // TODO create and update for each page
     switch (state.sidebarPage) {
       case 'inspect':
         contentContainer.appendChild(predictors(state, dispatch))
         break
 
-      case 'edit':
-        if (state.timeline.select) {
-          contentContainer.appendChild(cellEditor(state, dispatch))
-        } else {
-          contentContainer.innerHTML = 'Select a cell to edit it.'
-        }
+      case 'view':
+        contentContainer.appendChild(view(store, dispatch))
         break
 
       case 'performance':
@@ -112,6 +112,11 @@ exports.update = (store, dispatch) => {
       default:
         break
     }
+  }
+
+  if (state.sidebar && (isSidebarPageChanged || isSidebarChanged)) {
+    // Re-render sidebar when opened, closed or somehow changed
+    sidebar.replaceChild(sidebarView(state, dispatch), sidebar.firstChild)
   }
 
   const isPerfPage = state.sidebarPage === 'performance'

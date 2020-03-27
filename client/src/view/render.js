@@ -1,11 +1,13 @@
 const template = require('./template.ejs')
 
-module.exports = (state, dispatch) => {
+module.exports = (store, dispatch) => {
+  const state = store.getState()
   const root = document.createElement('div')
   const select = state.timeline.select
 
   // Cell editor is only for cell selections
   if (select === null || select.channel < 0 || select.frame < 0) {
+    root.innerHTML = 'Select a cell to view details.'
     return root
   }
 

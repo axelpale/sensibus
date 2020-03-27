@@ -19,18 +19,18 @@ module.exports = (state, dispatch) => {
     })
   })
 
+  listenId(root, 'navbarView', ev => {
+    ev.preventDefault()
+    dispatch({
+      type: 'OPEN_PAGE',
+      page: 'view'
+    })
+  })
   listenId(root, 'navbarInspect', ev => {
     ev.preventDefault()
     dispatch({
       type: 'OPEN_PAGE',
       page: 'inspect'
-    })
-  })
-  listenId(root, 'navbarEdit', ev => {
-    ev.preventDefault()
-    dispatch({
-      type: 'OPEN_PAGE',
-      page: 'edit'
     })
   })
   listenId(root, 'navbarPerformance', ev => {
