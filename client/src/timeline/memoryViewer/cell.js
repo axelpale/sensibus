@@ -56,15 +56,28 @@ module.exports = (store, dispatch, c, t) => {
   icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
 
   cell.addEventListener('click', ev => {
-    // Note, select might change.
     const sel = store.getState().timeline.select
     if (sel && sel.channel === c && sel.frame === t) {
+      // If the clicked cell is already focused.
       dispatch({
         type: 'EDIT_CELL',
         channel: c,
         frame: t
       })
+    } else if (sel && (sel.channel === c || sel.frame === t)) {
+      // If another cell in same channel or frame is clicked.
+      dispatch({
+        type: 'SELECT_CELL',
+        channel: c,
+        frame: t
+      })
+    } else if (sel && sel.channel > -1 && sel.frame > -1) {
+      // If none of the above happens but a cell is clicked anyway.
+      dispatch({
+        type: 'SELECT_NONE'
+      })
     } else {
+      // If nothing has been selected, select the cell.
       dispatch({
         type: 'SELECT_CELL',
         channel: c,
