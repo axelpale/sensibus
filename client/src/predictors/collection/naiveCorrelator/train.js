@@ -1,7 +1,7 @@
 const way = require('senseway')
-const nonprogressiveTrain = require('../nonprogressiveTrain')
+const syncTrain = require('../syncTrain')
 
-module.exports = nonprogressiveTrain((config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // Overview:
   // - Compute average neighborhood for every channel.
   // - Find unknown cells.

@@ -1,7 +1,7 @@
 const way = require('senseway')
-const nonprogressiveTrain = require('../nonprogressiveTrain')
+const syncTrain = require('../syncTrain')
 
-module.exports = nonprogressiveTrain((config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.

@@ -1,7 +1,7 @@
 const way = require('senseway')
-const nonprogressiveTrain = require('../nonprogressiveTrain')
+const syncTrain = require('../syncTrain')
 
-module.exports = nonprogressiveTrain((config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // Trit mean. A bit different from traditional mean where every value
   // has equal weight. Trit mean can be viewed as a weighted average where
   // weight of a trit equals its absolute value. Beautiful.

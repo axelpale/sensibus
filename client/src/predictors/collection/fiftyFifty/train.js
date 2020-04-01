@@ -1,6 +1,6 @@
-const nonprogressiveTrain = require('../nonprogressiveTrain')
+const syncTrain = require('../syncTrain')
 
-module.exports = nonprogressiveTrain((config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // No training
   return config
 })
