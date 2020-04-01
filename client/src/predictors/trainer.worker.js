@@ -14,6 +14,7 @@ onmessage = (ev) => {
   const memory = ev.data.memory
   const predictorId = ev.data.predictorId
   const config = ev.data.predictorConfig
+
   const train = trains[predictorId]
 
   const onProgress = (progressObj) => {
@@ -34,6 +35,7 @@ onmessage = (ev) => {
 
     // Emit the the model trained on the given memory.
     postMessage({
+      type: 'finish',
       predictorId: predictorId,
       trainedModel: trainedModel
     })
