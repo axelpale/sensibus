@@ -1,6 +1,7 @@
 const way = require('senseway')
+const nonprogressiveTrain = require('../nonprogressiveTrain')
 
-module.exports = (config, memory) => {
+module.exports = nonprogressiveTrain((config, memory) => {
   // Trit mean. A bit different from traditional mean where every value
   // has equal weight. Trit mean can be viewed as a weighted average where
   // weight of a trit equals its absolute value. Beautiful.
@@ -14,4 +15,4 @@ module.exports = (config, memory) => {
   return Object.assign({}, config, {
     channelMeans: channelMeans
   })
-}
+})

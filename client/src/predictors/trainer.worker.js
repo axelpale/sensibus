@@ -1,34 +1,43 @@
 /* eslint-env worker */
 const trains = require('./collection/trains')
 
-// Keep track of how many training procedures are running.
-// TODO cancel running training process immediately.
-let queue = 0
+const noop = () => {}
+let cancelOngoing = noop
 
 onmessage = (ev) => {
   // Begin a training procedure.
   // Cancel previous, possibly still running training.
+  // There is little need to emit models that are about to change soon.
 
-  queue += 1
+  cancelOngoing()
 
   const memory = ev.data.memory
   const predictorId = ev.data.predictorId
   const config = ev.data.predictorConfig
   const train = trains[predictorId]
 
-  train(config, memory, (err, trainedModel) => {
+  const onProgress = (progressObj) => {
+    postMessage({
+      type: 'progress',
+      predictorId: predictorId,
+      progress: progressObj.progress
+    })
+  }
+
+  const onFinish = (err, trainedModel) => {
     if (err) {
       return console.error(err)
     }
 
-    queue -= 1
-    if (queue === 0) {
-      // Emit the the model trained on the latest memory.
-      // There is little need to emit models that are about to change soon.
-      postMessage({
-        predictorId: predictorId,
-        trainedModel: trainedModel
-      })
-    }
-  })
+    // Ensure that calling cancel after finish does not do harm.
+    cancelOngoing = noop
+
+    // Emit the the model trained on the given memory.
+    postMessage({
+      predictorId: predictorId,
+      trainedModel: trainedModel
+    })
+  }
+
+  cancelOngoing = train(config, memory, onProgress, onFinish)
 }

@@ -3,8 +3,9 @@ const buildFields = require('./buildFields')
 const sumToProb = require('./sumToProb')
 const getMutualInfo = require('./getMutualInfo')
 const findBestSubset = require('./findBestSubset')
+const nonprogressiveTrain = require('../../nonprogressiveTrain')
 
-module.exports = (config, memory) => {
+module.exports = nonprogressiveTrain((config, memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
@@ -56,4 +57,4 @@ module.exports = (config, memory) => {
     mutualInfos: miFields,
     filtering: filtering
   }
-}
+})
