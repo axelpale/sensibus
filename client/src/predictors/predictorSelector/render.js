@@ -1,6 +1,7 @@
 const collection = require('../collection')
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const control = document.createElement('div')
   control.classList.add('predictor-selector')
 

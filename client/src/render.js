@@ -1,6 +1,5 @@
 require('./style.css')
 const sidebar = require('./sidebar/render')
-const storage = require('./storage/render')
 const timeline = require('./timeline/render')
 const createObserver = require('uilib').createObserver
 
@@ -31,7 +30,7 @@ exports.init = (store, dispatch) => {
 exports.update = (store, dispatch) => {
   const state = store.getState()
 
-  if (isTimelineChanged) { // TODO move condition in timeline
+  if (timelineChanged(state)) { // TODO move condition in timeline
     timeline.update(store, dispatch)
   }
 

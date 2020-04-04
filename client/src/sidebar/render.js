@@ -4,6 +4,8 @@ const sidebarOpener = require('./sidebarOpener')
 const view = require('../view/render')
 const predictors = require('../predictors/render')
 const performance = require('../performance/render')
+const storage = require('../storage/render')
+const createObserver = require('uilib').createObserver
 
 const sidebarChanged = createObserver([
   state => state.sidebar
@@ -64,13 +66,14 @@ exports.create = (store, dispatch) => {
   sidebar.appendChild(contentContainer)
 
   sidebarContainer.appendChild(sidebarOpener.create(store, dispatch))
+
+  return sidebarContainer
 }
 
 exports.update = (store, dispatch) => {
   const state = store.getState()
   const isSidebarChanged = sidebarChanged(state)
   const isSidebarPageChanged = sidebarPageChanged(state)
-  const isTimelineChanged = timelineChanged(state)
   const isPerfChanged = performanceChanged(state)
 
   // Open/close sidebar and sidebar opener
@@ -86,11 +89,13 @@ exports.update = (store, dispatch) => {
     }
   }
 
-  // Create pages when sidebar opens or page is changed.
   if (state.sidebar && (isSidebarPageChanged || isSidebarChanged)) {
     // Update navbar on page change and page open.
     navbar.updateTab(store, dispatch)
+  }
 
+  // Recreate pages when sidebar is open and state changes.
+  if (state.sidebar) {
     // First, clear content container (cc)
     const cc = document.querySelector('.sidebar-content')
     if (cc.firstChild) {
@@ -106,5 +111,4 @@ exports.update = (store, dispatch) => {
   if (state.sidebar && isPerfPage && isPerfChanged) {
     performance.update(store, dispatch)
   }
-
 }

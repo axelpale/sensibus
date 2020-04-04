@@ -12,7 +12,8 @@ const isRunningChanged = createObserver([
 // Root element
 let root = null
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const local = state.performance
 
   // NOTE the order. Short-circuit OR can block isRunningChanged.
@@ -58,4 +59,8 @@ module.exports = (state, dispatch) => {
   root.querySelector('#perfTableContainer').innerHTML = table
 
   return root
+}
+
+exports.update = (store, dispatch) => {
+  exports.create(store, dispatch)
 }

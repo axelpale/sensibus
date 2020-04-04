@@ -1,6 +1,6 @@
 const template = require('./template.ejs')
 
-module.exports = (store, dispatch) => {
+exports.create = (store, dispatch) => {
   const state = store.getState()
   const root = document.createElement('div')
   const select = state.timeline.select

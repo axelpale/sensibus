@@ -1,7 +1,8 @@
 const collection = require('./collection')
 const predictorSelector = require('./predictorSelector/render')
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const root = document.createElement('div')
   root.classList.add('row')
   const col = document.createElement('div')
@@ -11,7 +12,7 @@ module.exports = (state, dispatch) => {
   heading.innerHTML = 'Predict'
   col.appendChild(heading)
 
-  col.appendChild(predictorSelector(state, dispatch))
+  col.appendChild(predictorSelector.create(store, dispatch))
 
   const renderer = collection.getSelectedPredictor(state).render
   const local = collection.getSelectedModel(state)
