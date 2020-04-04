@@ -8,16 +8,16 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item<%= sidebarPage === 'inspect' ? ' active' : '' %>">
+      <li class="nav-item page-view<%= sidebarPage === 'view' ? ' active' : '' %>">
+        <a class="nav-link" href="#" id="navbarView">View</a>
+      </li>
+      <li class="nav-item page-inspect<%= sidebarPage === 'inspect' ? ' active' : '' %>">
         <a class="nav-link" href="#" id="navbarInspect">Predict</a>
       </li>
-      <li class="nav-item<%= sidebarPage === 'edit' ? ' active' : '' %>">
-        <a class="nav-link" href="#" id="navbarEdit">Edit</a>
-      </li>
-      <li class="nav-item<%= sidebarPage === 'performance' ? ' active' : '' %>">
+      <li class="nav-item page-performance<%= sidebarPage === 'performance' ? ' active' : '' %>">
         <a class="nav-link" href="#" id="navbarPerformance">Performance</a>
       </li>
-      <li class="nav-item<%= sidebarPage === 'storage' ? ' active' : '' %>">
+      <li class="nav-item page-storage<%= sidebarPage === 'storage' ? ' active' : '' %>">
         <a class="nav-link" href="#" id="navbarStorage">Storage</a>
       </li>
     </ul>

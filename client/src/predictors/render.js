@@ -30,8 +30,9 @@ const createTrainerMessageHandler = (dispatch) => {
   }
 }
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
   // Predictors' subscriber.
+  const state = store.getState()
 
   if (modelWillChange(state)) {
     // Something about model should change, thus begin training.
@@ -54,7 +55,7 @@ module.exports = (state, dispatch) => {
   heading.innerHTML = 'Predict'
   col.appendChild(heading)
 
-  col.appendChild(predictorSelector(state, dispatch))
+  col.appendChild(predictorSelector.create(store, dispatch))
 
   const renderer = collection.getSelectedPredictor(state).render
   const local = collection.getSelectedModel(state)
