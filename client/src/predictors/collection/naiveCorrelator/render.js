@@ -3,58 +3,63 @@ const renderControls = require('./controls/render')
 const renderWay = require('../../../lib/renderWay')
 const channelTitle = require('../../../lib/channelTitle')
 
-module.exports = (state, model, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
-  // Controls
-  root.appendChild(renderControls(state, model, dispatch))
+  const s = state.predictors
+  if (s.trained && s.trainedPredictor === 'naiveCorrelator') {
+    const model = s.trainedModel
 
-  // Inspection
+    // Controls
+    root.appendChild(renderControls(state, model, dispatch))
 
-  const sumEl = document.createElement('div')
-  model.fields.forEach((field, c) => {
-    const sumField = field.sumField
-    const selected = way.set(way.fill(sumField, 0), c, -model.fieldOffset, 1)
+    // Inspection
 
-    sumEl.appendChild(renderWay(sumField, {
-      reversed: true,
-      heading: 'Sum by ' + channelTitle(state, c),
-      caption: '',
-      normalize: true,
-      selected: selected
-    }))
-  })
-  root.appendChild(sumEl)
+    const sumEl = document.createElement('div')
+    model.fields.forEach((field, c) => {
+      const sumField = field.sumField
+      const selected = way.set(way.fill(sumField, 0), c, -model.fieldOffset, 1)
 
-  const sumAbsEl = document.createElement('div')
-  model.fields.forEach((field, c) => {
-    const sumAbsField = field.sumAbsField
-    const selected = way.set(way.fill(sumAbsField, 0), c, -model.fieldOffset, 1)
+      sumEl.appendChild(renderWay(sumField, {
+        reversed: true,
+        heading: 'Sum by ' + channelTitle(state, c),
+        caption: '',
+        normalize: true,
+        selected: selected
+      }))
+    })
+    root.appendChild(sumEl)
 
-    sumAbsEl.appendChild(renderWay(sumAbsField, {
-      reversed: true,
-      heading: 'SumAbs by ' + channelTitle(state, c),
-      caption: '',
-      normalize: true,
-      selected: selected
-    }))
-  })
-  root.appendChild(sumAbsEl)
+    const sumAbsEl = document.createElement('div')
+    model.fields.forEach((field, c) => {
+      const sumAbsField = field.sumAbsField
+      const selected = way.set(way.fill(sumAbsField, 0), c, -model.fieldOffset, 1)
 
-  const valueEl = document.createElement('div')
-  model.fields.forEach((field, c) => {
-    const valueField = field.valueField
-    const selected = way.set(way.fill(valueField, 0), c, -model.fieldOffset, 1)
+      sumAbsEl.appendChild(renderWay(sumAbsField, {
+        reversed: true,
+        heading: 'SumAbs by ' + channelTitle(state, c),
+        caption: '',
+        normalize: true,
+        selected: selected
+      }))
+    })
+    root.appendChild(sumAbsEl)
 
-    valueEl.appendChild(renderWay(valueField, {
-      reversed: true,
-      heading: 'Value by ' + channelTitle(state, c),
-      caption: '',
-      normalize: true,
-      selected: selected
-    }))
-  })
-  root.appendChild(valueEl)
+    const valueEl = document.createElement('div')
+    model.fields.forEach((field, c) => {
+      const valueField = field.valueField
+      const selected = way.set(way.fill(valueField, 0), c, -model.fieldOffset, 1)
+
+      valueEl.appendChild(renderWay(valueField, {
+        reversed: true,
+        heading: 'Value by ' + channelTitle(state, c),
+        caption: '',
+        normalize: true,
+        selected: selected
+      }))
+    })
+    root.appendChild(valueEl)
+  }
 
   return root
 }

@@ -1,7 +1,7 @@
 const renderControls = require('./controls/render')
 const inspector = require('./inspector/render')
 
-module.exports = (state, local, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   root.innerHTML = '<h3>How it works</h3>' +
@@ -14,11 +14,15 @@ module.exports = (state, local, dispatch) => {
     'probability in which the value occurs in the data. ' +
     'These are the basics of the naïve Bayes classification.</p>'
 
-  // Selection related data
-  root.appendChild(inspector(state, local, dispatch))
+  const s = state.predictors
+  if (s.trained && s.trainedPredictor === 'filteredNaiveBayes') {
+    const model = s.trainedModel
+    // Selection related data
+    root.appendChild(inspector(state, model, dispatch))
 
-  // Controls
-  root.appendChild(renderControls(state, local, dispatch))
+    // Controls
+    root.appendChild(renderControls(state, model, dispatch))
+  }
 
   return root
 }

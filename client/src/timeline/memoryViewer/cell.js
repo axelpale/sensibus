@@ -42,7 +42,11 @@ module.exports = (store, dispatch, c, t) => {
   let prob
   if (q === 0) {
     cell.classList.add('cell-unknown')
-    prob = (state.predictors.prediction[c][t] + 1) / 2
+    if (state.predictors.prediction) {
+      prob = (state.predictors.prediction[c][t] + 1) / 2
+    } else {
+      prob = 0
+    }
     // Percent-style numbers
     const probHtml = Math.floor(100 * prob)
     text.innerHTML = '' + probHtml + '<sub>%</sub>'

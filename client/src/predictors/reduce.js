@@ -17,7 +17,6 @@ const delegate = (state, ev) => {
     // Copy probabilties from the local state to ease read for timeline render.
     const update = {}
     update[selection] = nextPredictorState
-    update.prediction = nextPredictorState.prediction
 
     return Object.assign({}, state, {
       predictors: Object.assign({}, state.predictors, update)
@@ -34,7 +33,11 @@ module.exports = (state, ev) => {
     state = Object.assign({}, state, {
       predictors: {
         selection: collection.DEFAULT_PREDICTOR,
-        prediction: way.fill(state.timeline.memory, 0)
+        prediction: way.fill(state.timeline.memory, 0),
+        progress: 0,
+        trained: false,
+        trainedPredictor: collection.DEFAULT_PREDICTOR,
+        trainedModel: {}
       }
     })
   }
@@ -46,8 +49,31 @@ module.exports = (state, ev) => {
   state = predictorSelector(state, ev)
   state = delegate(state, ev) // TODO make lighter
 
-  // Predict if something changes.
   switch (ev.type) {
+    case 'TRAIN_PROGRESS': {
+      return Object.assign({}, state, {
+        predictors: Object.assign({}, state.predictors, {
+          progress: ev.progress
+        })
+      })
+    }
+
+    case 'TRAIN_FINISH': {
+      return Object.assign({}, state, {
+        predictors: Object.assign({}, state.predictors, {
+          progress: 1.0,
+          trained: true,
+          trainedPredictor: ev.predictorId,
+          trainedModel: ev.model
+        })
+      })
+    }
+
+    case 'INFER_FINISH': {
+      // TODO
+      return state
+    }
+
     case '__INIT__':
     case 'EDIT_CELL':
     case 'CREATE_CHANNEL':
@@ -59,25 +85,22 @@ module.exports = (state, ev) => {
     case 'IMPORT_STATE':
     case 'RESET_STATE':
     case 'SELECT_PREDICTOR': {
-      // Get predictor
-      const predictorId = collection.getPredictorId(state)
-      const predictor = collection.getPredictor(predictorId)
-      const predictorModel = state.predictors[predictorId]
-      const memory = state.timeline.memory
-
-      // Full training and infer all. TODO make lighter
-      const trainedModel = predictor.train(predictorModel, memory)
-      const inferModel = predictor.inferAll(trainedModel, memory)
-      const postInferModel = Object.assign({}, trainedModel, inferModel)
-
-      // Update predictor model and prediction memory.
-      const update = {}
-      update[predictorId] = postInferModel
-      update.prediction = postInferModel.prediction
-
-      return Object.assign({}, state, {
-        predictors: Object.assign({}, state.predictors, update)
-      })
+      if (state.predictors.trained) {
+        // Get the trained predictor.
+        const predictorId = state.predictors.trainedPredictor
+        const predictor = collection.getPredictor(predictorId)
+        const model = state.predictors.trainedModel
+        const memory = state.timeline.memory
+        // Infer.
+        const inference = predictor.inferAll(model, memory)
+        // Store prediction.
+        return Object.assign({}, state, {
+          predictors: Object.assign({}, state.predictors, {
+            prediction: inference.prediction
+          })
+        })
+      }
+      return state
     }
 
     default:

@@ -1,4 +1,4 @@
-module.exports = (state, model, dispatch) => {
+module.exports = (state, dispatch) => {
   const root = document.createElement('div')
 
   root.innerHTML = '<h3>How it works</h3>' +

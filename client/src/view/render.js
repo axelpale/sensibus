@@ -17,7 +17,13 @@ exports.create = (store, dispatch) => {
   const frameTitle = state.timeline.frames[t].title
 
   const givenValue = state.timeline.memory[c][t]
-  const predictedValue = state.predictors.prediction[c][t].toFixed(2)
+  let predictedValue
+
+  if (state.predictors.prediction) {
+    predictedValue = state.predictors.prediction[c][t].toFixed(2)
+  } else {
+    predictedValue = 0
+  }
 
   root.innerHTML = template({
     channelTitle: channelTitle,

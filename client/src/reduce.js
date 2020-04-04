@@ -13,7 +13,7 @@ module.exports = (state, ev) => {
   }
 
   // Root reducer debug tools:
-  // console.log(state, ev)
+  console.log(state, ev)
 
   state = storage(state, ev)
   state = sidebar(state, ev)
