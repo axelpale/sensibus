@@ -3,7 +3,7 @@ module.exports = (state, ev) => {
     case 'SELECT_PREDICTOR': {
       return Object.assign({}, state, {
         predictors: Object.assign({}, state.predictors, {
-          selection: ev.key
+          currentId: ev.key
         })
       })
     }

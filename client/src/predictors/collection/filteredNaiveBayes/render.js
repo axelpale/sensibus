@@ -17,7 +17,7 @@ module.exports = (state, dispatch) => {
   const s = state.predictors
   if (s.trained && s.trainedPredictor === 'filteredNaiveBayes') {
     const model = s.trainedModel
-    // Selection related data
+    // Cell selection related data
     root.appendChild(inspector(state, model, dispatch))
 
     // Controls

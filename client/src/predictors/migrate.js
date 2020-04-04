@@ -7,10 +7,10 @@ module.exports = (local) => {
   const nextLocal = {}
 
   // If predictor name is deprecated
-  if (local.selection && collection.has(local.selection)) {
-    nextLocal.selection = local.selection
+  if (local.currentId && collection.has(local.currentId)) {
+    nextLocal.currentId = local.currentId
   } else {
-    nextLocal.selection = collection.DEFAULT_PREDICTOR
+    nextLocal.currentId = collection.DEFAULT_PREDICTOR
   }
 
   // If predictor states are deprectated

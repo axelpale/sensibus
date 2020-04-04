@@ -7,13 +7,13 @@ const trainer = new Trainer()
 
 const modelWillChange = createObserver([
   state => state.timeline.memory,
-  state => state.predictors.selection
+  state => state.predictors.currentId
   // TODO detect model parameter change. Must group models in state to detect.
 ])
 
 const predictionWillChange = createObserver([
   state => state.timeline.memory,
-  state => state.predictors.selection,
+  state => state.predictors.currentId,
   state => state.predictors.trainedModel
 ])
 

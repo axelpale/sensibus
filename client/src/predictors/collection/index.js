@@ -11,7 +11,7 @@ exports.predictors = {
 
 exports.getPredictorId = (state) => {
   // Selected predictor id
-  const name = state.predictors.selection
+  const name = state.predictors.currentId
   if (name in exports.predictors) {
     return name
   }
@@ -31,12 +31,12 @@ exports.getPredictor = (predictorId) => {
 }
 
 exports.getSelectedPredictor = (state) => {
-  const name = state.predictors.selection
+  const name = state.predictors.currentId
   return exports.getPredictor(name)
 }
 
 exports.getSelectedModel = (state) => {
-  const name = state.predictors.selection
+  const name = state.predictors.currentId
   if (name in exports.predictors) {
     return state.predictors[name]
   } // else

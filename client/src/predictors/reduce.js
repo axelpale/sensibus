@@ -7,16 +7,16 @@ const delegate = (state, ev) => {
   // Create a state branch for the selector if one does not yet exist.
   //
   const memory = state.timeline.memory
-  const selection = state.predictors.selection
+  const currentId = state.predictors.currentId
 
-  const reducer = collection.getPredictor(selection).reduce
-  const oldPredictorState = state.predictors[selection] // can be undefined
+  const reducer = collection.getPredictor(currentId).reduce
+  const oldPredictorState = state.predictors[currentId] // can be undefined
   const nextPredictorState = reducer(oldPredictorState, memory, ev)
 
   if (nextPredictorState !== oldPredictorState) {
     // Copy probabilties from the local state to ease read for timeline render.
     const update = {}
-    update[selection] = nextPredictorState
+    update[currentId] = nextPredictorState
 
     return Object.assign({}, state, {
       predictors: Object.assign({}, state.predictors, update)
@@ -32,7 +32,7 @@ module.exports = (state, ev) => {
   if (!state.predictors) {
     state = Object.assign({}, state, {
       predictors: {
-        selection: collection.DEFAULT_PREDICTOR,
+        currentId: collection.DEFAULT_PREDICTOR,
         prediction: way.fill(state.timeline.memory, 0),
         progress: 0,
         trained: false,
