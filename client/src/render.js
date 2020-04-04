@@ -1,6 +1,7 @@
 require('./style.css')
 const sidebar = require('./sidebar/render')
 const timeline = require('./timeline/render')
+const predictors = require('./predictors/render')
 const createObserver = require('uilib').createObserver
 
 // TODO move under timeline/render
@@ -33,6 +34,8 @@ exports.update = (store, dispatch) => {
   if (timelineChanged(state)) { // TODO move condition in timeline
     timeline.update(store, dispatch)
   }
+
+  predictors.update(store, dispatch)
 
   sidebar.update(store, dispatch)
 }
