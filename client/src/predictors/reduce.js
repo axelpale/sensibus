@@ -69,48 +69,27 @@ module.exports = (state, ev) => {
       })
     }
 
-    case 'INFER_FINISH': {
-      // TODO
-      return state
-    }
-
-    case 'INFER_ONE': {
+    case 'INFER_CELLS': {
       if (state.predictors.trained) {
         // Extract the event
-        const c = ev.cell.channel
-        const t = ev.cell.time
-        // Get the trained predictor.
+        const cells = ev.cells
+        // Get the trained predictor
         const predictorId = state.predictors.trainedPredictor
         const predictor = collection.getPredictor(predictorId)
         const memory = state.timeline.memory
         const model = state.predictors.trainedModel
-        const virtual = state.predictors.prediction
-        // Infer.
-        const inference = predictor.infer(model, ev.cell, memory, virtual)
-        // Update prediction.
-        const nextVirtual = way.set(virtual, c, t, inference.prediction)
-        return Object.assign({}, state, {
-          predictors: Object.assign({}, state.predictors, {
-            prediction: nextVirtual
-          })
+        // Get the virtual memory. Will be updated in-place during prediction.
+        const virtual = way.clone(state.predictors.prediction)
+        // Predict cells and update virtual memory along the way.
+        cells.forEach(cell => {
+          // Infer.
+          const inference = predictor.infer(model, cell, memory, virtual)
+          // Update virtual for the next round.
+          virtual[cell.channel][cell.time] = inference.prediction
         })
-      }
-      return state
-    }
-
-    case 'INFER_ALL': {
-      if (state.predictors.trained) {
-        // Get the trained predictor.
-        const predictorId = state.predictors.trainedPredictor
-        const predictor = collection.getPredictor(predictorId)
-        const model = state.predictors.trainedModel
-        const memory = state.timeline.memory
-        // Infer.
-        const inference = predictor.inferAll(model, memory)
-        // Store prediction.
         return Object.assign({}, state, {
           predictors: Object.assign({}, state.predictors, {
-            prediction: inference.prediction
+            prediction: virtual
           })
         })
       }

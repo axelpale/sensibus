@@ -33,7 +33,6 @@
   },
   "dependencies": {
     "acorn": "^7.1.1",
-    "async": "^3.2.0",
     "deep-equal": "^1.0.1",
     "kind-of": "^6.0.3",
     "lodash": "^4.17.15",
