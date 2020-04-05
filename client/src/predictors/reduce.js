@@ -79,7 +79,7 @@ module.exports = (state, ev) => {
         const memory = state.timeline.memory
         const model = state.predictors.trainedModel
         // Get the virtual memory. Will be updated in-place during prediction.
-        const virtual = way.clone(state.predictors.prediction)
+        const virtual = way.fill(memory, 0)
         // Predict cells and update virtual memory along the way.
         cells.forEach(cell => {
           // Infer.
