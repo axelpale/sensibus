@@ -14,6 +14,7 @@ const modelWillChange = createObserver([
 
 const predictionWillChange = createObserver([
   state => state.timeline.memory,
+  state => state.timeline.select,
   state => state.predictors.currentId,
   state => state.predictors.trainedModel
 ])
