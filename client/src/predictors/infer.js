@@ -3,10 +3,49 @@ const eachSeries = require('async/eachSeries')
 
 const MAX_TIME_DISTANCE = 7
 
+const runner = {
+  // The prediction is executed cell by cell.
+  // The prediction is wrapped in a runner for easy cancelling.
+  stop: () => {},
+  start: function (cells, dispatch) {
+    // Stop previous run.
+    runner.stop()
+    let stopped = false
+    console.log('start run')
+
+    // Begin new run.
+    // Predict cells one by one
+    eachSeries(cells, (cell, then) => {
+      dispatch({
+        type: 'INFER_ONE',
+        cell: cell
+      })
+
+      if (!stopped) {
+        setTimeout(then, 10)
+      } else {
+        then('stop') // Hacky. Provide error string to stop execution.
+      }
+    }, (err) => {
+      if (err) {
+        if (err === 'stop') {
+          return
+        }
+        return console.error(err)
+      }
+      console.log('run finished')
+    })
+
+    runner.stop = function () {
+      console.log('run stopped')
+      stopped = true
+    }
+  }
+}
+
 module.exports = (store, dispatch) => {
   // A breadth-first propagation, originating from the selected cell.
   // Two-pass: from center to edge and from edge back to center.
-
   const state = store.getState()
   const memory = state.timeline.memory
   const select = state.timeline.select
@@ -43,17 +82,5 @@ module.exports = (store, dispatch) => {
   })
 
   // Predict one by one
-  eachSeries(cellsToPredict, (cell, then) => {
-    setTimeout(() => {
-      dispatch({
-        type: 'INFER_ONE',
-        cell: cell
-      })
-      then()
-    }, 10)
-  }, (err) => {
-    if (err) {
-      return console.error(err)
-    }
-  })
+  runner.start(cellsToPredict, dispatch)
 }
