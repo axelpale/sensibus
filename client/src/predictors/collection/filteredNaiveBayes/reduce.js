@@ -1,7 +1,3 @@
-const train = require('./train')
-const inferAll = require('./inferAll')
-const way = require('senseway')
-
 module.exports = (model, memory, ev) => {
   // Default
   if (!model) {
@@ -9,7 +5,6 @@ module.exports = (model, memory, ev) => {
       fieldLength: 5,
       fields: [],
       priors: [],
-      prediction: way.fill(memory, 0),
       inspectorChannel: 0,
       trainingInsights: false,
       inferringInsights: false
@@ -18,11 +13,9 @@ module.exports = (model, memory, ev) => {
 
   switch (ev.type) {
     case 'SELECT_FIELD_LENGTH': {
-      model = Object.assign({}, model, {
+      return Object.assign({}, model, {
         fieldLength: ev.length
       })
-      model = Object.assign({}, model, train(model, memory))
-      return Object.assign({}, model, inferAll(model, memory))
     }
 
     case 'SELECT_INSPECTOR_CHANNEL': {

@@ -1,4 +1,5 @@
-// A simplifying factory for those predictors that train synchronously.
+// A simplifying factory for those predictors that train synchronously i.e.
+// are busy until finished. Advanced predictors train in async.
 
 module.exports = (train) => {
   return (config, memory, onprogress, onfinish) => {
