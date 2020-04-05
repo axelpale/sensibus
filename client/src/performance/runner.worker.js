@@ -13,6 +13,9 @@ onmessage = (ev) => {
   const train = trains[predictorId]
   const config = ev.data.predictorConfig
 
+  // Empty virtual memory for all
+  const virtual = way.fill(mem, 0)
+
   const knownCells = way.toArray(mem).filter(elem => {
     return elem.value !== 0
   })
@@ -38,7 +41,7 @@ onmessage = (ev) => {
     // Make cell unknown to prevent predictor just using it to get max score.
     const hiddenTarget = Object.assign({}, trainSet.target, { value: 0 })
     const model = train(config, trainSet.memory)
-    const results = infer(model, hiddenTarget, trainSet.memory)
+    const results = infer(model, hiddenTarget, trainSet.memory, virtual)
 
     // Scoring Guidelines.
     // Initially we did the scoring with trits and multiplication:
