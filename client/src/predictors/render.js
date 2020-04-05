@@ -1,4 +1,5 @@
 const collection = require('./collection')
+const infer = require('./infer')
 const predictorSelector = require('./predictorSelector/render')
 const createObserver = require('uilib').createObserver
 
@@ -78,11 +79,9 @@ exports.update = (store, dispatch) => {
   }
 
   if (predictionWillCh) {
-    // Make prediction
+    // Begin inference
     setTimeout(() => {
-      dispatch({
-        type: 'INFER_ALL'
-      })
+      infer(store, dispatch)
     }, 0)
   }
 }

@@ -74,6 +74,30 @@ module.exports = (state, ev) => {
       return state
     }
 
+    case 'INFER_ONE': {
+      if (state.predictors.trained) {
+        // Extract the event
+        const c = ev.cell.channel
+        const t = ev.cell.time
+        // Get the trained predictor.
+        const predictorId = state.predictors.trainedPredictor
+        const predictor = collection.getPredictor(predictorId)
+        const memory = state.timeline.memory
+        const model = state.predictors.trainedModel
+        const virtual = state.predictors.prediction
+        // Infer.
+        const inference = predictor.infer(model, ev.cell, memory, virtual)
+        // Update prediction.
+        const nextVirtual = way.set(virtual, c, t, inference.prediction)
+        return Object.assign({}, state, {
+          predictors: Object.assign({}, state.predictors, {
+            prediction: nextVirtual
+          })
+        })
+      }
+      return state
+    }
+
     case 'INFER_ALL': {
       if (state.predictors.trained) {
         // Get the trained predictor.
