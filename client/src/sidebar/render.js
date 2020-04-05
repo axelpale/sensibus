@@ -19,7 +19,7 @@ const performanceChanged = createObserver([
 
 const openSidebar = (store, dispatch) => {
   const sidebar = document.querySelector('.sidebar')
-  sidebar.classList.remove('active')
+  sidebar.classList.remove('d-none')
 }
 
 const closeSidebar = (store, dispatch) => {
