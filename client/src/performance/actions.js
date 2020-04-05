@@ -1,5 +1,4 @@
 const Runner = require('./runner.worker.js')
-const predictorCollection = require('../predictors/collection')
 
 let perfRunner
 
@@ -36,10 +35,11 @@ exports.run = (state, dispatch) => {
   }
 
   // Begin the run
+  const currentId = state.predictors.currentId
   perfRunner.postMessage({
     memory: state.timeline.memory,
-    predictorId: predictorCollection.getPredictorId(state),
-    predictorConfig: predictorCollection.getSelectedModel(state)
+    predictorId: currentId,
+    predictorConfig: state.predictors[currentId]
   })
 }
 
