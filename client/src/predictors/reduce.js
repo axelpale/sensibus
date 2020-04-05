@@ -59,12 +59,17 @@ module.exports = (state, ev) => {
     }
 
     case 'TRAIN_FINISH': {
+      // Training finished.
+      // First, combine config and trained model.
+      const config = state.predictors[ev.predictorId]
+      const model = Object.assign({}, config, ev.model)
+      // Mark training as finished and update the selected model.
       return Object.assign({}, state, {
         predictors: Object.assign({}, state.predictors, {
           progress: 1.0,
           trained: true,
           trainedPredictor: ev.predictorId,
-          trainedModel: ev.model
+          trainedModel: model
         })
       })
     }
