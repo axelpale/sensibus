@@ -40,11 +40,9 @@ module.exports = (store, dispatch) => {
     return a.dist - b.dist
   })
 
-  // Do two passes
-  const cells = cellsToPredict.concat(cellsToPredict)
-
   dispatch({
     type: 'INFER_CELLS',
-    cells: cells
+    cells: cellsToPredict,
+    passes: 2
   })
 }

@@ -83,15 +83,25 @@ module.exports = (state, ev) => {
         const predictor = collection.getPredictor(predictorId)
         const memory = state.timeline.memory
         const model = state.predictors.trainedModel
-        // Get the virtual memory. Will be updated in-place during prediction.
-        const virtual = way.fill(memory, 0)
-        // Predict cells and update virtual memory along the way.
-        cells.forEach(cell => {
-          // Infer.
-          const inference = predictor.infer(model, cell, memory, virtual)
-          // Update virtual for the next round.
-          virtual[cell.channel][cell.time] = inference.prediction
-        })
+        // Get the virtual memory. Will be update in-place during prediction.
+        // It is important to make a pass without altering virtual memory,
+        // because then cells are more equal and thus the prediction becomes
+        // more realistic.
+        let virtual = way.fill(memory, 0)
+        let virtualNextPass
+        for (let i = 0; i < ev.passes; i += 1) {
+          // Avoid virtuals becoming same object.
+          virtualNextPass = way.clone(virtual)
+          // Predict cells and update virtual memory along the way.
+          cells.forEach(cell => {
+            // Infer.
+            const inference = predictor.infer(model, cell, memory, virtual)
+            // Update virtual for the next round.
+            virtualNextPass[cell.channel][cell.time] = inference.prediction
+          })
+          // Save the prediction and use it on the next round.
+          virtual = virtualNextPass
+        }
         return Object.assign({}, state, {
           predictors: Object.assign({}, state.predictors, {
             prediction: virtual
