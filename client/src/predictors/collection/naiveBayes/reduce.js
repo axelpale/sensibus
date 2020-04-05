@@ -4,8 +4,8 @@ module.exports = (model, memory, ev) => {
   // Default
   if (!model) {
     model = {
-      fieldLength: 5,
-      fieldOffset: -3,
+      fieldLength: 9,
+      fieldOffset: -5,
       fields: [],
       priors: []
     }
