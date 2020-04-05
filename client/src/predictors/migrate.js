@@ -1,26 +1,33 @@
 const collection = require('./collection')
+const way = require('senseway')
 
-module.exports = (local) => {
-  if (!local) {
-    local = {}
+module.exports = (state) => {
+  let predictors = state.predictors
+
+  if (!predictors) {
+    predictors = {}
   }
-  const nextLocal = {}
 
   // If predictor name is deprecated
-  if (local.currentId && collection.has(local.currentId)) {
-    nextLocal.currentId = local.currentId
+  let currentId
+  if (predictors.currentId && collection.has(predictors.currentId)) {
+    currentId = predictors.currentId
   } else {
-    nextLocal.currentId = collection.DEFAULT_PREDICTOR
+    currentId = collection.DEFAULT_PREDICTOR
   }
-
-  // If predictor states are deprectated
-  collection.getPredictorIds().forEach(prid => {
-    // Hibernate state of those predictors that have set a state.
-    const model = local[prid]
-    if (model) {
-      nextLocal[prid] = model
-    }
+  predictors = Object.assign({}, predictors, {
+    currentId: currentId
   })
 
-  return nextLocal
+  // If virtual memory is missing
+  if (!predictors.prediction) {
+    const memory = state.timeline.memory
+    predictors = Object.assign({}, predictors, {
+      prediction: way.fill(memory, 0)
+    })
+  }
+
+  return Object.assign({}, state, {
+    predictors: predictors
+  })
 }
