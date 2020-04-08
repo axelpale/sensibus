@@ -1,33 +1,31 @@
-const path = require('path');
+const path = require('path')
 
 module.exports = {
-  entry: './client/src/index.js',
-  output: {
-    path: path.resolve(__dirname, 'dist'),
-    filename: 'bundle.js'
-  },
+  entry: './client/index.js',
   module: {
     rules: [
       {
-        test: /\.ejs$/,
-        use: 'ejs-loader'
+        test: /\.(js|jsx)$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader'
+        }
+      },
+      {
+        test: /\.html$/,
+        use: [
+          {
+            loader: 'html-loader'
+          }
+        ]
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader?url=false'],
-      },
-      {
-        test: /\.worker\.js$/,
-        use: {
-          loader: 'worker-loader',
-          options: {
-            name: '[name].js',
-            publicPath: 'dist/' // otherwise browser tries to download at root
-          }
-        }
-      }
-    ],
+        use: ['style-loader', 'css-loader'],
+      }]
   },
-  mode: 'production', // in {development, production}
-  devtool: 'source-map',
+  output: {
+    path: path.resolve(__dirname, 'dist')
+  },
+  mode: 'development'
 }
