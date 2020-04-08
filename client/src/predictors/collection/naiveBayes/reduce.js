@@ -14,12 +14,8 @@ module.exports = (model, memory, ev) => {
   switch (ev.type) {
     case 'SELECT_FIELD_LENGTH':
       return Object.assign({}, model, {
-        fieldLength: ev.length
-      })
-
-    case 'SELECT_FIELD_OFFSET':
-      return Object.assign({}, model, {
-        fieldOffset: ev.offset
+        fieldLength: ev.length,
+        fieldOffset: -Math.ceil(ev.length / 2)
       })
 
     default:
