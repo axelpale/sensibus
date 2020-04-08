@@ -116,7 +116,3 @@
 .frame-title-selected {
   background: rgba(0,0,0,0.10);
 }
-
-.frame-title-selected.title-channel-selected {
-  background: rgba(0,0,0,0.26);
-}
