@@ -11,17 +11,4 @@
       <% }) %>
     </select>
   </div>
-
-  <div class="form-group">
-    <label for="field-offset">Field offset</label>
-    <select class="form-control" id="field-offset">
-      <% fieldOffsets.forEach(off => { %>
-        <% if (off === currentFieldOffset) { %>
-          <option value="<%= off %>" selected="selected"><%= off %></option>
-        <% } else { %>
-          <option value="<%= off %>"><%= off %></option>
-        <% } %>
-      <% }) %>
-    </select>
-  </div>
 </form>

@@ -19,7 +19,7 @@ exports.create = (store, dispatch) => {
     const opt = document.createElement('option')
     opt.value = key
     opt.innerHTML = key
-    if (state.predictors.selection === key) {
+    if (state.predictors.currentId === key) {
       opt.selected = 'selected'
     }
     input.appendChild(opt)

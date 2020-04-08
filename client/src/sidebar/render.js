@@ -19,7 +19,7 @@ const performanceChanged = createObserver([
 
 const openSidebar = (store, dispatch) => {
   const sidebar = document.querySelector('.sidebar')
-  sidebar.classList.remove('active')
+  sidebar.classList.remove('d-none')
 }
 
 const closeSidebar = (store, dispatch) => {
@@ -94,7 +94,7 @@ exports.update = (store, dispatch) => {
     navbar.updateTab(store, dispatch)
   }
 
-  // Recreate pages when sidebar is open and state changes.
+  // Recreate pages when sidebar is open and the state changes.
   if (state.sidebar) {
     // First, clear content container (cc)
     const cc = document.querySelector('.sidebar-content')

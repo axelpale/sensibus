@@ -1,6 +1,6 @@
 const lib = require('./lib')
-const prettyRatios = require('./prettyRatios')
-const color = lib.color
+// const prettyRatios = require('./prettyRatios')
+const color = lib.colorSunset
 const probToCircleRadius = lib.probToCircleRadius
 
 module.exports = (store, dispatch, c, t) => {
@@ -42,11 +42,17 @@ module.exports = (store, dispatch, c, t) => {
   let prob
   if (q === 0) {
     cell.classList.add('cell-unknown')
-    prob = (state.predictors.prediction[c][t] + 1) / 2
-    text.innerHTML = '' + prettyRatios.ratio7(prob)
+    if (state.predictors.prediction) {
+      prob = (state.predictors.prediction[c][t] + 1) / 2
+    } else {
+      prob = 0
+    }
+    // Percent-style numbers
+    const probHtml = Math.floor(100 * prob)
+    text.innerHTML = '' + probHtml + '<sub>%</sub>'
     // Alternatively:
-    // const probHtml = Math.floor(100 * prob)
-    // text.innerHTML = '' + probHtml
+    // Pretty ratios
+    // text.innerHTML = '' + prettyRatios.ratio7(prob)
     icon.style.opacity = 0.5
   } else {
     cell.classList.add('cell-known')

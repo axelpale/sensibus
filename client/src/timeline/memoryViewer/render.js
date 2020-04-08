@@ -11,12 +11,17 @@ const removeElsByClass = cl => getElementsByClass(cl).forEach(removeEl)
 
 exports.create = (store, dispatch) => {
   const timeline = store.getState().timeline
+  const select = timeline.select
   const root = document.createElement('div')
 
   const LEN = way.len(timeline.memory)
   const HIDE_BEFORE = timeline.hideBefore
 
   for (let t = LEN - 1; t >= HIDE_BEFORE; t -= 1) {
+    // Add frame editor before the frame if selected.
+    if (select && t === select.frame && select.channel === -1) {
+      root.appendChild(frameEditor(store, dispatch, t))
+    }
     root.appendChild(renderRow(store, dispatch, t))
   }
 

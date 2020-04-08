@@ -45,7 +45,7 @@ exports.create = (store, dispatch) => {
   root.querySelector('#perfProgressContainer').innerHTML = progress
 
   const table = tableTemplate({
-    predictorId: state.predictors.selection,
+    predictorId: state.predictors.currentId,
     elapsedSeconds: local.elapsedSeconds,
     progress: local.progress,
     progressMax: local.progressMax,

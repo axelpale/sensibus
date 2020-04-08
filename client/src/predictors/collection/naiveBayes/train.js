@@ -1,6 +1,7 @@
 const way = require('senseway')
+const syncTrain = require('../syncTrain')
 
-module.exports = (config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // How the field is positioned on the conditioned element?
   // Offset of 0 means that the element is on the oldest row
   // and that the field is towards future.
@@ -91,4 +92,4 @@ module.exports = (config, memory) => {
       return 1 - 1 / Math.pow(1 + m, 1 / Math.PI) // experimental
     }).map(w => w[0])
   }
-}
+})
