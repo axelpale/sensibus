@@ -1,3 +1,6 @@
+# Notes about deployments
+.deploys
+
 package-lock.json
 /client/dist/
 /dist/
