@@ -111,6 +111,18 @@ module.exports = (state, ev) => {
       return state
     }
 
+    case 'CREATE_CHANNEL':
+    case 'REMOVE_CHANNEL':
+    case 'MOVE_CHANNEL': {
+      // Trained model is not valid anymore.
+      return Object.assign({}, state, {
+        predictors: Object.assign({}, state.predictors, {
+          trained: false,
+          progress: 0
+        })
+      })
+    }
+
     default:
       return state
   }

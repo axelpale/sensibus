@@ -79,8 +79,8 @@ exports.update = (store, dispatch) => {
     })
   }
 
-  if (predictionWillCh) {
-    // Begin inference
+  if (predictionWillCh && state.predictors.trained) {
+    // Model trained. Begin inference.
     setTimeout(() => {
       infer(store, dispatch)
     }, 0)
