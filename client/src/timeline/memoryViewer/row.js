@@ -6,11 +6,6 @@ module.exports = (store, dispatch, t) => {
   const state = store.getState()
   const W = way.width(state.timeline.memory)
 
-  // // Frame editor
-  // if (select && t === select.frame) {
-  //   root.appendChild(frameEditor(store, dispatch, t))
-  // }
-
   // Cells
   const row = document.createElement('div')
   row.classList.add('timeline-row')
