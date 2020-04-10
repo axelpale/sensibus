@@ -4,13 +4,24 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import LandingPage from './components/LandingPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
-import TimelinePage from './components/TimelinePage.jsx'
+import CreateTimeline from './components/CreateTimeline.jsx'
+import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 const App = () => {
   return (<div>
-            <LandingPage />
-            <NotFoundPage />
-            <TimelinePage />
+            <Router>
+              <Switch>
+                <Route path='/t/:id'>
+                  <CreateTimeline />
+                </Route>
+                <Route exact path='/'>
+                  <LandingPage />
+                </Route>
+                <Route>
+                  <NotFoundPage />
+                </Route>
+              </Switch>
+            </Router>
           </div>)
 }
 
