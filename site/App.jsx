@@ -14,11 +14,11 @@ const App = () => {
                 <Route path='/t/:id'>
                   <CreateTimeline />
                 </Route>
-                <Route exact path='/'>
-                  <LandingPage />
+                <Route path='/notfound'>
+                  <NotFoundPage />
                 </Route>
                 <Route>
-                  <NotFoundPage />
+                  <LandingPage />
                 </Route>
               </Switch>
             </Router>
