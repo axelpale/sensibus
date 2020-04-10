@@ -2,7 +2,7 @@ const path = require('path')
 const HtmlWebPackPlugin = require("html-webpack-plugin")
 
 module.exports = {
-  entry: './site/index.js',
+  entry: './index.js',
   module: {
     rules: [
       {
@@ -30,7 +30,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebPackPlugin({
-      template: "./site/index.html",
+      template: "./index.html",
       filename: "index.html"
     })
   ],
