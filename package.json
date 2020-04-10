@@ -18,7 +18,7 @@
     "lintserver": "standard \"server/**/*.js\" && echo OK",
     "start": "node server/index.js",
     "watchstart": "nodemon --watch server --ext js,json --exec \"npm run lintserver && npm start\"",
-    "watchreact": "webpack -d --watch --config client/webpack.config.js"
+    "watchreact": "webpack -d --watch --config site/webpack.config.js"
   },
   "author": {
     "name": "Akseli Palén",
