@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 
 import LandingPage from './components/LandingPage.jsx'
 import NotFoundPage from './components/NotFoundPage.jsx'
-import CreateTimeline from './components/CreateTimeline.jsx'
+import CreateTimelinePage from './components/CreateTimelinePage.jsx'
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom'
 
 const App = () => {
@@ -12,7 +12,7 @@ const App = () => {
             <Router>
               <Switch>
                 <Route path='/t/:id'>
-                  <CreateTimeline />
+                  <CreateTimelinePage />
                 </Route>
                 <Route path='/notfound'>
                   <NotFoundPage />

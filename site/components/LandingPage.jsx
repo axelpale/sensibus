@@ -1,12 +1,13 @@
 import React from 'react'
 import Site from './Site.jsx'
+import CreateTimelineForm from './CreateTimelineForm.jsx'
 
 const LandingPage = () => {
   
   return (<div>
             <h1>Sensibus.io</h1>
             <Site>
-              create timeline
+              <CreateTimelineForm/>
               <br/>
               or see popular timelines
               <br/>
