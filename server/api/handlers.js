@@ -35,3 +35,30 @@ exports.create = (req, res, next) => {
     })
   })
 }
+
+exports.get = (req, res, next) => {
+  if (req.query.sort === 'popular') {
+    return res.json([
+      {
+        'id': 'world-history',
+        'title': 'World History'
+      },
+      {
+        'id': 'stockmarket',
+        'title': 'Stock Market'
+      }
+    ])
+  }
+
+  // Default: sort=recent
+  return res.json([
+    {
+      'id': '123456',
+      'title': 'Untitled'
+    },
+    {
+      'id': 'adjkvie',
+      'title': 'Reinon elämäjutut'
+    }
+  ])
+}
