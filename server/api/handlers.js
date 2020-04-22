@@ -40,12 +40,12 @@ exports.get = (req, res, next) => {
   if (req.query.sort === 'popular') {
     return res.json([
       {
-        'id': 'world-history',
-        'title': 'World History'
+        id: 'world-history',
+        title: 'World History'
       },
       {
-        'id': 'stockmarket',
-        'title': 'Stock Market'
+        id: 'stockmarket',
+        title: 'Stock Market'
       }
     ])
   }
@@ -53,12 +53,12 @@ exports.get = (req, res, next) => {
   // Default: sort=recent
   return res.json([
     {
-      'id': '123456',
-      'title': 'Untitled'
+      id: '123456',
+      title: 'Untitled'
     },
     {
-      'id': 'adjkvie',
-      'title': 'Reinon elämäjutut'
+      id: 'adjkvie',
+      title: 'Reinon elämäjutut'
     }
   ])
 }
