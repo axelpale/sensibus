@@ -4,8 +4,8 @@ import CreateTimelineForm from './CreateTimelineForm.jsx'
 
 const CreateTimeline = () => {
   return (<div>
-            <h1>Not found</h1>
             <Site>
+              <h1>Not found</h1>
               The timeline does not exist.
               <CreateTimelineForm/>
               <a href=''>Create</a>

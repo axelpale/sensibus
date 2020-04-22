@@ -5,8 +5,8 @@ import CreateTimelineForm from './CreateTimelineForm.jsx'
 const LandingPage = () => {
   
   return (<div>
-            <h1>Sensibus.io</h1>
             <Site>
+              <h1>Sensibus.io</h1>
               <CreateTimelineForm/>
               <br/>
               or see popular timelines
