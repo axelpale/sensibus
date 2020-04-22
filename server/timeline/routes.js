@@ -5,6 +5,7 @@ const path = require('path')
 
 const timelineClientPath = path.resolve(__dirname, '../../timeline')
 
+router.post('/', handlers.create)
 router.use('/:timelineId', express.static(timelineClientPath))
 router.get('/:timelineId', handlers.render)
 

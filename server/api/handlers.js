@@ -1,4 +1,4 @@
-const databaseService = require('database-service')
+const dbs = require('database-service')
 
 exports.getOne = (req, res, next) => {
   const timelineId = req.params.timelineId
@@ -6,7 +6,7 @@ exports.getOne = (req, res, next) => {
   // TODO validate timelineId
 
   // Fetch row from database
-  databaseService.getOneTimeline('fooman', (err, timelineStr) => {
+  dbs.getOneTimeline('fooman', (err, timelineStr) => {
     if (err) {
       return next(err)
     }
@@ -24,11 +24,14 @@ exports.getOne = (req, res, next) => {
 }
 
 exports.create = (req, res, next) => {
-  databaseService.setOneTimeline('randomdummytimeline', 'fooman', (err) => {
+  const userId = 'fooman'
+  dbs.createRandomTimeline(userId, (err, timelineId) => {
     if (err) {
       return next(err)
     }
 
-    res.status(200).end()
+    res.json({
+      timelineId: timelineId
+    })
   })
 }
