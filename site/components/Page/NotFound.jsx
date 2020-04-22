@@ -1,8 +1,6 @@
 import React from 'react'
-import Site from './Site.jsx'
+import Site from '../Site.jsx'
 import {Link} from 'react-router-dom'
-
-
 
 const NotFoundPage = () => {
   return (<div>

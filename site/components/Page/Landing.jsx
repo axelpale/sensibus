@@ -1,6 +1,6 @@
 import React from 'react'
-import Site from './Site.jsx'
-import CreateTimelineForm from './CreateTimelineForm.jsx'
+import Site from '../Site.jsx'
+import CreateTimelineForm from '../CreateTimelineForm.jsx'
 
 const LandingPage = () => {
   
