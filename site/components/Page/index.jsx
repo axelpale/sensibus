@@ -4,7 +4,7 @@ import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
 
 
-const Site = ({children}) => {
+const Page = ({children}) => {
   return (<div className='site'>
             <Container>
               <Row>
@@ -14,4 +14,4 @@ const Site = ({children}) => {
           </div>)
 }
 
-export default Site
+export default Page

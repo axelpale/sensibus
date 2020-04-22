@@ -1,11 +1,11 @@
 import React from 'react'
-import Site from '../Site.jsx'
+import Page from './index.jsx'
 
 const TimelinePage = () => {
-  return (<Site>
+  return (<Page>
             <h1>timeline</h1>
             this would redirect to timeline-view
-          </Site>)
+          </Page>)
 }
 
 export default TimelinePage

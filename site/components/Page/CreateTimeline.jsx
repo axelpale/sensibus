@@ -1,16 +1,14 @@
 import React from 'react'
-import Site from '../Site.jsx'
+import Page from './index.jsx'
 import CreateTimelineForm from '../CreateTimelineForm.jsx'
 
 const CreateTimelinePage = () => {
-  return (<div>
-            <Site>
-              <h1>Not found</h1>
-              The timeline does not exist.
-              <CreateTimelineForm/>
-              <a href=''>Create</a>
-            </Site>
-          </div>)
+  return (<Page>
+            <h1>Not found</h1>
+            The timeline does not exist.
+            <CreateTimelineForm/>
+            <a href=''>Create</a>
+          </Page>)
 }
 
 export default CreateTimelinePage
