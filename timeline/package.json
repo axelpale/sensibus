@@ -9,12 +9,11 @@
   },
   "scripts": {
     "build": "webpack",
-    "watchbuild": "nodemon --watch client/src --watch local_modules --watch datasets --ext js,ejs,css,json --ignore version.js --exec \"npm run lint && npm run gv && npm run build\"",
-    "lint": "standard \"client/src/**/*.js\" && echo OK",
-    "lintfix": "standard --fix \"client/src/**/*.js\" && echo OK",
+    "watchbuild": "nodemon --watch src --ext js,ejs,css,json --ignore version.js --exec \"npm run lint && npm run gv && npm run build\"",
+    "lint": "standard \"src/**/*.js\" && echo OK",
+    "lintfix": "standard --fix \"src/**/*.js\" && echo OK",
     "test": "npm run lint",
-    "gv": "genversion client/src/version.js",
-    "start": "node server/index.js"
+    "gv": "genversion src/version.js"
   },
   "author": {
     "name": "Akseli Palén",
@@ -25,7 +24,8 @@
     "bootstrap": "^4.4.1",
     "css-loader": "^3.2.0",
     "ejs-loader": "^0.3.3",
-    "genversion": "^2.2.0",
+    "genversion": "^2.2.1",
+    "nodemon": "^2.0.3",
     "standard": "*",
     "style-loader": "^1.0.0",
     "webpack": "^4.39.3",
