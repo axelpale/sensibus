@@ -51,14 +51,11 @@ exports.get = (req, res, next) => {
   }
 
   // Default: sort=recent
-  return res.json([
-    {
-      id: '123456',
-      title: 'Untitled'
-    },
-    {
-      id: 'adjkvie',
-      title: 'Reinon elämäjutut'
+  const opts = {}
+  dbs.getRecentTimelines(opts, (err, timelineMetas) => {
+    if (err) {
+      return next(err)
     }
-  ])
+    return res.json(timelineMetas)
+  })
 }

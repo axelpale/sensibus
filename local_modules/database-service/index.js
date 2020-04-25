@@ -18,6 +18,7 @@ const db = new sqlite.Database(dbpath, (err) => {
   // Create tables
   const querystr = 'CREATE TABLE IF NOT EXISTS timeline (' +
     'timelineId varchar(255),' +
+    'title varchar(512),' +
     'dump TEXT,' +
     'userId TEXT' +
     ')'
@@ -36,10 +37,10 @@ exports.createRandomTimeline = (userId, cb) => {
   //
   const timelineId = shortid.generate()
 
-  const query = 'INSERT INTO timeline (timelineId, dump, userId) ' +
-    'VALUES (?, ?, ?)'
+  const query = 'INSERT INTO timeline (timelineId, title, dump, userId) ' +
+    'VALUES (?, ?, ?, ?)'
 
-  db.run(query, [timelineId, '{}', userId], (err) => {
+  db.run(query, [timelineId, 'Untitled', '{}', userId], (err) => {
     return cb(err, timelineId)
   })
 }
@@ -66,5 +67,12 @@ exports.setOneTimeline = (timelineId, timelineDump, userId, cb) => {
       return cb(err)
     }
     cb()
+  })
+}
+
+exports.getRecentTimelines = (opts, callback) => {
+  const query = 'SELECT timelineId, title, userId FROM timeline'
+  db.all(query, (err, rows) => {
+    return callback(err, rows)
   })
 }

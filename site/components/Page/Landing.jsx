@@ -20,10 +20,10 @@ const LandingPage = () => {
       .getPopularTimelines()
       .then(data=>{setPopular(data)})
   }, [])
-  
+
   const mapThings = (things) => {
     // el.id el.title
-    return things.map((el, i)=>{return (<div key={i}><a href={`/t/${el.id}`} >{el.title}</a></div>)})
+    return things.map((el, i)=>{return (<div key={i}><a href={`/t/${el.timelineId}`} >{el.title}</a></div>)})
   }
 
   return (<Page>
