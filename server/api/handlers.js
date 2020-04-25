@@ -40,12 +40,14 @@ exports.get = (req, res, next) => {
   if (req.query.sort === 'popular') {
     return res.json([
       {
-        id: 'world-history',
-        title: 'World History'
+        timelineId: 'world-history',
+        title: 'World History',
+        userId: 'juissi999'
       },
       {
-        id: 'stockmarket',
-        title: 'Stock Market'
+        timelineId: 'stockmarket',
+        title: 'Stock Market',
+        userId: 'axelpale'
       }
     ])
   }

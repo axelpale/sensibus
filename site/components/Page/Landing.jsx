@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react'
 import Page from './index.jsx'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
+import ListGroup from 'react-bootstrap/ListGroup'
 
 import CreateTimelineForm from '../CreateTimelineForm.jsx'
 import apiService from '../../apiService.js'
@@ -23,7 +24,13 @@ const LandingPage = () => {
 
   const mapThings = (things) => {
     // el.id el.title
-    return things.map((el, i)=>{return (<div key={i}><a href={`/t/${el.timelineId}`} >{el.title}</a></div>)})
+    return things.map((el, i)=>{
+      return (<ListGroup.Item key={i}>
+                <a href={`/t/${el.timelineId}`}>{el.title}</a>{' '}
+                by {el.userId}
+              </ListGroup.Item>)
+    })
+
   }
 
   return (<Page>
@@ -32,11 +39,11 @@ const LandingPage = () => {
             <Row className='mt-3'>
               <Col>
                 <h3>Popular timelines</h3>
-                {mapThings(popular)}
+                <ListGroup>{mapThings(popular)}</ListGroup>
               </Col>
               <Col>
                 <h3>New timelines</h3>
-                {mapThings(recent)}
+                <ListGroup>{mapThings(recent)}</ListGroup>
               </Col>
             </Row>
           </Page>)
