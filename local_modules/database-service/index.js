@@ -1,6 +1,7 @@
 const sqlite = require('sqlite3')
 const fs = require('fs')
 const shortid = require('shortid')
+const series = require('async/series')
 
 const path = require('path')
 const dbdir = path.resolve(__dirname, '../../server/db')
@@ -16,17 +17,26 @@ const db = new sqlite.Database(dbpath, (err) => {
   }
 
   // Create tables
-  const querystr = 'CREATE TABLE IF NOT EXISTS timeline (' +
+  const createTimelineTable = 'CREATE TABLE IF NOT EXISTS timeline (' +
     'timelineId varchar(255),' +
     'title varchar(512),' +
     'dump TEXT,' +
     'userId TEXT' +
     ')'
 
-  db.run(querystr, (err) => {
+  const createUserTable = 'CREATE TABLE IF NOT EXISTS user (' +
+    'userId varchar(255),' +
+    'name varchar(255)' +
+    ')'
+
+  series([
+    next => db.run(createTimelineTable, next),
+    next => db.run(createUserTable, next)
+  ], (err, results) => {
     if (err) {
       return console.log(err.message)
     }
+    console.log('Database ready.')
   })
 })
 
