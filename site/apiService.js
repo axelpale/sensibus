@@ -11,4 +11,4 @@ const getPopularTimelines = () => {
   return promise.then(response => response.data)
 }
 
-export default {getRecentTimelines, getPopularTimelines}
+export default { getRecentTimelines, getPopularTimelines }
