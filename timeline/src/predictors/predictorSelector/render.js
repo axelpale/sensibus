@@ -1,6 +1,7 @@
 const collection = require('../collection')
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const control = document.createElement('div')
   control.classList.add('predictor-selector')
 
@@ -18,7 +19,7 @@ module.exports = (state, dispatch) => {
     const opt = document.createElement('option')
     opt.value = key
     opt.innerHTML = key
-    if (state.predictors.selection === key) {
+    if (state.predictors.currentId === key) {
       opt.selected = 'selected'
     }
     input.appendChild(opt)

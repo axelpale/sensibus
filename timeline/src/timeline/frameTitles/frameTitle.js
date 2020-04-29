@@ -1,9 +1,10 @@
-module.exports = (state, dispatch, frame) => {
-  const timeline = state.timeline
+module.exports = (store, dispatch, frame) => {
+  const timeline = store.getState().timeline
 
   const root = document.createElement('div')
   root.classList.add('frame-title')
   root.classList.add('timeline-row-title')
+  root.classList.add('frame-title-' + frame)
 
   if (timeline.select && timeline.select.frame === frame) {
     root.classList.add('frame-title-selected')

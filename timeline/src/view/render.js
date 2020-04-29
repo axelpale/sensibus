@@ -1,11 +1,13 @@
 const template = require('./template.ejs')
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const root = document.createElement('div')
   const select = state.timeline.select
 
   // Cell editor is only for cell selections
   if (select === null || select.channel < 0 || select.frame < 0) {
+    root.innerHTML = 'Select a cell to view details.'
     return root
   }
 
@@ -15,7 +17,13 @@ module.exports = (state, dispatch) => {
   const frameTitle = state.timeline.frames[t].title
 
   const givenValue = state.timeline.memory[c][t]
-  const predictedValue = state.predictors.prediction[c][t].toFixed(2)
+  let predictedValue
+
+  if (state.predictors.prediction) {
+    predictedValue = state.predictors.prediction[c][t].toFixed(2)
+  } else {
+    predictedValue = 0
+  }
 
   root.innerHTML = template({
     channelTitle: channelTitle,

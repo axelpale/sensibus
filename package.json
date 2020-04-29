@@ -8,6 +8,7 @@
     "url": "git://github.com/axelpale/sensibus.git"
   },
   "scripts": {
+    "start": "python3 -m http.server -d client/ 8888",
     "build": "webpack --config client/webpack.config.js",
     "lint": "(cd timeline; npm run lint) && (cd site; npm run lint)",
     "test": "npm run lint",

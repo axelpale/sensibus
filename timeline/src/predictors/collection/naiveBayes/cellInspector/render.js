@@ -29,10 +29,13 @@ const tritToProb = t => {
 module.exports = (state, model, dispatch) => {
   const root = document.createElement('div')
 
-  // Cell inspector is only for selections
-  if (!state.timeline.select) {
+  // Cell inspector is only for selections and trained models
+  if (!state.timeline.select || !state.predictors.trained ||
+      !state.predictors.trainedPredictor !== 'naiveBayes') {
     return root
   }
+
+  model = state.predictors.trainedModel
 
   const c = state.timeline.select.channel
   const t = state.timeline.select.frame

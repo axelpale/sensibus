@@ -1,14 +1,18 @@
 const lib = require('./lib')
-const color = lib.color
+// const prettyRatios = require('./prettyRatios')
+const color = lib.colorSunset
 const probToCircleRadius = lib.probToCircleRadius
 
-module.exports = (state, dispatch, c, t) => {
+module.exports = (store, dispatch, c, t) => {
+  const state = store.getState()
   const timeline = state.timeline
   const sel = timeline.select
 
   const cell = document.createElement('div')
   cell.classList.add('cell')
   cell.classList.add('cell-event')
+  cell.classList.add('channel-' + c)
+  cell.classList.add('frame-' + t)
 
   if (sel && (sel.channel === c || sel.frame === t)) {
     cell.classList.add('cell-selected')
@@ -38,9 +42,17 @@ module.exports = (state, dispatch, c, t) => {
   let prob
   if (q === 0) {
     cell.classList.add('cell-unknown')
-    prob = (state.predictors.prediction[c][t] + 1) / 2
+    if (state.predictors.prediction) {
+      prob = (state.predictors.prediction[c][t] + 1) / 2
+    } else {
+      prob = 0
+    }
+    // Percent-style numbers
     const probHtml = Math.floor(100 * prob)
-    text.innerHTML = '' + probHtml
+    text.innerHTML = '' + probHtml + '<sub>%</sub>'
+    // Alternatively:
+    // Pretty ratios
+    // text.innerHTML = '' + prettyRatios.ratio7(prob)
     icon.style.opacity = 0.5
   } else {
     cell.classList.add('cell-known')
@@ -50,15 +62,28 @@ module.exports = (state, dispatch, c, t) => {
   icon.style.transform = 'scale(' + probToCircleRadius(prob) + ')'
 
   cell.addEventListener('click', ev => {
-    const sel = state.timeline.select
-    // TODO store.getState() if we go lazy
+    const sel = store.getState().timeline.select
     if (sel && sel.channel === c && sel.frame === t) {
+      // If the clicked cell is already focused.
       dispatch({
         type: 'EDIT_CELL',
         channel: c,
         frame: t
       })
+    } else if (sel && (sel.channel === c || sel.frame === t)) {
+      // If another cell in same channel or frame is clicked.
+      dispatch({
+        type: 'SELECT_CELL',
+        channel: c,
+        frame: t
+      })
+    } else if (sel && sel.channel > -1 && sel.frame > -1) {
+      // If none of the above happens but a cell is clicked anyway.
+      dispatch({
+        type: 'SELECT_NONE'
+      })
     } else {
+      // If nothing has been selected, select the cell.
       dispatch({
         type: 'SELECT_CELL',
         channel: c,

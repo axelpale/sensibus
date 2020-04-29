@@ -8,6 +8,11 @@ exports.color = (state, channel) => {
   return hsl
 }
 
+const sunset = ['F8B195', 'F67280', 'C06C84', '6C5B7B', '355C7D']
+exports.colorSunset = (state, channel) => {
+  return '#' + sunset[channel % sunset.length]
+}
+
 exports.probToCircleRadius = (prob) => {
   // Return 0..1 as the radius of a unit circle.
   //

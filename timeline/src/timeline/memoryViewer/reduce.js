@@ -6,7 +6,12 @@ const DOWN = -1
 const updateSelect = (state, channel, frame) => {
   // Determine cell edit direction from prediction at select
   // to prevent hysteria between predictions of edits.
-  const pred = state.predictors.prediction[channel][frame]
+  let pred
+  if (state.predictors.prediction) {
+    pred = state.predictors.prediction[channel][frame]
+  } else {
+    pred = 0
+  }
   return Object.assign({}, state, {
     timeline: Object.assign({}, state.timeline, {
       select: {
@@ -38,6 +43,14 @@ module.exports = (state, ev) => {
       const c = ev.channel
       const t = sel ? sel.frame : 0
       return updateSelect(state, c, t)
+    }
+
+    case 'SELECT_NONE': {
+      return Object.assign({}, state, {
+        timeline: Object.assign({}, state.timeline, {
+          select: null
+        })
+      })
     }
 
     case 'EDIT_CELL': {

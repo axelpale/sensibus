@@ -2,7 +2,9 @@ require('./style.css')
 const template = require('./frameEditorRow.ejs')
 const listen = require('uilib').listen
 
-module.exports = (state, dispatch, frame) => {
+module.exports = (store, dispatch, frame) => {
+  const state = store.getState()
+
   const row = document.createElement('div')
   row.classList.add('frame-editor-row')
 
@@ -20,8 +22,16 @@ module.exports = (state, dispatch, frame) => {
   // Bind events
 
   listen(row, '#frameForm', 'submit', ev => {
-    // Not sure if this is needed... but to be safe.
     ev.preventDefault()
+    // Not sure if this is needed... but to be safe.
+    dispatch({
+      type: 'EDIT_FRAME_TITLE',
+      frame: frame,
+      title: row.querySelector('#frameTitleInput').value
+    })
+    dispatch({
+      type: 'SELECT_NONE'
+    })
   })
 
   listen(row, '#frameTitleInput', 'input', ev => {
@@ -66,6 +76,12 @@ module.exports = (state, dispatch, frame) => {
     dispatch({
       type: 'CREATE_FRAME',
       frame: frame
+    })
+  })
+
+  listen(row, '#frameFormClose', 'click', ev => {
+    dispatch({
+      type: 'SELECT_NONE'
     })
   })
 

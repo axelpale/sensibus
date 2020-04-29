@@ -67,7 +67,7 @@
   width: 4.2rem;
   height: 4.2rem;
   background: url('img/spine.png') center repeat-y;
-  opacity: 1;
+  opacity: 0.8;
 }
 
 .cell .cell-icon {
@@ -90,6 +90,7 @@
 
 .cell.cell-unknown .cell-icon {
   opacity: 0.6;
+  filter: blur(3px);
 }
 .cell.cell-unknown .cell-spine {
   opacity: 0.16;
@@ -98,13 +99,14 @@
   top: 1.3rem;
   font-size: 1.27rem;
   height: 60%;
+  visibility: hidden;
 }
 
 .cell.cell-selected {
   background: rgba(0,0,0,0.10);
 }
 .cell.cell-selected.cell-focus {
-  background: rgba(0,0,0,0.26);
+  background: white;
 }
 
 .frame-title-selected {
@@ -113,8 +115,4 @@
 
 .frame-title-selected {
   background: rgba(0,0,0,0.10);
-}
-
-.frame-title-selected.title-channel-selected {
-  background: rgba(0,0,0,0.26);
 }

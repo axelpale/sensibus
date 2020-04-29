@@ -1,6 +1,8 @@
 # sensibus
 
-A time series logger, analyser, and predictor for your daily feelings and activity.
+A time series logger, analyser, and predictor for your daily feelings and activity. Provides future prediction via dynamic naive bayesian methods.
+
+![Timeline Example](doc/timeline-example.jpg)
 
 ## Install
 
@@ -12,3 +14,7 @@ A time series logger, analyser, and predictor for your daily feelings and activi
 After the build finishes, open `index.html` in your web browser.
 
 Currently tested only on Google Chrome.
+
+## Production
+
+Point a static file server e.g. Nginx to `sensibus/client/`.

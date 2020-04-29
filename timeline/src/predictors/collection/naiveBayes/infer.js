@@ -1,7 +1,7 @@
 const way = require('senseway')
 const lib = require('./lib')
 
-module.exports = (model, cell, memory) => {
+module.exports = (model, cell, memory, virtual) => {
   const posField = model.fields[cell.channel].posField
   const negField = model.fields[cell.channel].negField
   const posPrior = (1 + model.priors[cell.channel]) / 2
@@ -9,7 +9,12 @@ module.exports = (model, cell, memory) => {
 
   const ctxBegin = lib.getBegin(model, cell.time)
   const ctxEnd = lib.getEnd(model, cell.time)
-  const context = way.slice(memory, ctxBegin, ctxEnd)
+  const evidentContext = way.slice(memory, ctxBegin, ctxEnd)
+  const virtualContext = way.slice(virtual, ctxBegin, ctxEnd)
+  const context = way.map2(evidentContext, virtualContext, (eq, vq) => {
+    // Fill gaps in evidence with simulated evidence
+    return (eq === 0) ? vq : eq
+  })
 
   // Prediction p, weighted by mass m of context cell and sample size
   const fac = (avg, c, t) => {

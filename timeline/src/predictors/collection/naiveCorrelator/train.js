@@ -1,6 +1,7 @@
 const way = require('senseway')
+const syncTrain = require('../syncTrain')
 
-module.exports = (config, memory) => {
+module.exports = syncTrain((config, memory) => {
   // Overview:
   // - Compute average neighborhood for every channel.
   // - Find unknown cells.
@@ -52,4 +53,4 @@ module.exports = (config, memory) => {
     fieldOffset: config.fieldOffset,
     fields: fields
   }
-}
+})

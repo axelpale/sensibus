@@ -9,7 +9,8 @@ const listenId = (root, elemId, handler) => {
   el.addEventListener('click', handler)
 }
 
-module.exports = (state, dispatch) => {
+exports.create = (store, dispatch) => {
+  const state = store.getState()
   const root = document.createElement('div')
   root.innerHTML = template({ version: version })
 

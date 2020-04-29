@@ -2,7 +2,7 @@ const collection = require('./collection')
 
 module.exports = (local) => {
   const nextLocal = {
-    selection: local.selection
+    currentId: local.currentId
   }
 
   collection.getPredictorIds().forEach(prid => {
