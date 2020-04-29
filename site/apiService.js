@@ -11,8 +11,8 @@ const getPopularTimelines = () => {
   return promise.then(response => response.data)
 }
 
-const postAccount = () => {
-  const promise = axios.post(`${baseUrl}/account/`)
+const postAccount = (accountDetails) => {
+  const promise = axios.post(`${baseUrl}/account/`, accountDetails)
   return promise.then(response => response.data)
 }
 
