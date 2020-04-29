@@ -19,7 +19,7 @@ const updateSelect = (state, channel, frame) => {
         frame: frame
       },
       cellEditPredicted: (pred > 0) ? UP : DOWN,
-      cellEditDirection: 1
+      cellEditDirection: (pred > 0) ? UP : DOWN
     })
   })
 }
@@ -57,26 +57,21 @@ module.exports = (state, ev) => {
     case 'EDIT_CELL': {
       const curVal = timeline.memory[ev.channel][ev.frame]
       // Take prediction into account.
-      const pred = timeline.cellEditPredicted
       const dir = timeline.cellEditDirection
 
-      // Towards unknown if not unknown already.
+      let nextDir
       let nextVal
+      // Towards unknown if not unknown already.
       if (curVal > 0) {
         nextVal = 0
+        nextDir = -1
       } else if (curVal < 0) {
         nextVal = 0
+        nextDir = 1
       } else {
         // nextVal either -1 or 1
+        // Prediction determines cycle order
         nextVal = dir
-      }
-
-      // Set next direction every time we come back to unknown.
-      let nextDir
-      if (curVal !== 0) {
-        nextDir = -dir * pred
-      } else {
-        nextDir = dir * pred
       }
 
       return Object.assign({}, state, {
