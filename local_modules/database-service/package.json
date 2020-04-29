@@ -3,6 +3,10 @@
   "version": "0.0.0",
   "description": "Database api sevice",
   "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
   "scripts": {
     "lint": "standard",
     "test": "npm run lint"
