@@ -26,7 +26,7 @@
 }
 .channel-titles .channel-title.channel-selected {
   font-weight: bold;
-  background: rgba(0,0,0,0.10);
+  /* background: rgba(0,0,0,0.10); */
 }
 
 .channel-editor-row {

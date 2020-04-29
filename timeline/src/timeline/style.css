@@ -103,7 +103,7 @@
 }
 
 .cell.cell-selected {
-  background: rgba(0,0,0,0.10);
+  /* background: rgba(0,0,0,0.10); */
 }
 .cell.cell-selected.cell-focus {
   background: white;
@@ -114,5 +114,5 @@
 }
 
 .frame-title-selected {
-  background: rgba(0,0,0,0.10);
+  /* background: rgba(0,0,0,0.10); */
 }
