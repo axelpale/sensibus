@@ -14,6 +14,10 @@ const memoryWidthChanged = createObserver([
   state => way.width(state.timeline.memory)
 ])
 
+const memoryLengthChanged = createObserver([
+  state => way.len(state.timeline.memory)
+])
+
 const memoryChanged = createObserver([
   state => state.timeline.memory
 ])
@@ -91,6 +95,7 @@ exports.update = (store, dispatch) => {
   const predictionCh = predictionChanged(state)
   const selectCh = selectChanged(state)
   const frameTitlesCh = frameTitlesChanged(state)
+  const memoryLengthCh = memoryLengthChanged(state)
   const hideBeforeCh = hideBeforeChanged(state)
 
   if (memoryCh || predictionCh || hideBeforeCh) {
@@ -107,7 +112,7 @@ exports.update = (store, dispatch) => {
     }
   }
 
-  if (hideBeforeCh) {
+  if (memoryLengthCh || hideBeforeCh) {
     memoryRangeTools.update(store, dispatch)
   }
 }

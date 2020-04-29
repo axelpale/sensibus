@@ -1,5 +1,5 @@
 <form>
-  <button id="showLessBtn" type="button" class="btn btn-secondary mr-1 mb-2">– Less</button>
-  <button id="showMoreBtn" type="button" class="btn btn-secondary mr-2 mb-2">More +</button>
+  <button id="showLessBtn" type="button" class="<%= showLessBtn ? '' : 'd-none ' %>btn btn-secondary mr-1 mb-2">– Show Less</button>
+  <button id="showMoreBtn" type="button" class="<%= showMoreBtn ? '' : 'd-none ' %>btn btn-secondary mr-2 mb-2">Show More +</button>
   <span id="showMeter" class="text-muted"></span>
 </form>
