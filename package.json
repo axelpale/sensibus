@@ -26,6 +26,7 @@
     "standard": "*"
   },
   "dependencies": {
+    "body-parser": "^1.19.0",
     "database-service": "file:local_modules/database-service",
     "express": "^4.17.1",
     "lodash": "^4.17.15",
