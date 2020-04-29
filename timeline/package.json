@@ -1,0 +1,45 @@
+{
+  "name": "sensibus-timeline",
+  "version": "1.0.0",
+  "description": "Time series logger and analyzer",
+  "main": "index.html",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
+  "scripts": {
+    "build": "webpack",
+    "watchbuild": "nodemon --watch src --ext js,ejs,css,json --ignore version.js --exec \"npm run lint && npm run gv && npm run build\"",
+    "lint": "standard \"src/**/*.js\" && echo OK",
+    "lintfix": "standard --fix \"src/**/*.js\" && echo OK",
+    "test": "npm run lint",
+    "gv": "genversion src/version.js"
+  },
+  "author": {
+    "name": "Akseli Palén",
+    "email": "akseli.palen@gmail.com"
+  },
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "bootstrap": "^4.4.1",
+    "css-loader": "^3.2.0",
+    "ejs-loader": "^0.3.3",
+    "genversion": "^2.2.1",
+    "nodemon": "^2.0.3",
+    "standard": "*",
+    "style-loader": "^1.0.0",
+    "webpack": "^4.39.3",
+    "webpack-cli": "^3.3.7",
+    "worker-loader": "^2.0.0"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "deep-equal": "^1.0.1",
+    "lodash": "^4.17.15",
+    "problib": "file:../local_modules/problib",
+    "redux": "^4.0.5",
+    "reselect": "^4.0.0",
+    "senseway": "file:../local_modules/senseway",
+    "uilib": "file:../local_modules/uilib"
+  }
+}

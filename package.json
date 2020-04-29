@@ -1,6 +1,6 @@
 {
   "name": "sensibus",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Time series logger and analyzer",
   "main": "index.html",
   "repository": {
@@ -8,13 +8,13 @@
     "url": "git://github.com/axelpale/sensibus.git"
   },
   "scripts": {
-    "start": "python3 -m http.server -d client/ 8888",
     "build": "webpack --config client/webpack.config.js",
-    "deploy": "rsync -r --include-from=\".deployinclude\" --exclude=\"*\" ./ xeli@xeli.webfactional.com:~/webapps/demos/sensibus",
-    "watchbuild": "nodemon --watch client/src --watch local_modules --watch datasets --ext js,ejs,css,json --exec 'npm run lint && npm run build'",
-    "lint": "standard 'client/src/**/*.js' && echo OK",
-    "lintfix": "standard --fix 'client/src/**/*.js' && echo OK",
-    "test": "npm run lint"
+    "lint": "(cd timeline; npm run lint) && (cd site; npm run lint)",
+    "test": "npm run lint",
+    "lintserver": "standard \"server/**/*.js\" && echo OK",
+    "start": "node server/index.js",
+    "watchstart": "nodemon --watch server --ext js,json --exec \"npm run lintserver && npm start\"",
+    "watchreact": "webpack -d --watch --config site/webpack.config.js"
   },
   "author": {
     "name": "Akseli Palén",
@@ -22,25 +22,13 @@
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {
-    "css-loader": "^3.2.0",
-    "ejs-loader": "^0.3.3",
     "nodemon": "*",
-    "standard": "*",
-    "style-loader": "^1.0.0",
-    "webpack": "^4.42.0",
-    "webpack-cli": "^3.3.11",
-    "worker-loader": "^2.0.0"
+    "standard": "*"
   },
   "dependencies": {
-    "acorn": "^7.1.1",
-    "async": "^3.2.0",
-    "deep-equal": "^1.0.1",
-    "kind-of": "^6.0.3",
+    "database-service": "file:local_modules/database-service",
+    "express": "^4.17.1",
     "lodash": "^4.17.15",
-    "problib": "file:./local_modules/problib",
-    "redux": "^4.0.5",
-    "reselect": "^4.0.0",
-    "senseway": "file:./local_modules/senseway",
-    "uilib": "file:local_modules/uilib"
+    "sqlite3": "^4.1.1"
   }
 }

@@ -1,0 +1,24 @@
+{
+  "name": "database-service",
+  "version": "0.0.0",
+  "description": "Database api sevice",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint"
+  },
+  "author": "Akseli Palén",
+  "license": "MIT",
+  "devDependencies": {
+    "standard": "^14.3.1"
+  },
+  "dependencies": {
+    "async": "^3.2.0",
+    "shortid": "^2.2.15",
+    "sqlite3": "^4.1.1"
+  }
+}

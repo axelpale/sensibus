@@ -1,3 +1,4 @@
+const version = require('../version')
 const download = require('./download')
 const template = require('./template.ejs')
 const hibernate = require('../hibernate')
@@ -11,7 +12,7 @@ const listenId = (root, elemId, handler) => {
 exports.create = (store, dispatch) => {
   const state = store.getState()
   const root = document.createElement('div')
-  root.innerHTML = template({})
+  root.innerHTML = template({ version: version })
 
   listenId(root, 'file-new', ev => {
     dispatch({
