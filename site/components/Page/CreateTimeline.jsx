@@ -1,6 +1,6 @@
 import React from 'react'
 import Page from './index.jsx'
-import CreateTimelineForm from '../CreateTimelineForm.jsx'
+import CreateTimelineForm from '../Form/CreateTimeline.jsx'
 
 const CreateTimelinePage = () => {
   return (

@@ -8,6 +8,8 @@ app.use(express.static('site/dist/'))
 
 app.use('/notfound', express.static('site/dist/'))
 
+app.use('/signup', express.static('site/dist/'))
+
 app.use('/', router)
 
 // return index for all the other routes (which are used and
