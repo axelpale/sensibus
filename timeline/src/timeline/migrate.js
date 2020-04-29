@@ -12,6 +12,20 @@ module.exports = (state) => {
     })
   }
 
+  // Init cellEditDirection and cellEditPredicted
+  const dir = timeline.cellEditDirection
+  if (typeof dir === 'undefined' || dir === 0) {
+    timeline = Object.assign({}, timeline, {
+      cellEditDirection: 1
+    })
+  }
+  const pred = timeline.cellEditPredicted
+  if (typeof pred === 'undefined' || pred === 0) {
+    timeline = Object.assign({}, timeline, {
+      cellEditPredicted: 1
+    })
+  }
+
   return Object.assign({}, state, {
     timeline: timeline
   })

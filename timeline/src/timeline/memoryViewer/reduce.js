@@ -18,7 +18,8 @@ const updateSelect = (state, channel, frame) => {
         channel: channel,
         frame: frame
       },
-      cellEditDirection: (pred > 0) ? UP : DOWN
+      cellEditPredicted: (pred > 0) ? UP : DOWN,
+      cellEditDirection: 1
     })
   })
 }
@@ -54,25 +55,34 @@ module.exports = (state, ev) => {
     }
 
     case 'EDIT_CELL': {
-      const curval = timeline.memory[ev.channel][ev.frame]
-      const nextval = (() => {
-        // Take prediction into account.
-        const dir = timeline.cellEditDirection
-        if (dir && dir === UP) {
-          if (curval === 0) return 1
-          if (curval === 1) return -1
-          if (curval === -1) return 0
-        } else {
-          if (curval === 0) return -1
-          if (curval === -1) return 1
-          if (curval === 1) return 0
-        }
-        return curval
-      })()
+      const curVal = timeline.memory[ev.channel][ev.frame]
+      // Take prediction into account.
+      const pred = timeline.cellEditPredicted
+      const dir = timeline.cellEditDirection
+
+      // Towards unknown if not unknown already.
+      let nextVal
+      if (curVal > 0) {
+        nextVal = 0
+      } else if (curVal < 0) {
+        nextVal = 0
+      } else {
+        // nextVal either -1 or 1
+        nextVal = dir
+      }
+
+      // Set next direction every time we come back to unknown.
+      let nextDir
+      if (curVal !== 0) {
+        nextDir = -dir * pred
+      } else {
+        nextDir = dir * pred
+      }
 
       return Object.assign({}, state, {
         timeline: Object.assign({}, timeline, {
-          memory: way.set(timeline.memory, ev.channel, ev.frame, nextval)
+          memory: way.set(timeline.memory, ev.channel, ev.frame, nextVal),
+          cellEditDirection: nextDir
         })
       })
     }

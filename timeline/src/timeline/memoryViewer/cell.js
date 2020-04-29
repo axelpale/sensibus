@@ -77,15 +77,36 @@ module.exports = (store, dispatch, c, t) => {
         channel: c,
         frame: t
       })
+      dispatch({
+        type: 'EDIT_CELL',
+        channel: c,
+        frame: t
+      })
     } else if (sel && sel.channel > -1 && sel.frame > -1) {
       // If none of the above happens but a cell is clicked anyway.
-      dispatch({
-        type: 'SELECT_NONE'
-      })
-    } else {
-      // If nothing has been selected, select the cell.
+      // Away from the cross.
       dispatch({
         type: 'SELECT_CELL',
+        channel: c,
+        frame: t
+      })
+      dispatch({
+        type: 'EDIT_CELL',
+        channel: c,
+        frame: t
+      })
+      // dispatch({
+      //   type: 'SELECT_NONE'
+      // })
+    } else {
+      // If nothing has been selected, select and edit the cell.
+      dispatch({
+        type: 'SELECT_CELL',
+        channel: c,
+        frame: t
+      })
+      dispatch({
+        type: 'EDIT_CELL',
         channel: c,
         frame: t
       })
