@@ -11,8 +11,8 @@ const Page = ({ children }) => {
         <Row>
           <Col>{children}</Col>
         </Row>
-        <Footer />
       </Container>
+      <Footer />
     </div>
   )
 }
