@@ -8,6 +8,7 @@
     "url": "git://github.com/axelpale/sensibus.git"
   },
   "scripts": {
+    "lint": "standard",
     "build": "webpack",
     "watchreact": "webpack -d --watch"
   },
