@@ -32,3 +32,11 @@ exports.listen = (el, query, eventName, handler) => {
 exports.setHtml = (el, query, newHtml) => {
   el.querySelector(query).innerHTML = newHtml
 }
+
+exports.hide = (el, query) => {
+  el.querySelector(query).classList.add('d-none')
+}
+
+exports.show = (el, query) => {
+  el.querySelector(query).classList.remove('d-none')
+}
