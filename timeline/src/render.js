@@ -1,4 +1,5 @@
 require('./style.css')
+const header = require('./header/render')
 const sidebar = require('./sidebar/render')
 const timeline = require('./timeline/render')
 const predictors = require('./predictors/render')
@@ -18,6 +19,9 @@ exports.init = (store, dispatch) => {
   root.classList.add('root')
   root.id = 'root'
 
+  // Header
+  root.appendChild(header.create(store, dispatch))
+
   // Timeline
   root.appendChild(timeline.create(store, dispatch))
 
@@ -30,6 +34,8 @@ exports.init = (store, dispatch) => {
 
 exports.update = (store, dispatch) => {
   const state = store.getState()
+
+  header.update(store, dispatch)
 
   if (timelineChanged(state)) { // TODO move condition in timeline
     timeline.update(store, dispatch)
