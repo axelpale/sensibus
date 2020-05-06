@@ -18,6 +18,12 @@
     "email": "akseli.palen@gmail.com",
     "url": "https://github.com/axelpale"
   },
+  "contributors": [
+    {
+      "name": "juissi999",
+      "url": "https://github.com/juissi999/"
+    }
+  ],
   "license": "GPL-3.0-or-later",
   "devDependencies": {},
   "dependencies": {
