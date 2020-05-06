@@ -13,6 +13,8 @@ app.use('/notfound', express.static(siteClientPath))
 
 app.use('/signup', express.static(siteClientPath))
 
+app.use('/user/:userid', express.static(siteClientPath))
+
 app.use('/', router)
 
 // return index for all the other routes (which are used and
