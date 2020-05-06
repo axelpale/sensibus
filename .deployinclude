@@ -1,7 +1,0 @@
-img/
-img/*.png
-dist/
-dist/bundle.js
-index.html
-favicon.ico
-LICENSE
