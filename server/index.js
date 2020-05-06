@@ -1,14 +1,17 @@
 const express = require('express')
 const router = require('./routes')
+const path = require('path')
 
 const app = express()
 const port = 8888
 
-app.use(express.static('site/dist/'))
+const siteClientPath = path.resolve(__dirname, '..', 'site', 'dist')
 
-app.use('/notfound', express.static('site/dist/'))
+app.use(express.static(siteClientPath))
 
-app.use('/signup', express.static('site/dist/'))
+app.use('/notfound', express.static(siteClientPath))
+
+app.use('/signup', express.static(siteClientPath))
 
 app.use('/', router)
 
