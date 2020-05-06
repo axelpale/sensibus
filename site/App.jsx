@@ -5,6 +5,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import LandingPage from './components/Page/Landing.jsx'
 import NotFoundPage from './components/Page/NotFound.jsx'
 import CreateTimelinePage from './components/Page/CreateTimeline.jsx'
+import UserPage from './components/Page/User.jsx'
 import SignUpPage from './components/Page/SignUp.jsx'
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom'
 
@@ -15,6 +16,9 @@ const App = () => {
         <Switch>
           <Route path='/t/:id'>
             <CreateTimelinePage />
+          </Route>
+          <Route path='/user/:userId'>
+            <UserPage />
           </Route>
           <Route path='/notfound'>
             <NotFoundPage />

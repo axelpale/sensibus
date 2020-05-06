@@ -37,5 +37,7 @@
     "webpack": "^4.39.3",
     "webpack-cli": "^3.3.7"
   },
-  "dependencies": {}
+  "dependencies": {
+    "sensibus-api-client": "file:../local_modules/sensibus-api-client"
+  }
 }
