@@ -15,7 +15,8 @@
   },
   "author": {
     "name": "Akseli Palén",
-    "email": "akseli.palen@gmail.com"
+    "email": "akseli.palen@gmail.com",
+    "url": "https://github.com/axelpale"
   },
   "license": "GPL-3.0-or-later",
   "devDependencies": {},
