@@ -1,0 +1,32 @@
+{
+  "name": "sensibus-server",
+  "version": "0.0.1",
+  "description": "Server backend for Sensibus, open time series logger and analyzer",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
+  "scripts": {
+    "start": "node index.js",
+    "lint": "standard \"./**/*.js\" && echo OK",
+    "test": "npm run lint",
+    "watchstart": "nodemon --watch . --ext js,json --exec \"npm run test && npm start\""
+  },
+  "author": {
+    "name": "Akseli Palén",
+    "email": "akseli.palen@gmail.com"
+  },
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "nodemon": "*",
+    "standard": "*"
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "database-service": "file:../local_modules/database-service",
+    "express": "^4.17.1",
+    "lodash": "^4.17.15",
+    "sqlite3": "^4.1.1"
+  }
+}
