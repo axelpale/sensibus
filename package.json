@@ -2,34 +2,26 @@
   "name": "sensibus",
   "version": "0.0.1",
   "description": "Time series logger and analyzer",
-  "main": "index.html",
+  "main": "server/index.js",
   "repository": {
     "type": "git",
     "url": "git://github.com/axelpale/sensibus.git"
   },
   "scripts": {
-    "build": "webpack --config client/webpack.config.js",
-    "lint": "(cd timeline; npm run lint) && (cd site; npm run lint)",
-    "test": "npm run lint",
-    "lintserver": "standard \"server/**/*.js\" && echo OK",
-    "start": "node server/index.js",
-    "watchstart": "nodemon --watch server --ext js,json --exec \"npm run lintserver && npm start\"",
-    "watchreact": "webpack -d --watch --config site/webpack.config.js"
+    "start": "(cd server; npm start)",
+    "build": "(cd site; npm run build) && (cd timeline; npm run build)",
+    "lint": "(cd server; npm run lint) && (cd site; npm run lint) && (cd timeline; npm run lint)",
+    "test": "npm run lint"
   },
   "author": {
     "name": "Akseli Palén",
     "email": "akseli.palen@gmail.com"
   },
   "license": "GPL-3.0-or-later",
-  "devDependencies": {
-    "nodemon": "*",
-    "standard": "*"
-  },
+  "devDependencies": {},
   "dependencies": {
-    "body-parser": "^1.19.0",
-    "database-service": "file:local_modules/database-service",
-    "express": "^4.17.1",
-    "lodash": "^4.17.15",
-    "sqlite3": "^4.1.1"
+    "sensibus-server": "file:server",
+    "sensibus-site": "file:site",
+    "sensibus-timeline": "file:timeline"
   }
 }
