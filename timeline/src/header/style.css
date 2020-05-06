@@ -1,3 +1,14 @@
 #sb-header-container {
+  background-color: #f6f6f6;
+  border-bottom: 1px solid #dddddd;
+}
+
+#sb-header-container .navbar {
   padding-left: 10em;
+}
+#sb-header-container .header-title-row {
+  padding: 1em 0 0 10em;
+}
+#sb-header-container .header-info-row {
+  padding: 0 0 1em 10em;
 }
