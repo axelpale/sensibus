@@ -10,11 +10,10 @@ A time series logger, analyser, and predictor for your daily feelings and activi
     $ cd sensibus
     $ npm install
     $ npm run build
+    $ npm start
 
-After the build finishes, open `index.html` in your web browser.
+Then, open [localhost:8888](http://localhost:8888/) in your web browser.
 
-Currently tested only on Google Chrome.
+## Licence
 
-## Production
-
-Point a static file server e.g. Nginx to `sensibus/client/`.
+[GPL 3.0](LICENSE)
