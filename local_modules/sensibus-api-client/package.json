@@ -1,0 +1,22 @@
+{
+  "name": "sensibus-api-client",
+  "version": "0.0.0",
+  "description": "Programmatic access to Sensibus API",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint"
+  },
+  "author": "Akseli Palén",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "standard": "^14.3.3"
+  },
+  "dependencies": {
+    "axios": "^0.19.2"
+  }
+}
