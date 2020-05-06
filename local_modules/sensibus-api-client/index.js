@@ -17,9 +17,6 @@ exports.postAccount = (accountDetails) => {
 }
 
 exports.getUser = (userId) => {
-  return new Promise((resolve, reject) => {
-    setTimeout( function() {
-      resolve({userId})
-    }, 250)
-  })
+  const promise = axios.get(`${baseUrl}/user/${userId}`)
+  return promise.then(response => response.data)
 }
