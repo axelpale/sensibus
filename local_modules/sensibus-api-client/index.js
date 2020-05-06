@@ -15,3 +15,11 @@ exports.postAccount = (accountDetails) => {
   const promise = axios.post(`${baseUrl}/account/`, accountDetails)
   return promise.then(response => response.data)
 }
+
+exports.getUser = (userId) => {
+  return new Promise((resolve, reject) => {
+    setTimeout( function() {
+      resolve({userId})
+    }, 250)
+  })
+}
