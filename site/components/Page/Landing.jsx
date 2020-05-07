@@ -7,6 +7,7 @@ import ListGroup from 'react-bootstrap/ListGroup'
 import CreateTimelineForm from '../Form/CreateTimeline.jsx'
 import SignUpForm from '../Form/SignUp.jsx'
 import apiService from '../../apiService.js'
+import {Link} from 'react-router-dom'
 
 const LandingPage = () => {
   const [popular, setPopular] = useState([])
@@ -28,7 +29,7 @@ const LandingPage = () => {
       return (
         <ListGroup.Item key={i}>
           <a href={`/t/${el.timelineId}`}>{el.title}</a>{' '}
-          by {el.userId}
+          by <Link to={`/user/${el.userId}`}>{el.userId}</Link>
         </ListGroup.Item>)
     })
   }
