@@ -12,6 +12,8 @@ A time series logger, analyser, and predictor for your daily feelings and activi
     $ npm run build
     $ npm start
 
+---insert database connection setup here---
+
 Then, open [localhost:8888](http://localhost:8888/) in your web browser.
 
 ## Licence
