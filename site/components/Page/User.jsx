@@ -12,6 +12,9 @@ const UserPage = () => {
     sensibusApi
       .getUser(userId)
       .then((value) => setUserDetails(value))
+      .catch(err => {
+        setUserDetails({})
+      })
   }, [])
 
   if (userDetails !== null) {
