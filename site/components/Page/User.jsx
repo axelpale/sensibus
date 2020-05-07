@@ -27,9 +27,9 @@ const UserPage = () => {
       return (
         <Page>
           <h1>{userId}</h1>
-          {userDetails}
+          E-mail: {userDetails.email}
         </Page>
-    )  
+      )
     }
   } else {
     return (
