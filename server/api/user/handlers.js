@@ -1,7 +1,7 @@
 const User = require('./model')
 
 exports.getUser = (req, res, next) => {
-  User.find({name:req.params.userId})
+  User.find({ name: req.params.userId })
     .then(user => {
       if (user) {
         res.json(user)
