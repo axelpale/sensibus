@@ -6,19 +6,19 @@ import ListGroup from 'react-bootstrap/ListGroup'
 
 import CreateTimelineForm from '../Form/CreateTimeline.jsx'
 import SignUpForm from '../Form/SignUp.jsx'
-import apiService from '../../apiService.js'
-import {Link} from 'react-router-dom'
+import sensibusApi from 'sensibus-api-client'
+import { Link } from 'react-router-dom'
 
 const LandingPage = () => {
   const [popular, setPopular] = useState([])
   const [recent, setRecent] = useState([])
 
   useEffect(() => {
-    apiService
+    sensibusApi
       .getRecentTimelines()
       .then(data => { setRecent(data) })
 
-    apiService
+    sensibusApi
       .getPopularTimelines()
       .then(data => { setPopular(data) })
   }, [])

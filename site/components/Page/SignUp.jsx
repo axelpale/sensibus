@@ -3,7 +3,7 @@ import Page from './index.jsx'
 import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
-import apiService from '../../apiService.js'
+import sensibusApi from 'sensibus-api-client'
 
 const SignUpPage = () => {
 
@@ -14,7 +14,7 @@ const SignUpPage = () => {
     const user = document.getElementById('formBasicUser').value
 
     const account = {username:user, email:email, password:pwd}
-    apiService.postAccount(account)
+    sensibusApi.postAccount(account)
   }
 
   return (
