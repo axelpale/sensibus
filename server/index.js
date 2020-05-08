@@ -1,10 +1,11 @@
+// get environmental variables
+require('dotenv').config()
+
+// Requires
 const express = require('express')
 const router = require('./routes')
 const path = require('path')
 const mongoose = require('mongoose')
-
-// get environmental variables
-require('dotenv').config()
 
 // connect to mongodb
 const url = process.env.MONGODB_URI
