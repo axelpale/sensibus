@@ -1,10 +1,13 @@
-// get environmental variables
-require('dotenv').config()
+// Get environmental variables.
+// Must be first before other requires to ensure env var visibility.
+const path = require('path')
+require('dotenv').config({
+  path: path.resolve(__dirname, '..', '.env')
+})
 
 // Requires
 const express = require('express')
 const router = require('./routes')
-const path = require('path')
 const mongoose = require('mongoose')
 
 // connect to mongodb
