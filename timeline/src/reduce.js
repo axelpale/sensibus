@@ -7,7 +7,7 @@ const performance = require('./performance/reduce')
 module.exports = (state, ev) => {
   if (!state) {
     state = {
-      sidebar: true,
+      sidebar: false,
       sidebarPage: 'storage'
     }
   }

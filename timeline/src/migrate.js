@@ -4,7 +4,7 @@ const timeline = require('./timeline/migrate')
 module.exports = (state) => {
   // Populate sidebar
   state = Object.assign({}, state, {
-    sidebar: typeof state.sidebar === 'undefined' ? true : state.sidebar,
+    sidebar: typeof state.sidebar === 'undefined' ? false : state.sidebar,
     sidebarPage: state.sidebarPage ? state.sidebarPage : 'storage'
   })
 
