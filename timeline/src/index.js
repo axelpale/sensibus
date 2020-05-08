@@ -4,6 +4,10 @@ const renderer = require('./render')
 const hibernator = require('./hibernate')
 const migrate = require('./migrate')
 
+// Get timeline id
+const timelineId = window.sensibus.timelineId
+console.log(timelineId)
+
 // Hydrate from localStorage
 const storageName = 'sensibus-state'
 const storedState = window.localStorage.getItem(storageName)
