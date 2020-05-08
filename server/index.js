@@ -25,6 +25,9 @@ mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true })
 const app = express()
 const port = process.env.PORT || 8888
 
+// Set server-side rendering engine
+app.set('view engine', 'ejs')
+
 const siteClientPath = path.resolve(__dirname, '..', 'site', 'dist')
 
 app.use(express.static(siteClientPath))
