@@ -1,4 +1,3 @@
-const dbs = require('database-service')
 const Timeline = require('./model')
 
 exports.getOne = (req, res, next) => {
@@ -63,10 +62,12 @@ exports.get = (req, res, next) => {
 
   // Default: sort=recent
   const opts = {}
-  dbs.getRecentTimelines(opts, (err, timelineMetas) => {
-    if (err) {
-      return next(err)
-    }
-    return res.json(timelineMetas)
+  Timeline.find(opts)
+  .then(timelineMetas => {
+      res.json(timelineMetas)
+  })
+  .catch(err => {
+    console.log(err.message)
+    res.status(400).end()
   })
 }
