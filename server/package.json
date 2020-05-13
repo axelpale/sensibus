@@ -10,6 +10,7 @@
   "scripts": {
     "start": "node index.js",
     "lint": "standard \"./**/*.js\" && echo OK",
+    "lintfix": "standard --fix \"./**/*.js\" && echo OK",
     "test": "npm run lint",
     "watchstart": "nodemon --watch . --ext js,json --exec \"npm run test && npm start\""
   },
