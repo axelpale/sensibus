@@ -6,7 +6,7 @@ exports.getOne = (req, res, next) => {
   // TODO validate timelineId
 
   // Fetch row from database
-  Timeline.findOne({ id:timelineId })
+  Timeline.findOne({ id: timelineId })
     .then(timeline => {
       if (timeline) {
         res.json(timeline)
@@ -16,7 +16,7 @@ exports.getOne = (req, res, next) => {
     })
     .catch(err => {
       console.log(err.message)
-      res.status(400).end()
+      res.status(500).end()
     })
 }
 
@@ -34,14 +34,14 @@ exports.create = (req, res, next) => {
       frames: [],
       memory: [[1]]
     })
-  .then(() => {
-    res.json({
-      timelineId: timelineId
+    .then(() => {
+      res.json({
+        timelineId: timelineId
+      })
+    }).catch((err) => {
+      console.log(err.message)
+      res.status(500).end()
     })
-  }).catch((err) => {
-    console.log(err.message)
-    res.status(500).end()
-  })
 }
 
 exports.get = (req, res, next) => {
@@ -63,11 +63,11 @@ exports.get = (req, res, next) => {
   // Default: sort=recent
   const opts = {}
   Timeline.find(opts)
-  .then(timelineMetas => {
+    .then(timelineMetas => {
       res.json(timelineMetas)
-  })
-  .catch(err => {
-    console.log(err.message)
-    res.status(400).end()
-  })
+    })
+    .catch(err => {
+      console.log(err.message)
+      res.status(500).end()
+    })
 }
