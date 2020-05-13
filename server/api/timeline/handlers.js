@@ -24,24 +24,22 @@ exports.create = (req, res, next) => {
   const userId = 'fooman'
 
   const timelineId = 'test_timeline'
-  Timeline.create(
-    {
-      id: timelineId,
-      title: '123',
-      createdBy: userId,
-      updatedBy: userId,
-      channels: [],
-      frames: [],
-      memory: [[1]]
+  Timeline.create({
+    id: timelineId,
+    title: '123',
+    createdBy: userId,
+    updatedBy: userId,
+    channels: [],
+    frames: [],
+    memory: [[1]]
+  }).then(() => {
+    res.json({
+      timelineId: timelineId
     })
-    .then(() => {
-      res.json({
-        timelineId: timelineId
-      })
-    }).catch((err) => {
-      console.log(err.message)
-      res.status(500).end()
-    })
+  }).catch((err) => {
+    console.log(err.message)
+    res.status(500).end()
+  })
 }
 
 exports.get = (req, res, next) => {
@@ -61,8 +59,11 @@ exports.get = (req, res, next) => {
   }
 
   // Default: sort=recent
-  const opts = {}
-  Timeline.find(opts)
+  // TODO select only "meta", do not include e.g. memory
+  const filter = {}
+  Timeline.find(filter)
+    .select('id title createdBy createdAt')
+    .limit(10)
     .then(timelineMetas => {
       res.json(timelineMetas)
     })
