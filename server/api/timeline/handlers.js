@@ -7,33 +7,41 @@ exports.getOne = (req, res, next) => {
   // TODO validate timelineId
 
   // Fetch row from database
-  dbs.getOneTimeline('fooman', (err, timelineStr) => {
-    if (err) {
-      return next(err)
-    }
-
-    if (timelineStr === null) {
-      return res.status(404).send('Timeline not found')
-    }
-
-    // Return timeline to client
-    return res.json({
-      id: timelineId,
-      timeline: timelineStr
+  Timeline.findOne({ id:timelineId })
+    .then(timeline => {
+      if (timeline) {
+        res.json(timeline)
+      } else {
+        res.status(404).send('Timeline not found')
+      }
     })
-  })
+    .catch(err => {
+      console.log(err.message)
+      res.status(400).end()
+    })
 }
 
 exports.create = (req, res, next) => {
   const userId = 'fooman'
-  dbs.createRandomTimeline(userId, (err, timelineId) => {
-    if (err) {
-      return next(err)
-    }
 
+  const timelineId = 'test_timeline'
+  Timeline.create(
+    {
+      id: timelineId,
+      title: '123',
+      createdBy: userId,
+      updatedBy: userId,
+      channels: [],
+      frames: [],
+      memory: [[1]]
+    })
+  .then(() => {
     res.json({
       timelineId: timelineId
     })
+  }).catch((err) => {
+    console.log(err.message)
+    res.status(500).end()
   })
 }
 
