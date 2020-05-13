@@ -11,6 +11,11 @@ exports.getPopularTimelines = () => {
   return promise.then(response => response.data)
 }
 
+exports.postTimeline = () => {
+  const promise = axios.post(`${baseUrl}/timeline/`)
+  return promise.then(response => response.data)
+}
+
 exports.postAccount = (accountDetails) => {
   const promise = axios.post(`${baseUrl}/account/`, accountDetails)
   return promise.then(response => response.data)
