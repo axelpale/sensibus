@@ -1,4 +1,5 @@
 const dbs = require('database-service')
+const Timeline = require('./model')
 
 exports.getOne = (req, res, next) => {
   const timelineId = req.params.timelineId
