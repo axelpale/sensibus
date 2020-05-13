@@ -11,7 +11,8 @@
     "start": "(cd server; npm start)",
     "build": "(cd site; npm run build) && (cd timeline; npm run build)",
     "lint": "(cd server; npm run lint) && (cd site; npm run lint) && (cd timeline; npm run lint)",
-    "test": "npm run lint"
+    "test": "npm run lint",
+    "mongod": "mongod --auth --dbpath=server/db"
   },
   "author": {
     "name": "Akseli Palén",
