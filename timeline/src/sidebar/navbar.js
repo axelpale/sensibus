@@ -1,4 +1,7 @@
-const template = require('./navbar.ejs')
+const navbarTemplate = require('./navbar.ejs')
+const closeIconUrl = require('./xwhite.png').default
+
+console.log(closeIconUrl)
 
 const listenId = (root, elemId, handler) => {
   const el = root.querySelector('#' + elemId)
@@ -9,8 +12,9 @@ exports.create = (store, dispatch) => {
   const sidebarPage = store.getState().sidebarPage
 
   const root = document.createElement('div')
-  root.innerHTML = template({
-    sidebarPage: sidebarPage
+  root.innerHTML = navbarTemplate({
+    sidebarPage: sidebarPage,
+    closeIconUrl: closeIconUrl
   })
 
   listenId(root, 'navbar-brand', ev => {

@@ -16,7 +16,7 @@
   height: 4.2rem;
 }
 .channel-titles .cell.channel-title .cell-spine {
-  background: url('img/spine-arrow-up.png') center top repeat-y;
+  background: url('./spine-arrow-up.png') center top repeat-y;
   opacity: 0.16;
 }
 .channel-titles .cell.channel-title .cell-text {

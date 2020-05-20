@@ -14,13 +14,14 @@ module.exports = {
       },
       {
         test: /\.css$/i,
-        use: ['style-loader', 'css-loader?url=false'],
+        use: ['style-loader', 'css-loader'],
       },
       {
         test: /\.png$/i,
         loader: 'file-loader',
         options: {
-          name: '[name].[ext]'
+          name: 'img/[name].[ext]',
+          publicPath: '/t/assets/'
         }
       },
       {
