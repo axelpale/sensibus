@@ -14,23 +14,24 @@ const LandingPage = () => {
   const [recent, setRecent] = useState([])
 
   useEffect(() => {
-    sensibusApi
-      .getRecentTimelines()
-      .then(data => { setRecent(data) })
+    sensibusApi.getRecentTimelines().then(data => {
+      setRecent(data)
+    })
 
-    sensibusApi
-      .getPopularTimelines()
-      .then(data => { setPopular(data) })
+    sensibusApi.getPopularTimelines().then(data => {
+      setPopular(data)
+    })
   }, [])
 
-  const mapThings = (things) => {
+  const mapThings = things => {
     // el.id el.title
     return things.map((el, i) => {
       return (
         <ListGroup.Item key={i}>
-          <a href={`/t/${el.timelineId}`}>{el.title}</a>{' '}
-          by <Link to={`/user/${el.userId}`}>{el.userId}</Link>
-        </ListGroup.Item>)
+          <a href={`/t/${el.timelineId}`}>{el.title}</a> by{' '}
+          <Link to={`/user/${el.userId}`}>{el.userId}</Link>
+        </ListGroup.Item>
+      )
     })
   }
 
@@ -49,7 +50,8 @@ const LandingPage = () => {
           <ListGroup>{mapThings(recent)}</ListGroup>
         </Col>
       </Row>
-    </Page>)
+    </Page>
+  )
 }
 
 export default LandingPage

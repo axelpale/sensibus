@@ -11,7 +11,7 @@ const UserPage = () => {
   useEffect(() => {
     sensibusApi
       .getUser(userId)
-      .then((value) => setUserDetails(value))
+      .then(value => setUserDetails(value))
       .catch(err => {
         setUserDetails({})
       })
@@ -40,7 +40,7 @@ const UserPage = () => {
         <h1>{userId}</h1>
         Retrieving information...
       </Page>
-  )
+    )
   }
 }
 

@@ -9,7 +9,8 @@ const CreateTimelinePage = () => {
       The timeline does not exist.
       <CreateTimelineForm />
       <a href=''>Create</a>
-    </Page>)
+    </Page>
+  )
 }
 
 export default CreateTimelinePage

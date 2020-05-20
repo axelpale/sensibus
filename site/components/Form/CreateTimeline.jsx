@@ -4,11 +4,10 @@ import Button from 'react-bootstrap/Button'
 import sensibusApi from 'sensibus-api-client'
 
 const CreateTimelineForm = () => {
-
   const onClick = () => {
     sensibusApi
       .postTimeline()
-      .then((obj) => window.location.replace(`/t/${obj.timelineId}`) )
+      .then(obj => window.location.replace(`/t/${obj.timelineId}`))
       .catch(err => {
         console.log(err)
       })
