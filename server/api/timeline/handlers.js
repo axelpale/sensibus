@@ -46,14 +46,16 @@ exports.get = (req, res, next) => {
   if (req.query.sort === 'popular') {
     return res.json([
       {
-        timelineId: 'world-history',
+        id: 'world-history',
         title: 'World History',
-        userId: 'juissi999'
+        createdBy: 'juissi999',
+        createdAt: 'asdfasdf'
       },
       {
-        timelineId: 'stockmarket',
+        id: 'stockmarket',
         title: 'Stock Market',
-        userId: 'axelpale'
+        createdBy: 'axelpale',
+        createdAt: 'something'
       }
     ])
   }
