@@ -1,8 +1,6 @@
 const navbarTemplate = require('./navbar.ejs')
 const closeIconUrl = require('./xwhite.png').default
 
-console.log(closeIconUrl)
-
 const listenId = (root, elemId, handler) => {
   const el = root.querySelector('#' + elemId)
   el.addEventListener('click', handler)

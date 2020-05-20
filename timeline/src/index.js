@@ -6,7 +6,6 @@ const migrate = require('./migrate')
 
 // Get timeline id
 const timelineId = window.sensibus.timelineId
-console.log(timelineId)
 
 // Hydrate from localStorage
 const storageName = 'sensibus-state'
