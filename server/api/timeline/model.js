@@ -19,6 +19,10 @@ const timelineSchema = new mongoose.Schema({
   visibility: {
     type: String,
     default: 'public'
+  },
+  resolution: {
+    type: String,
+    default: 'day' // in {second, minute, hour, day, month, year, decade}
   }
 })
 
