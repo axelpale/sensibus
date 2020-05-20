@@ -23,13 +23,15 @@ const LandingPage = () => {
     })
   }, [])
 
+  // new Date(el.createdAt).toLocaleDateString('en')
   const mapThings = things => {
     // el.id el.title
     return things.map((el, i) => {
       return (
         <ListGroup.Item key={i}>
-          <a href={`/t/${el.timelineId}`}>{el.title}</a> by{' '}
-          <Link to={`/user/${el.userId}`}>{el.userId}</Link>
+          <a href={`/t/${el.id}`}>{el.title}</a> by{' '}
+          <Link to={`/user/${el.createdBy}`}>{el.createdBy}</Link> at{' '}
+          {el.createdAt}
         </ListGroup.Item>
       )
     })
