@@ -1,4 +1,5 @@
 const Timeline = require('./model')
+const shortid = require('shortid')
 
 exports.getOne = (req, res, next) => {
   const timelineId = req.params.timelineId
@@ -23,10 +24,10 @@ exports.getOne = (req, res, next) => {
 exports.create = (req, res, next) => {
   const userId = 'fooman'
 
-  const timelineId = 'test_timeline'
+  const timelineId = shortid.generate()
   Timeline.create({
     id: timelineId,
-    title: '123',
+    title: 'Untitled',
     createdBy: userId,
     updatedBy: userId,
     channels: [],
