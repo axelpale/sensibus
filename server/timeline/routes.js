@@ -3,9 +3,9 @@ const router = express.Router()
 const handlers = require('./handlers')
 const path = require('path')
 
-const timelineClientPath = path.resolve(__dirname, '../../timeline')
+const timelineClientPath = path.resolve(__dirname, '../../timeline/dist')
 
+router.use('/assets', express.static(timelineClientPath))
 router.get('/:timelineId', handlers.render)
-router.use('/:timelineId', express.static(timelineClientPath))
 
 module.exports = router

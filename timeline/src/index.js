@@ -1,3 +1,6 @@
+// Include all image files
+require.context('../img')
+
 const redux = require('redux')
 const reducer = require('./reduce')
 const renderer = require('./render')

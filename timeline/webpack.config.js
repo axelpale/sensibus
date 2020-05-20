@@ -17,6 +17,13 @@ module.exports = {
         use: ['style-loader', 'css-loader?url=false'],
       },
       {
+        test: /\.png$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[name].[ext]'
+        }
+      },
+      {
         test: /\.worker\.js$/,
         use: {
           loader: 'worker-loader',
