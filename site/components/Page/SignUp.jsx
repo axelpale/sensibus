@@ -6,14 +6,13 @@ import Button from 'react-bootstrap/Button'
 import sensibusApi from 'sensibus-api-client'
 
 const SignUpPage = () => {
-
-  const onSubmit = (event) => {
+  const onSubmit = event => {
     event.preventDefault()
     const email = document.getElementById('formBasicEmail').value
     const pwd = document.getElementById('formBasicPassword').value
     const user = document.getElementById('formBasicUser').value
 
-    const account = {username:user, email:email, password:pwd}
+    const account = { username: user, email: email, password: pwd }
     sensibusApi.postAccount(account)
   }
 
@@ -37,7 +36,7 @@ const SignUpPage = () => {
           Submit
         </Button>
       </Form>
-      
+
       <Link to='/'>main page</Link>
     </Page>
   )
