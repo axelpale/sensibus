@@ -4,6 +4,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import sensibusApi from 'sensibus-api-client'
+import jwtDecode from 'jwt-decode'
 
 const LoginBar = ({}) => {
   // states:
@@ -17,7 +18,7 @@ const LoginBar = ({}) => {
   useEffect(() => {
     const lsToken = window.localStorage.getItem('sensibusToken')
     if (lsToken !== null) {
-      setUserDetails({ ...userDetails, email: 'fromtoken' })
+      setUserDetails({ ...userDetails, email: jwtDecode(lsToken).email })
       setLoginState(4)
     }
   }, [])
@@ -25,7 +26,8 @@ const LoginBar = ({}) => {
   const [loginState, setLoginState] = useState(0)
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
 
-  const onClickShowLogin = () => {
+  const onClickShowLogin = e => {
+    e.preventDefault()
     setLoginState(1)
   }
 
@@ -43,7 +45,7 @@ const LoginBar = ({}) => {
   const onClickLogout = () => {
     // remove token from local storage
     window.localStorage.removeItem('sensibusToken')
-    loginState(0)
+    setLoginState(0)
   }
 
   const renderLoginForm = state => {
@@ -55,7 +57,7 @@ const LoginBar = ({}) => {
       )
     } else if (state == 1) {
       return (
-        <Form inline>
+        <Form inline onSubmit={onClickSendLogin}>
           <FormControl
             type='text'
             placeholder='Username/email'
@@ -72,7 +74,7 @@ const LoginBar = ({}) => {
               setUserDetails({ ...userDetails, password: e.target.value })
             }
           />
-          <Button variant='outline-info' onClick={onClickSendLogin}>
+          <Button variant='outline-info' type='submit'>
             Login
           </Button>
         </Form>
