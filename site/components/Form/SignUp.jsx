@@ -3,8 +3,8 @@ import Button from 'react-bootstrap/Button'
 
 const SignUpForm = () => {
   return (
-    <Button className='mt-1' variant='primary' href='signup'>
-      SignUp
+    <Button variant='outline-info' className='ml-2' href='/signup'>
+      Sign Up
     </Button>
   )
 }

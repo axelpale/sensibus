@@ -5,7 +5,6 @@ import Col from 'react-bootstrap/Col'
 import ListGroup from 'react-bootstrap/ListGroup'
 
 import CreateTimelineForm from '../Form/CreateTimeline.jsx'
-import SignUpForm from '../Form/SignUp.jsx'
 import sensibusApi from 'sensibus-api-client'
 import { Link } from 'react-router-dom'
 
@@ -42,7 +41,6 @@ const LandingPage = () => {
     <Page>
       <h1>Sensibus.io</h1>
       <CreateTimelineForm />
-      <SignUpForm />
       <Row className='mt-3'>
         <Col>
           <h3>Popular timelines</h3>

@@ -3,6 +3,7 @@ import Button from 'react-bootstrap/Button'
 import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
+import SignUpForm from '../Form/SignUp.jsx'
 import sensibusApi from 'sensibus-api-client'
 import jwtDecode from 'jwt-decode'
 
@@ -51,9 +52,12 @@ const LoginBar = ({}) => {
   const renderLoginForm = state => {
     if (state == 0) {
       return (
-        <Button variant='outline-info' onClick={onClickShowLogin}>
-          LOGIN
-        </Button>
+        <>
+          <Button variant='outline-info' onClick={onClickShowLogin}>
+            Log In
+          </Button>
+          <SignUpForm />
+        </>
       )
     } else if (state == 1) {
       return (
@@ -82,7 +86,14 @@ const LoginBar = ({}) => {
     } else if (state == 2) {
       return <Navbar.Text>Logging in...</Navbar.Text>
     } else if (state == 3) {
-      return <Navbar.Text>Error</Navbar.Text>
+      return (
+        <Navbar.Text>
+          Error{' '}
+          <Button variant='outline-info' onClick={() => setLoginState(0)}>
+            X
+          </Button>
+        </Navbar.Text>
+      )
     } else if (state == 4)
       return (
         <Navbar.Text>
