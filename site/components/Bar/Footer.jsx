@@ -4,7 +4,7 @@ import Col from 'react-bootstrap/Col'
 import Container from 'react-bootstrap/Container'
 import './footer.css'
 
-const Footer = () => {
+const FooterBar = () => {
   return (
     <Container fluid className='bg-primary'>
       <div className='footer-fill bg-primary'>
@@ -20,4 +20,4 @@ const Footer = () => {
   )
 }
 
-export default Footer
+export default FooterBar

@@ -2,7 +2,7 @@ import React from 'react'
 import Container from 'react-bootstrap/Container'
 import Row from 'react-bootstrap/Row'
 import Col from 'react-bootstrap/Col'
-import Footer from '../Footer.jsx'
+import FooterBar from '../Bar/Footer.jsx'
 
 const Page = ({ children }) => {
   return (
@@ -12,7 +12,7 @@ const Page = ({ children }) => {
           <Col>{children}</Col>
         </Row>
       </Container>
-      <Footer />
+      <FooterBar />
     </div>
   )
 }
