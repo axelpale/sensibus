@@ -24,6 +24,7 @@ const LandingPage = () => {
   }, [])
 
   // new Date(el.createdAt).toLocaleDateString('en')
+  // TODO: rename
   const mapThings = things => {
     // el.id el.title
     return things.map((el, i) => {
