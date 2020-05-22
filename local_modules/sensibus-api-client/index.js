@@ -16,12 +16,12 @@ exports.postTimeline = () => {
   return promise.then(response => response.data)
 }
 
-exports.postAccount = (accountDetails) => {
-  const promise = axios.post(`${baseUrl}/account/`, accountDetails)
+exports.postAccount = accountDetails => {
+  const promise = axios.post(`${baseUrl}/account/signup`, accountDetails)
   return promise.then(response => response.data)
 }
 
-exports.getUser = (userId) => {
+exports.getUser = userId => {
   const promise = axios.get(`${baseUrl}/user/${userId}`)
   return promise.then(response => response.data)
 }
