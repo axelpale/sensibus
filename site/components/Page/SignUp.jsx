@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Page from './index.jsx'
 import { Link } from 'react-router-dom'
 import Form from 'react-bootstrap/Form'
@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button'
 import sensibusApi from 'sensibus-api-client'
 
 const SignUpPage = () => {
+  const [signUpSuccess, setSignUpSuccess] = useState(false)
+
   const onSubmit = event => {
     event.preventDefault()
     const email = document.getElementById('formBasicEmail').value
@@ -13,7 +15,18 @@ const SignUpPage = () => {
     const user = document.getElementById('formBasicUser').value
 
     const account = { username: user, email: email, password: pwd }
-    sensibusApi.postAccount(account)
+    sensibusApi.postAccount(account).then(() => setSignUpSuccess(true))
+  }
+
+  if (signUpSuccess) {
+    return (
+      <Page>
+        <h1>Sign up</h1>
+        Your sign up was succesful.
+        <br />
+        <Link to='/'>main page</Link>
+      </Page>
+    )
   }
 
   return (
