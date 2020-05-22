@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from 'react-bootstrap/Button'
 import Navbar from 'react-bootstrap/Navbar'
 import Form from 'react-bootstrap/Form'
@@ -13,6 +13,15 @@ const LoginBar = ({}) => {
   // 3 - show when error (timeout/button to state 0)
   // 4 - show logged in details
 
+  // at the start watch if token is in local storage
+  useEffect(() => {
+    const lsToken = window.localStorage.getItem('sensibusToken')
+    if (lsToken !== null) {
+      setUserDetails({ ...userDetails, email: 'fromtoken' })
+      setLoginState(4)
+    }
+  }, [])
+
   const [loginState, setLoginState] = useState(0)
   const [userDetails, setUserDetails] = useState({ email: '', password: '' })
 
@@ -24,8 +33,17 @@ const LoginBar = ({}) => {
     setLoginState(2)
     sensibusApi
       .postLogin(userDetails)
-      .then(() => setLoginState(4))
+      .then(token => {
+        window.localStorage.setItem('sensibusToken', token)
+        setLoginState(4)
+      })
       .catch(() => setLoginState(3))
+  }
+
+  const onClickLogout = () => {
+    // remove token from local storage
+    window.localStorage.removeItem('sensibusToken')
+    loginState(0)
   }
 
   const renderLoginForm = state => {
@@ -63,7 +81,15 @@ const LoginBar = ({}) => {
       return <Navbar.Text>Logging in...</Navbar.Text>
     } else if (state == 3) {
       return <Navbar.Text>Error</Navbar.Text>
-    } else if (state == 4) return <Navbar.Text> logged in</Navbar.Text>
+    } else if (state == 4)
+      return (
+        <Navbar.Text>
+          {userDetails.email}{' '}
+          <Button variant='outline-info' onClick={onClickLogout}>
+            Logout
+          </Button>
+        </Navbar.Text>
+      )
   }
 
   return (
