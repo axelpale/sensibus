@@ -3,18 +3,42 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 
 exports.signUp = (req, res, next) => {
-  const user = new User({
-    admin: false,
-    email: req.body.email,
-    hash: req.body.password, // TODO bcrypt hash
-    name: req.body.username,
-    status: 'active'
-  })
+  // Create non-admin active user. Does not check if user exists.
+  //
+  // Body Parameters:
+  //   username
+  //     string
+  //   email
+  //     string
+  //   password
+  //     string
+  //   callback
+  //     function (err)
 
-  user.save().then(result => {
-    console.log('note saved!')
-    // mongoose.connection.close()
-    return res.json(result)
+  const username = req.body.username
+  const email = req.body.email
+  const password = req.body.password
+
+  // Bcrypt salt rounds
+  const r = 10
+
+  bcrypt.hash(password, r, function (berr, pwdHash) {
+    if (berr) {
+      return next(berr)
+    }
+
+    const user = new User({
+      admin: false,
+      email: email,
+      hash: pwdHash,
+      name: username,
+      status: 'active' // in {active, deactivated}
+    })
+
+    user.save().then(result => {
+      console.log('User created: ' + username) // DEBUG
+      return res.json(result)
+    }).catch(next)
   })
 }
 
