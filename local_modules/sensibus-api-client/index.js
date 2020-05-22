@@ -25,3 +25,8 @@ exports.getUser = userId => {
   const promise = axios.get(`${baseUrl}/user/${userId}`)
   return promise.then(response => response.data)
 }
+
+exports.postLogin = credentials => {
+  const promise = axios.post(`${baseUrl}/account/login`, credentials)
+  return promise.then(response => response.data)
+}
