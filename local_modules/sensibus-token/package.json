@@ -1,0 +1,24 @@
+{
+  "name": "sensibus-token",
+  "version": "0.0.0",
+  "description": "Sensibus JWT token handling",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/axelpale/sensibus.git"
+  },
+  "scripts": {
+    "lint": "standard",
+    "test": "npm run lint && node test.js"
+  },
+  "author": "Akseli Palén",
+  "license": "GPL-3.0-or-later",
+  "devDependencies": {
+    "jsonwebtoken": "^8.5.1",
+    "standard": "^14.3.3",
+    "tape": "^5.0.0"
+  },
+  "dependencies": {
+    "jwt-decode": "^2.2.0"
+  }
+}
