@@ -75,3 +75,43 @@ exports.get = (req, res, next) => {
       res.status(500).end()
     })
 }
+
+exports.feedEvent = (req, res, next) => {
+  //
+  const timelineId = req.params.timelineId
+  // TODO process events instead of overwriting everything.
+  const channels = req.body.channels
+  const frames = req.body.frames
+  const memory = req.body.memory
+
+  Timeline.findOne({ id: timelineId }).then(timeline => {
+    if (!timeline) {
+      return res.status(404).json({
+        success: false,
+        message: 'Timeline not found'
+      })
+    }
+
+    // Replace values. TODO do this via a delta event.
+    timeline.channels = channels
+    timeline.frames = frames
+    timeline.memory = memory
+
+    // Update meta
+    timeline.updatedAt = Date.now()
+    timeline.updatedBy = 'fooman' // TODO req.user.name
+
+    // TODO Avoid the race condition between read and save.
+
+    timeline.save().then(() => {
+      // Response with some details about the update.
+      return res.json({
+        success: true
+      })
+    }).catch(err => {
+      return next(err)
+    })
+  }).catch(err => {
+    return next(err)
+  })
+}
