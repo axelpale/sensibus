@@ -30,3 +30,15 @@ exports.postLogin = credentials => {
   const promise = axios.post(`${baseUrl}/account/login`, credentials)
   return promise.then(response => response.data)
 }
+
+exports.getTimeline = (timelineId) => {
+  const promise = axios.get(`${baseUrl}/timeline/${timelineId}`)
+  return promise.then(response => response.data)
+}
+
+exports.postTimelineEvent = (timelineId, deltaEvent) => {
+  // TODO use real events, do not send all data
+  const url = `${baseUrl}/timeline/${timelineId}/event/`
+  const promise = axios.post(url, deltaEvent)
+  return promise.then(response => response.data)
+}
