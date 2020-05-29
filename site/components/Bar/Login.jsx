@@ -93,6 +93,7 @@ const LoginBar = ({}) => {
 
   return (
     <Navbar bg='dark' variant='dark'>
+      <Navbar.Brand href='/'>Sensibus.io</Navbar.Brand>
       <Navbar.Collapse className='justify-content-end'>
         {renderLoginForm(loginBarState)}
       </Navbar.Collapse>
