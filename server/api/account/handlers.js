@@ -1,6 +1,7 @@
 const User = require('../user/model')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const shortid = require('shortid')
 
 exports.signUp = (req, res, next) => {
   // Create non-admin active user. Does not check if user exists.
@@ -27,7 +28,11 @@ exports.signUp = (req, res, next) => {
       return next(berr)
     }
 
+    // TODO what if conflict?
+    const userId = shortid.generate() + shortid.generate()
+
     const user = new User({
+      id: userId,
       admin: false,
       email: email,
       hash: pwdHash,
@@ -94,6 +99,7 @@ exports.logIn = function (req, res, next) {
 
       // Build jwt token
       const tokenPayload = {
+        id: user.id,
         name: user.name,
         email: user.email,
         admin: user.admin
