@@ -18,11 +18,16 @@ const LoginBar = ({}) => {
 
   // at the start watch if token is in local storage
   useEffect(() => {
+    checkIfLoggedIn()
+  }, [])
+
+  // TODO: think
+  const checkIfLoggedIn = () => {
     if (sensibusToken.hasToken()) {
       setLoggedInUserDetails(sensibusToken.getDecoded())
       setLoginState(4)
     }
-  }, [])
+  }
 
   const onClickShowLogin = e => {
     e.preventDefault()
@@ -46,7 +51,12 @@ const LoginBar = ({}) => {
         </>
       )
     } else if (state == 1) {
-      return <LoginForm setLoginState={setLoginState} />
+      return (
+        <LoginForm
+          setLoginState={setLoginState}
+          checkIfLoggedIn={checkIfLoggedIn}
+        />
+      )
     } else if (state == 2) {
       return <Navbar.Text>Logging in...</Navbar.Text>
     } else if (state == 3) {
@@ -58,7 +68,7 @@ const LoginBar = ({}) => {
           </Button>
         </Navbar.Text>
       )
-    } else if (state == 4)
+    } else if (state == 4) {
       return (
         <Navbar.Text>
           <a href={`/user/${loggedInUserDetails.name}`}>
@@ -69,6 +79,7 @@ const LoginBar = ({}) => {
           </Button>
         </Navbar.Text>
       )
+    }
   }
 
   return (
