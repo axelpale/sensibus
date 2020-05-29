@@ -13,6 +13,14 @@ const LoginBar = ({}) => {
   // 3 - show when error (timeout/button to state 0)
   // 4 - show logged in details
 
+  const ls = {
+    SHOW_LOGINBUTTON: 0,
+    SHOW_LOGINFORM: 1,
+    WAITING_RESPONSE: 2,
+    LOGIN_ERROR: 3,
+    LOGGED_IN: 4
+  }
+
   const [loginState, setLoginState] = useState(0)
   const [loggedInUserDetails, setLoggedInUserDetails] = useState({})
 
@@ -25,23 +33,23 @@ const LoginBar = ({}) => {
   const checkIfLoggedIn = () => {
     if (sensibusToken.hasToken()) {
       setLoggedInUserDetails(sensibusToken.getDecoded())
-      setLoginState(4)
+      setLoginState(ls.LOGGED_IN)
     }
   }
 
   const onClickShowLogin = e => {
     e.preventDefault()
-    setLoginState(1)
+    setLoginState(ls.SHOW_LOGINFORM)
   }
 
   const onClickLogout = () => {
     // remove token from local storage
     sensibusToken.removeToken()
-    setLoginState(0)
+    setLoginState(ls.SHOW_LOGINBUTTON)
   }
 
   const renderLoginForm = state => {
-    if (state == 0) {
+    if (state == ls.SHOW_LOGINBUTTON) {
       return (
         <>
           <Button variant='outline-info' onClick={onClickShowLogin}>
@@ -50,16 +58,17 @@ const LoginBar = ({}) => {
           <SignUpForm />
         </>
       )
-    } else if (state == 1) {
+    } else if (state == ls.SHOW_LOGINFORM) {
       return (
         <LoginForm
           setLoginState={setLoginState}
           checkIfLoggedIn={checkIfLoggedIn}
+          ls={ls}
         />
       )
-    } else if (state == 2) {
+    } else if (state == ls.WAITING_RESPONSE) {
       return <Navbar.Text>Logging in...</Navbar.Text>
-    } else if (state == 3) {
+    } else if (state == ls.LOGIN_ERROR) {
       return (
         <Navbar.Text>
           Error{' '}
@@ -68,7 +77,7 @@ const LoginBar = ({}) => {
           </Button>
         </Navbar.Text>
       )
-    } else if (state == 4) {
+    } else if (state == ls.LOGGED_IN) {
       return (
         <Navbar.Text>
           <a href={`/user/${loggedInUserDetails.name}`}>
