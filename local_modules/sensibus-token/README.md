@@ -13,6 +13,15 @@ false
 true
 > sbtoken.getToken()
 "eyJhbGciOiJIUzI1NiIsInR5c...
+> sbtoken.getDecoded()
+{
+  admin: false,
+  id: '123',
+  name: 'Ab C',
+  email: 'a@b.c',
+  iat: 1590760774,
+  exp: 1590847174
+}
 > sbtoken.getUser()
 {
   id: '161803398874',

@@ -34,6 +34,13 @@ const validate = (obj) => {
     typeof obj.email === 'string'
 }
 
+exports.getDecoded = () => {
+  if (tokenCache === null) {
+    return null
+  }
+  return Object.assign({}, tokenCache)
+}
+
 exports.getUser = () => {
   // Return user data from the token. Return null if no token set.
   // Leave out expiration time and others.

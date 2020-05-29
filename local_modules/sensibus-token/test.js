@@ -59,3 +59,16 @@ test('token removal', (t) => {
   t.equal(sbtoken.getUser(), null)
   t.end()
 })
+
+test('getDecoded', (t) => {
+  t.equal(sbtoken.getDecoded(), null)
+  sbtoken.setToken(VALID_TOKEN)
+  t.equal(typeof sbtoken.getDecoded(), 'object')
+  t.equal(typeof sbtoken.getDecoded().iat, 'number')
+
+  const decoded = sbtoken.getDecoded()
+  decoded.hazard = 'hahaa'
+  t.equal(typeof sbtoken.getDecoded().hazard, 'undefined', 'is immutable')
+
+  t.end()
+})
