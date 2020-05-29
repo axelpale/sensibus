@@ -21,7 +21,7 @@ const LoginBar = ({}) => {
     LOGGED_IN: 4
   }
 
-  const [loginState, setLoginState] = useState(0)
+  const [loginBarState, setLoginBarState] = useState(0)
   const [loggedInUserDetails, setLoggedInUserDetails] = useState({})
 
   // at the start watch if token is in local storage
@@ -33,19 +33,19 @@ const LoginBar = ({}) => {
   const checkIfLoggedIn = () => {
     if (sensibusToken.hasToken()) {
       setLoggedInUserDetails(sensibusToken.getDecoded())
-      setLoginState(ls.LOGGED_IN)
+      setLoginBarState(ls.LOGGED_IN)
     }
   }
 
   const onClickShowLogin = e => {
     e.preventDefault()
-    setLoginState(ls.SHOW_LOGINFORM)
+    setLoginBarState(ls.SHOW_LOGINFORM)
   }
 
   const onClickLogout = () => {
     // remove token from local storage
     sensibusToken.removeToken()
-    setLoginState(ls.SHOW_LOGINBUTTON)
+    setLoginBarState(ls.SHOW_LOGINBUTTON)
   }
 
   const renderLoginForm = state => {
@@ -61,7 +61,7 @@ const LoginBar = ({}) => {
     } else if (state == ls.SHOW_LOGINFORM) {
       return (
         <LoginForm
-          setLoginState={setLoginState}
+          setLoginBarState={setLoginBarState}
           checkIfLoggedIn={checkIfLoggedIn}
           ls={ls}
         />
@@ -72,7 +72,7 @@ const LoginBar = ({}) => {
       return (
         <Navbar.Text>
           Error{' '}
-          <Button variant='outline-info' onClick={() => setLoginState(0)}>
+          <Button variant='outline-info' onClick={() => setLoginBarState(0)}>
             X
           </Button>
         </Navbar.Text>
@@ -94,7 +94,7 @@ const LoginBar = ({}) => {
   return (
     <Navbar bg='dark' variant='dark'>
       <Navbar.Collapse className='justify-content-end'>
-        {renderLoginForm(loginState)}
+        {renderLoginForm(loginBarState)}
       </Navbar.Collapse>
     </Navbar>
   )

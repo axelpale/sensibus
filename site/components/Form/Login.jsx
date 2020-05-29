@@ -5,20 +5,20 @@ import FormControl from 'react-bootstrap/FormControl'
 import sensibusApi from 'sensibus-api-client'
 import sensibusToken from 'sensibus-token'
 
-const LoginForm = ({ setLoginState, checkIfLoggedIn, ls }) => {
+const LoginForm = ({ setLoginBarState, checkIfLoggedIn, ls }) => {
   const [loginDetails, setLoginDetails] = useState({ email: '', password: '' })
 
   const onClickSendLogin = event => {
-    setLoginState(ls.WAITING_RESPONSE)
+    setLoginBarState(ls.WAITING_RESPONSE)
     sensibusApi
       .postLogin(loginDetails)
       .then(token => {
         sensibusToken.setToken(token)
-        setLoginState(ls.LOGGED_IN)
+        setLoginBarState(ls.LOGGED_IN)
         checkIfLoggedIn()
       })
       .catch(err => {
-        setLoginState(ls.LOGIN_ERROR)
+        setLoginBarState(ls.LOGIN_ERROR)
       })
   }
 
