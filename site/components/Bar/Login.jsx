@@ -5,7 +5,8 @@ import Form from 'react-bootstrap/Form'
 import FormControl from 'react-bootstrap/FormControl'
 import SignUpForm from '../Form/SignUp.jsx'
 import sensibusApi from 'sensibus-api-client'
-import jwtDecode from 'jwt-decode'
+import sensibusToken from 'sensibus-token'
+//import jwtDecode from 'jwt-decode'
 
 const LoginBar = ({}) => {
   // states:
@@ -15,21 +16,18 @@ const LoginBar = ({}) => {
   // 3 - show when error (timeout/button to state 0)
   // 4 - show logged in details
 
+  const [loginState, setLoginState] = useState(0)
+  const [loginDetails, setLoginDetails] = useState({ email: '', password: '' })
+  const [loggedInUserDetails, setLoggedInUserDetails] = useState({})
+
   // at the start watch if token is in local storage
   useEffect(() => {
-    const lsToken = window.localStorage.getItem('sensibusToken')
+    const lsToken = sensibusToken.getToken() //window.localStorage.getItem('sensibusToken')
     if (lsToken !== null) {
-      setUserDetails({
-        ...userDetails,
-        email: jwtDecode(lsToken).email,
-        name: jwtDecode(lsToken).name
-      })
+      setLoggedInUserDetails(sensibusToken.getDecoded())
       setLoginState(4)
     }
   }, [])
-
-  const [loginState, setLoginState] = useState(0)
-  const [userDetails, setUserDetails] = useState({ email: '', password: '' })
 
   const onClickShowLogin = e => {
     e.preventDefault()
@@ -39,17 +37,22 @@ const LoginBar = ({}) => {
   const onClickSendLogin = event => {
     setLoginState(2)
     sensibusApi
-      .postLogin(userDetails)
+      .postLogin(loginDetails)
       .then(token => {
-        window.localStorage.setItem('sensibusToken', token)
+        sensibusToken.setToken(token)
+        //window.localStorage.setItem('sensibusToken', token)
         setLoginState(4)
       })
-      .catch(() => setLoginState(3))
+      .catch(err => {
+        console.log(err)
+        setLoginState(3)
+      })
   }
 
   const onClickLogout = () => {
     // remove token from local storage
-    window.localStorage.removeItem('sensibusToken')
+    // window.localStorage.removeItem('sensibusToken')
+    sensibusToken.removeToken()
     setLoginState(0)
   }
 
@@ -71,7 +74,7 @@ const LoginBar = ({}) => {
             placeholder='Username/email'
             className='mr-sm-2'
             onChange={e =>
-              setUserDetails({ ...userDetails, email: e.target.value })
+              setLoginDetails({ ...loginDetails, email: e.target.value })
             }
           />
           <FormControl
@@ -79,7 +82,7 @@ const LoginBar = ({}) => {
             placeholder='Password'
             className='mr-sm-2'
             onChange={e =>
-              setUserDetails({ ...userDetails, password: e.target.value })
+              setLoginDetails({ ...loginDetails, password: e.target.value })
             }
           />
           <Button variant='outline-info' type='submit'>
@@ -101,7 +104,9 @@ const LoginBar = ({}) => {
     } else if (state == 4)
       return (
         <Navbar.Text>
-          <a href={`/user/${userDetails.name}`}>{userDetails.email}</a>{' '}
+          <a href={`/user/${loggedInUserDetails.name}`}>
+            {loggedInUserDetails.email}
+          </a>{' '}
           <Button variant='outline-info' onClick={onClickLogout}>
             Logout
           </Button>
