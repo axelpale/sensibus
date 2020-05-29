@@ -19,7 +19,11 @@ const LoginBar = ({}) => {
   useEffect(() => {
     const lsToken = window.localStorage.getItem('sensibusToken')
     if (lsToken !== null) {
-      setUserDetails({ ...userDetails, email: jwtDecode(lsToken).email })
+      setUserDetails({
+        ...userDetails,
+        email: jwtDecode(lsToken).email,
+        name: jwtDecode(lsToken).name
+      })
       setLoginState(4)
     }
   }, [])
@@ -97,7 +101,7 @@ const LoginBar = ({}) => {
     } else if (state == 4)
       return (
         <Navbar.Text>
-          {userDetails.email}{' '}
+          <a href={`/user/${userDetails.name}`}>{userDetails.email}</a>{' '}
           <Button variant='outline-info' onClick={onClickLogout}>
             Logout
           </Button>
