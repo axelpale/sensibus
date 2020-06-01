@@ -9,6 +9,7 @@ const CreateTimelineForm = () => {
   const history = useHistory()
 
   const onClick = () => {
+    // TODO: token validation check, insert token to postTimeline()
     if (sensibusToken.hasToken()) {
       sensibusApi
         .postTimeline()

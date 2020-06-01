@@ -4,13 +4,13 @@ import { useParams } from 'react-router-dom'
 import sensibusApi from 'sensibus-api-client'
 
 const UserPage = () => {
-  const { userId } = useParams()
+  const { userName } = useParams()
 
   const [userDetails, setUserDetails] = useState(null)
 
   useEffect(() => {
     sensibusApi
-      .getUser(userId)
+      .getUser(userName)
       .then(value => setUserDetails(value))
       .catch(err => {
         setUserDetails({})
@@ -23,13 +23,13 @@ const UserPage = () => {
       return (
         <Page>
           <h1>User not found</h1>
-          User {userId} does not exist
+          User {userName} does not exist
         </Page>
       )
     } else {
       return (
         <Page>
-          <h1>{userId}</h1>
+          <h1>{userName}</h1>
           E-mail: {userDetails.email}
         </Page>
       )
@@ -37,7 +37,7 @@ const UserPage = () => {
   } else {
     return (
       <Page>
-        <h1>{userId}</h1>
+        <h1>{userName}</h1>
         Retrieving information...
       </Page>
     )

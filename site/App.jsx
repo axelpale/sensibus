@@ -17,7 +17,7 @@ const App = () => {
           <Route path='/t/:id'>
             <CreateTimelinePage />
           </Route>
-          <Route path='/user/:userId'>
+          <Route path='/user/:userName'>
             <UserPage />
           </Route>
           <Route path='/notfound'>
