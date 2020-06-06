@@ -4,6 +4,8 @@ import Navbar from 'react-bootstrap/Navbar'
 import SignUpForm from '../Form/SignUp.jsx'
 import sensibusToken from 'sensibus-token'
 import LoginForm from '../Form/Login.jsx'
+import { login, logout } from '../../reducers/loginReducer'
+import { useDispatch } from 'react-redux'
 
 const LoginBar = ({}) => {
   // states:
@@ -23,6 +25,7 @@ const LoginBar = ({}) => {
 
   const [loginBarState, setLoginBarState] = useState(0)
   const [loggedInUserDetails, setLoggedInUserDetails] = useState({})
+  const dispatch = useDispatch()
 
   // at the start watch if token is in local storage
   useEffect(() => {
@@ -34,6 +37,7 @@ const LoginBar = ({}) => {
     if (sensibusToken.hasToken()) {
       setLoggedInUserDetails(sensibusToken.getDecoded())
       setLoginBarState(ls.LOGGED_IN)
+      dispatch(login())
     }
   }
 
@@ -46,6 +50,7 @@ const LoginBar = ({}) => {
     // remove token from local storage
     sensibusToken.removeToken()
     setLoginBarState(ls.SHOW_LOGINBUTTON)
+    dispatch(logout())
   }
 
   const renderLoginForm = state => {
